@@ -82,6 +82,7 @@ export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/.bin/
 umask o=
 
 alias "proxy!"="proxychains -q zsh"
+alias npm="HTTP_PROXY= HTTPS_PROXY= proxychains -q npm"
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
