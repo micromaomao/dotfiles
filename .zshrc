@@ -76,7 +76,7 @@ SAVEHIST=$HISTSIZE
 
 alias c="clear"
 
-export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/.bin/
+export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/
 
 # Don't let others see our files.
 umask o=
