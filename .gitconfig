@@ -1,6 +1,7 @@
 [user]
 	email = micromaomao@gmail.com
 	name = Mao Wtm
+  signingkey = 2B30339029E6CBD128779A876B8AA3FDC9DAF7AA
 [push]
 	default = simple
 [core]
