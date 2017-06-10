@@ -70,6 +70,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export EDITOR='vim'
 export HTTPS_PROXY=http://127.3.0.4:8080 HTTP_PROXY=http://127.3.0.4:8080
+export ALL_PROXY="socks5://127.3.0.4:1080"
+export https_proxy=$HTTPS_PROXY http_proxy=$HTTP_PROXY all_proxy=$ALL_PROXY
 
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
@@ -82,7 +84,7 @@ export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/
 umask o=
 
 alias "proxy!"="proxychains -q zsh"
-alias npm="HTTP_PROXY= HTTPS_PROXY= proxychains -q npm"
+alias npm="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy= proxychains -q npm"
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
@@ -92,3 +94,5 @@ zstyle ':completion:*' matcher-list '' \
   'm:{a-z\-}={A-Z\_}' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
+
+ulimit -Sv 5242880 # Prevent machine halt.
