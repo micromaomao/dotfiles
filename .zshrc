@@ -96,3 +96,5 @@ zstyle ':completion:*' matcher-list '' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
 
 ulimit -Sv 5242880 # Prevent machine halt.
+
+alias noproxy="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
