@@ -84,7 +84,8 @@ export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/
 umask o=
 
 alias "proxy!"="proxychains -q zsh"
-alias npm="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy= proxychains -q npm"
+alias noproxy="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
+alias npm="noproxy proxychains -q npm"
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
@@ -97,4 +98,3 @@ zstyle ':completion:*' matcher-list '' \
 
 ulimit -Sv 5242880 # Prevent machine halt.
 
-alias noproxy="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
