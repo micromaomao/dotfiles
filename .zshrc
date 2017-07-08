@@ -85,7 +85,6 @@ umask o=
 
 alias "proxy!"="proxychains -q zsh"
 alias noproxy="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
-alias npm="noproxy proxychains -q npm"
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
