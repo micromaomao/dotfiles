@@ -140,3 +140,5 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 :set laststatus=2
 
 match ErrorMsg '\s\+$'
+
+vnoremap // y/<C-R>"<CR>
