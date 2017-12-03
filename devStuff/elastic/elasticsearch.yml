@@ -1,0 +1,5 @@
+path:
+    data: /tmp/maowtmdev_esdata/data
+    logs: /tmp/maowtmdev_esdata/logs
+
+network.host: 127.6.0.233
