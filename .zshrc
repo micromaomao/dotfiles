@@ -99,6 +99,8 @@ mwssh () {
   proxychains -q obfsproxy obfs3 client --dest 104.131.13.235:22333 127.23.0.233:22233 &
   obfs_pid=$!
   sleep 1
+  trap "kill -s SIGTERM $obfs_pid" 0 2 14
   ssh mao@127.23.0.233 -p 22233
-  kill -s SIGTERM $obfs_pid
+  trap - 0 2 14
+  kill -s sigterm $obfs_pid
 }
