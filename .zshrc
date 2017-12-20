@@ -95,12 +95,34 @@ zstyle ':completion:*' matcher-list '' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
 
-mwssh () {
-  proxychains -q obfsproxy obfs3 client --dest 104.131.13.235:22333 127.23.0.233:22233 &
-  obfs_pid=$!
-  sleep 1
-  trap "kill -s SIGTERM $obfs_pid" 0 2 14
-  ssh mao@127.23.0.233 -p 22233
-  trap - 0 2 14
-  kill -s sigterm $obfs_pid
-}
+if [ $(whoami) = mao ]; then
+  mwssh () {
+    obfs_pid=0
+    if [ -z $ALL_PROXY ]; then
+      echo "Running obfsproxy without going through proxy."
+      sudo su -s /bin/sh -c "obfsproxy obfs3 client --dest 104.131.13.235:22333 127.23.0.233:22233" shadowsocks &
+      obfs_pid=$!
+    else
+      sudo su -s /bin/sh -c "proxychains -q obfsproxy obfs3 client --dest 104.131.13.235:22333 127.23.0.233:22233" shadowsocks &
+      obfs_pid=$!
+    fi
+    sleep 1
+    trap "sudo kill -s SIGTERM $obfs_pid" 0 2 14
+    ssh mao@127.23.0.233 -p 22233
+    trap - 0 2 14
+    sudo kill -s sigterm $obfs_pid
+  }
+
+  chvpn () {
+    sudo su -s /bin/sh -c "cd ~ && /bin/zsh" shadowsocks
+  }
+fi
+
+if [ $(whoami) = shadowsocks ]; then
+  echo "Currently using "$(readlink ~shadowsocks/config.current.json)" ."
+  journalctl -q -u ssr -n 10
+fi
+
+if [ $(whoami) = root ]; then
+  echo "Root shell."
+fi
