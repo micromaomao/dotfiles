@@ -40,7 +40,7 @@ ensure_data_dir $mongod_data
 ensure_data_dir $redis_data
 ensure_data_dir $elasticsearch_data
 trap stopall 0 2 14
-mongod --bind_ip 127.6.0.233 --dbpath $mongod_data --nojournal --nohttpinterface --noauth &
+mongod --bind_ip 127.6.0.233 --dbpath $mongod_data --nojournal --noauth &
 redis-server ./redis.conf &
 ES_JAVA_OPTS="-Dlog4j2.disable.jmx=true" ES_PATH_CONF="./elastic" elasticsearch &
 wait
