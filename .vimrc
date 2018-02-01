@@ -65,6 +65,9 @@ let g:YUNOcommit_after = 30
 " Fast moving cursor
 Plugin 'easymotion/vim-easymotion'
 
+Plugin 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
 map <Leader> <Plug>(easymotion-prefix)
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
@@ -140,5 +143,3 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 :set laststatus=2
 
 match ErrorMsg '\s\+$'
-
-vnoremap // y/<C-R>"<CR>
