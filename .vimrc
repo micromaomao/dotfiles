@@ -10,7 +10,7 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " Tree
 Plugin 'scrooloose/nerdtree'
@@ -64,9 +64,6 @@ let g:YUNOcommit_after = 30
 
 " Fast moving cursor
 Plugin 'easymotion/vim-easymotion'
-
-Plugin 'luochen1990/rainbow'
-let g:rainbow_active = 1
 
 map <Leader> <Plug>(easymotion-prefix)
 map  / <Plug>(easymotion-sn)
