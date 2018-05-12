@@ -114,13 +114,12 @@ if [ $(whoami) = mao ]; then
   }
 
   chvpn () {
-    sudo su -s /bin/sh -c "cd ~ && /bin/zsh" shadowsocks
+    sudo su -s /bin/zsh -l shadowsocks
   }
 fi
 
 if [ $(whoami) = shadowsocks ]; then
   echo "Currently using "$(readlink ~shadowsocks/config.current.json)" ."
-  journalctl -q -u ssr -n 10
 fi
 
 if [ $(whoami) = root ]; then
