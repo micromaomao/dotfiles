@@ -57,6 +57,7 @@ Plugin 'Raimondi/delimitMate'
 " Fuzzy search
 Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+:map <c-t> :CtrlPTag<CR>
 
 " Commit reminder
 Plugin 'esneider/YUNOcommit.vim'
@@ -87,9 +88,6 @@ call vundle#end()            " required
 " Put your non-Plugin stuff after this line
 
 map ,n :NERDTreeToggle<CR>
-" Auto open NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 let g:airline#extensions#tabline#enabled = 1
 syntax enable

@@ -77,6 +77,7 @@ HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
 
 alias c="clear"
+alias recitediff="git diff --color-words --minimal -U100"
 
 export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/
 
@@ -85,6 +86,7 @@ umask o=
 
 alias "proxy!"="proxychains -q zsh"
 alias noproxy="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
+alias ctags="ctags --exclude=ctags --exclude=tags -L <(git ls-files -co --exclude-standard) ctags"
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
@@ -96,26 +98,7 @@ zstyle ':completion:*' matcher-list '' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
 
 if [ $(whoami) = mao ]; then
-  mwssh () {
-    obfs_pid=0
-    if [ -z $ALL_PROXY ]; then
-      echo "Running obfsproxy without going through proxy."
-      sudo su -s /bin/sh -c "obfsproxy obfs3 client --dest 104.131.13.235:22333 127.23.0.233:22233" shadowsocks &
-      obfs_pid=$!
-    else
-      sudo su -s /bin/sh -c "proxychains -q obfsproxy obfs3 client --dest 104.131.13.235:22333 127.23.0.233:22233" shadowsocks &
-      obfs_pid=$!
-    fi
-    sleep 1
-    trap "sudo kill -s SIGTERM $obfs_pid" 0 2 14
-    ssh mao@127.23.0.233 -p 22233
-    trap - 0 2 14
-    sudo kill -s sigterm $obfs_pid
-  }
-
-  chvpn () {
-    sudo su -s /bin/zsh -l shadowsocks
-  }
+  alias mwssh="ssh mao@127.23.0.233 -p 22233"
 fi
 
 if [ $(whoami) = shadowsocks ]; then
