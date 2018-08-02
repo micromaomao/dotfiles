@@ -59,10 +59,6 @@ Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 :map <c-t> :CtrlPTag<CR>
 
-" Commit reminder
-Plugin 'esneider/YUNOcommit.vim'
-let g:YUNOcommit_after = 30
-
 " Fast moving cursor
 Plugin 'easymotion/vim-easymotion'
 
