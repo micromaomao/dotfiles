@@ -1,0 +1,10 @@
+{
+    "vim.easymotion": true,
+    "vim.useCtrlKeys": true,
+    "vim.textwidth": 120,
+    "gitlens.keymap": "chorded",
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "workbench.colorTheme": "Solarized Light"
+}
