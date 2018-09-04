@@ -85,9 +85,14 @@ export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/
 # Don't let others see our files.
 umask o=
 
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
 alias "proxy!"="proxychains -q zsh"
 alias noproxy="HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
 alias ctags="ctags --exclude=ctags --exclude=tags -L <(git ls-files -co --exclude-standard) ctags"
+
+alias ls=exa
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
