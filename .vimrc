@@ -134,3 +134,5 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 :set laststatus=2
 
 match ErrorMsg '\s\+$'
+
+set textwidth=120
