@@ -42,6 +42,7 @@ Plugin 'othree/yajs.vim'
 
 Plugin 'mxw/vim-jsx'
 
+let g:ycm_server_python_interpreter = '/usr/sbin/python2'
 Plugin 'valloric/YouCompleteMe'
 
 Plugin 'nathanaelkane/vim-indent-guides'
