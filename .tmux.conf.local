@@ -272,3 +272,4 @@ bind -n M-Up select-pane -U
 bind -n M-Down select-pane -D
 
 unbind C-a
+set -g prefix2 None
