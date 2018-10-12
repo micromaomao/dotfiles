@@ -1,4 +1,4 @@
-export ZSH=/home/mao/.oh-my-zsh
+export ZSH=/home/mao/.oh-my-zsh ZSH_DISABLE_COMPFIX=true
 
 ZSH_THEME="gnzh"
 
