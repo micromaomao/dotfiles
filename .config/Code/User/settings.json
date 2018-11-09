@@ -6,10 +6,25 @@
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
     },
-    "workbench.colorTheme": "Solarized Light",
+    "workbench.colorTheme": "Quiet Light",
     "editor.tabSize": 2,
     "window.newWindowDimensions": "maximized",
     "latex-workshop.view.pdf.viewer": "tab",
     "git.promptToSaveFilesBeforeCommit": true,
-    "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
+    "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "workbench.statusBar.feedback.visible": false,
+    "editor.suggest.localityBonus": true,
+    "files.trimTrailingWhitespace": true,
+    "go.formatTool": "gofmt",
+    "go.buildOnSave": "off",
+    "go.docsTool": "gogetdoc",
+    "files.enableTrash": false,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "files.trimFinalNewlines": true,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "files.insertFinalNewline": true,
+    "files.useExperimentalFileWatcher": true
 }
