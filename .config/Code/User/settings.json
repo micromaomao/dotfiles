@@ -26,5 +26,7 @@
     "editor.minimap.enabled": false,
     "editor.acceptSuggestionOnEnter": "off",
     "files.insertFinalNewline": true,
-    "files.useExperimentalFileWatcher": true
+    "files.useExperimentalFileWatcher": true,
+    "files.autoSave": "off",
+    "editor.formatOnPaste": true
 }
