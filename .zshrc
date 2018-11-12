@@ -73,6 +73,7 @@ export EDITOR='vim'
 export HTTPS_PROXY=http://127.3.0.4:8080 HTTP_PROXY=http://127.3.0.4:8080
 export ALL_PROXY="socks5://127.3.0.4:1080"
 export https_proxy=$HTTPS_PROXY http_proxy=$HTTP_PROXY all_proxy=$ALL_PROXY
+export GOPATH=/home/mao/go
 
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
