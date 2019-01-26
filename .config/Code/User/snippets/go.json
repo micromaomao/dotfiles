@@ -1,0 +1,92 @@
+{
+	// Place your snippets for go here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Algorithm boilerplate": {
+		"prefix": "albp",
+		"body": [
+			"package main",
+			"",
+			"import (",
+			"\t\"bufio\"",
+			"\t\"io\"",
+			"\t\"os\"",
+			"\t\"strconv\"",
+			"\t\"strings\"",
+			")",
+			"",
+			"func start() {",
+			"\tdebug(\"Read: \" + mustReadLine())",
+			"\tstdout.WriteString(\"Stub!\\n\")",
+			"\t$1",
+			"}",
+			"",
+			"/*********Start boilerplate***********/",
+			"",
+			"var stdin *bufio.Reader",
+			"var stdout *bufio.Writer",
+			"",
+			"func main() {",
+			"\treadFrom := os.Stdin",
+			"\tif len(os.Args) == 2 {",
+			"\t\tvar err error",
+			"\t\treadFrom, err = os.Open(os.Args[1])",
+			"\t\tif err != nil {",
+			"\t\t\tpanic(err)",
+			"\t\t}",
+			"\t}",
+			"\tif len(os.Args) > 2 {",
+			"\t\tpanic(\"Too much arguments.\")",
+			"\t}",
+			"\tstdin = bufio.NewReader(readFrom)",
+			"\tstdout = bufio.NewWriter(os.Stdout)",
+			"\tstart()",
+			"\tstdout.Flush()",
+			"}",
+			"",
+			"func mustReadLine() string {",
+			"\tstr, err := stdin.ReadString('\\n')",
+			"\tif err != nil && err != io.EOF {",
+			"\t\tpanic(err)",
+			"\t}",
+			"\tstr = strings.TrimRight(str, \"\\n\")",
+			"\treturn str",
+			"}",
+			"",
+			"func mustAtoi(in string) int {",
+			"\ti, err := strconv.Atoi(in)",
+			"\tif err != nil {",
+			"\t\tpanic(err)",
+			"\t}",
+			"\treturn i",
+			"}",
+			"",
+			"func debug(str string) {",
+			"\tstdout.Flush()",
+			"\tos.Stderr.WriteString(\"[debug] \" + str + \"\\n\")",
+			"}",
+			"",
+			"func mustReadLineOfInts(a ...*int) {",
+			"\tline := mustReadLine()",
+			"\tstrs := strings.Split(line, \" \")",
+			"\tif len(strs) != len(a) {",
+			"\t\tpanic(\"Expected \" + strconv.Itoa(len(a)) + \" numbers, got \" + strconv.Itoa(len(strs)) + \".\")",
+			"\t}",
+			"\tfor i := 0; i < len(a); i++ {",
+			"\t\t(*a[i]) = mustAtoi(strs[i])",
+			"\t}",
+			"}",
+			""
+		]
+	}
+}

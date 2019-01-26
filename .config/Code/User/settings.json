@@ -1,7 +1,6 @@
 {
     "vim.easymotion": true,
     "vim.useCtrlKeys": true,
-    "vim.textwidth": 120,
     "gitlens.keymap": "chorded",
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
@@ -16,17 +15,23 @@
     "editor.suggest.localityBonus": true,
     "files.trimTrailingWhitespace": true,
     "go.formatTool": "gofmt",
-    "go.buildOnSave": "off",
-    "go.docsTool": "gogetdoc",
     "files.enableTrash": false,
     "git.confirmSync": false,
     "git.autofetch": true,
     "files.trimFinalNewlines": true,
-    "editor.formatOnSave": true,
     "editor.minimap.enabled": false,
     "editor.acceptSuggestionOnEnter": "off",
     "files.insertFinalNewline": true,
     "files.useExperimentalFileWatcher": true,
     "files.autoSave": "off",
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "go.gopath": "/home/mao/go",
+    "window.titleBarStyle": "custom",
+    "vim.textwidth": 120,
+    "javascript.format.enable": false,
+    "editor.smoothScrolling": true,
+    "terminal.integrated.enableBell": true,
+    "terminal.integrated.rendererType": "canvas",
+    "go.lintOnSave": "off",
+    "git.enableCommitSigning": true
 }
