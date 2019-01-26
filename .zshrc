@@ -105,7 +105,7 @@ zstyle ':completion:*' matcher-list '' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
 
 if [ $(whoami) = mao ]; then
-  alias mwssh="ssh mao@127.23.0.233 -p 22233"
+  alias mwssh="ssh mao@127.23.0.234 -p 22233"
 fi
 
 if [ $(whoami) = shadowsocks ]; then
