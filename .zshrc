@@ -2,7 +2,7 @@ export ZSH=/home/mao/.oh-my-zsh ZSH_DISABLE_COMPFIX=true
 
 ZSH_THEME="wedisagree"
 
-plugins=(git colored-man-pages tmux safe-paste docker docker-compose golang npm vi-mode)
+plugins=(git colored-man-pages tmux safe-paste docker docker-compose golang npm)
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
