@@ -17,9 +17,6 @@ Plugin 'myusuf3/numbers.vim'
 
 Plugin 'terryma/vim-multiple-cursors'
 
-Plugin 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_enable_on_vim_startup = 1
-
 " Fast moving cursor
 Plugin 'easymotion/vim-easymotion'
 

@@ -1,6 +1,6 @@
 export ZSH=/home/mao/.oh-my-zsh ZSH_DISABLE_COMPFIX=true
 
-ZSH_THEME="gnzh"
+ZSH_THEME="wedisagree"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
