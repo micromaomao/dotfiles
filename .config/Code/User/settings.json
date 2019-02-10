@@ -13,7 +13,6 @@
     "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "workbench.statusBar.feedback.visible": false,
     "editor.suggest.localityBonus": true,
-    "files.trimTrailingWhitespace": true,
     "go.formatTool": "gofmt",
     "files.enableTrash": false,
     "git.confirmSync": false,
@@ -33,5 +32,10 @@
     "terminal.integrated.enableBell": true,
     "terminal.integrated.rendererType": "canvas",
     "go.lintOnSave": "off",
-    "git.enableCommitSigning": true
+    "git.enableCommitSigning": true,
+    "search.useIgnoreFiles": false,
+    "editor.wordWrapColumn": 120,
+    "rust-client.disableRustup": true,
+    "files.trimTrailingWhitespace": true,
+    "rust.all_features": true
 }

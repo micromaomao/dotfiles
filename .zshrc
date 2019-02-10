@@ -18,7 +18,7 @@ if [[ -z $SSH_CONNECTION ]]; then
   alias mwssh="ssh mao@127.23.0.234 -p 22233"
 fi
 export GOPATH=/home/mao/go
-export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/
+export PATH=$PATH:/usr/bin/core_perl/:~/npm-g/bin/:~/.cargo/bin
 
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
