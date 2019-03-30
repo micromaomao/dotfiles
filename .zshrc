@@ -25,7 +25,10 @@ SAVEHIST=$HISTSIZE
 
 alias recitediff="git diff --color-words --minimal -U100"
 alias ctags="ctags --exclude=ctags --exclude=tags -L <(git ls-files -co --exclude-standard) ctags"
-alias ls=exa
+if hash exa; then
+  alias ls=exa
+fi
+alias newcontainer="docker run -it --entrypoint bash -v \$(pwd):/tmp/workspace -w /tmp/workspace -u \$(id -u):\$(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
 # Don't let others see our files.
 umask o=
 
