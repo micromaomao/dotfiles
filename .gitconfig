@@ -1,7 +1,7 @@
 [user]
-	email = micromaomao@gmail.com
+	email = m@maowtm.org
 	name = Mao Wtm
-  signingkey = 2B30339029E6CBD128779A876B8AA3FDC9DAF7AA
+  signingkey = F8F90429D7F6C877C7CC427C83C39700868796DB
 [push]
 	default = simple
 [core]
@@ -11,6 +11,8 @@
 	diff = diff-so-fancy | less --tabs=1,5 -RFX
 	show = diff-so-fancy | less --tabs=1,5 -RFX
 [http]
-  postBuffer = 524288000
+  postBuffer = 1024288000
 [grep]
   lineNumber = true
+[commit]
+	gpgsign = true
