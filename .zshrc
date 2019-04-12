@@ -29,6 +29,7 @@ if hash exa; then
   alias ls=exa
 fi
 alias newcontainer="docker run -it --entrypoint bash -v \$(pwd):/tmp/workspace -w /tmp/workspace -u \$(id -u):\$(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
+alias diff="diff -u --color=always"
 # Don't let others see our files.
 umask o=
 
