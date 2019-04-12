@@ -1,3 +1,3 @@
 FROM archlinux/base
 RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm gcc make
+    pacman -S --noconfirm gcc make unzip
