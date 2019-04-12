@@ -1,0 +1,17 @@
+sudo: no
+dist: stretch
+group: edge
+language: generic
+services:
+  - docker
+
+script:
+  - >
+    cd archlinux-base-additions &&
+    docker build . -t maowtm/archlinux-base-additions
+
+deploy:
+  provider: script
+  script: echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin && docker push maowtm/archlinux-base-additions
+  on:
+    branch: master
