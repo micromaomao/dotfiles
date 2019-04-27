@@ -30,6 +30,7 @@ if hash exa; then
 fi
 alias newcontainer="docker run -it --entrypoint bash -v \$(pwd):/tmp/workspace -w /tmp/workspace -u \$(id -u):\$(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
 alias diff="diff -u --color=always"
+alias httpserverhere="(sleep 1; xdg-open http://localhost:8000) & newcontainer -p 127.0.0.1:8000:8000 python -c 'python -m http.server'"
 # Don't let others see our files.
 umask o=
 
@@ -42,4 +43,3 @@ zstyle ':completion:*' matcher-list '' \
   'm:{a-z\-}={A-Z\_}' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
-
