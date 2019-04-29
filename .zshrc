@@ -28,7 +28,7 @@ alias ctags="ctags --exclude=ctags --exclude=tags -L <(git ls-files -co --exclud
 if hash exa; then
   alias ls=exa
 fi
-alias newcontainer="docker run -it --entrypoint bash -v \$(pwd):/tmp/workspace -w /tmp/workspace -u \$(id -u):\$(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
+alias newcontainer="docker run -it --entrypoint bash -v \$(pwd):/tmp/workspace -v \$(pwd)/.git:/tmp/workspace/.git:ro -v \$(pwd)/.vscode:/tmp/workspace/.vscode:ro -w /tmp/workspace -u \$(id -u):\$(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
 alias diff="diff -u --color=always"
 alias httpserverhere="(sleep 1; xdg-open http://localhost:8000) & newcontainer -p 127.0.0.1:8000:8000 python -c 'python -m http.server'"
 # Don't let others see our files.
