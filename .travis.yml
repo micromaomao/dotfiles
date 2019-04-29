@@ -7,11 +7,15 @@ services:
 
 script:
   - >
-    cd archlinux-base-additions &&
-    docker build . -t maowtm/archlinux-base-additions
+    cd docker-images &&
+    docker build -f archlinux-base-additions.Dockerfile . -t maowtm/archlinux-base-additions &&
+    docker build -f debian-stretch.Dockerfile . -t maowtm/debian-stretch
 
 deploy:
   provider: script
-  script: echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin && docker push maowtm/archlinux-base-additions
+  script: >
+    echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin &&
+    docker push maowtm/archlinux-base-additions
+    docker push maowtm/debian-stretch
   on:
     branch: master
