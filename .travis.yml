@@ -16,6 +16,6 @@ deploy:
   script: >
     echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin &&
     docker push maowtm/archlinux-base-additions &&
-    docker push maowtm/debian-stretch
+    docker push maowtm/debian-stretch; #
   on:
     branch: master
