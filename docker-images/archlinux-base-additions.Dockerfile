@@ -1,3 +1,3 @@
 FROM archlinux/base
 RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm gcc make unzip grep p7zip bison pkgconf go rust git curl
+    pacman -S --noconfirm bison curl gcc git go grep make p7zip pkgconf rust unzip
