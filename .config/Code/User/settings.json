@@ -55,6 +55,10 @@
             "value": "#007fff"
         },
         {
+            "name": "C# Purple",
+            "value": "#68217A"
+        },
+        {
             "name": "Gatsby Purple",
             "value": "#639"
         },
@@ -98,5 +102,6 @@
     "editor.acceptSuggestionOnCommitCharacter": false,
     "search.exclude": {
         "**/node_modules": false
-    }
+    },
+    "gitlens.codeLens.enabled": false
 }
