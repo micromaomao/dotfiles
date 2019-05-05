@@ -1,11 +1,14 @@
 set -x EDITOR 'vim'
-# if [ -z $SSH_CONNECTION ]
-#   set -x HTTPS_PROXY http://127.3.0.4:8080 HTTP_PROXY=http://127.3.0.4:8080
-#   set -x ALL_PROXY "socks5://127.3.0.4:1080"
-#   set -x https_proxy $HTTPS_PROXY http_proxy=$HTTP_PROXY all_proxy=$ALL_PROXY
-#   alias noproxy="env HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
-#   alias mwssh="ssh mao@127.23.0.234 -p 22233"
-# end
+if [ -z $SSH_CONNECTION ]
+  set -x HTTPS_PROXY http://127.3.0.4:8080
+  set -x HTTP_PROXY http://127.3.0.4:8080
+  set -x ALL_PROXY "socks5://127.3.0.4:1080"
+  set -x https_proxy $HTTPS_PROXY
+  set -x http_proxy $HTTP_PROXY
+  set -x all_proxy $ALL_PROXY
+  alias noproxy="env HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= http_proxy= https_proxy= all_proxy="
+  alias mwssh="ssh mao@127.23.0.234 -p 22233"
+end
 set -x GOPATH /home/mao/go
 set -x PATH $PATH:/usr/bin/core_perl/:~/npm-g/bin/:~/.cargo/bin
 
