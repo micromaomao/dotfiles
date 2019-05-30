@@ -9,13 +9,15 @@ script:
   - >
     cd docker-images &&
     docker build -f archlinux-base-additions.Dockerfile . -t maowtm/archlinux-base-additions &&
-    docker build -f debian-stretch.Dockerfile . -t maowtm/debian-stretch
+    docker build -f debian-stretch.Dockerfile . -t maowtm/debian-stretch &&
+    docker build -f archlinux-texlive.Dockerfile . -t maowtm/archlinux-texlive
 
 deploy:
   provider: script
   script: >
     echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin &&
     docker push maowtm/archlinux-base-additions &&
-    docker push maowtm/debian-stretch; #
+    docker push maowtm/debian-stretch &&
+    docker push maowtm/archlinux-texlive; #
   on:
     branch: master
