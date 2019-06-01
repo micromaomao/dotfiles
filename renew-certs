@@ -1,0 +1,246 @@
+#!/bin/bash
+if [ -z "$CERTBOT" ]; then
+  CERTBOT="certbot"
+fi
+if [ -z "$CERTBOT_DIR" ]; then
+  CERTBOT_DIR="$HOME/letsencrypt"
+fi
+TESTCERTFLAG=()
+USER_EMAIL=''
+CLOUDFLARE_CRED_INI=''
+DOTNETRC_FILE="$HOME/.netrc"
+function usage () {
+  echo "[CERTBOT=certbot] [CERTBOT_DIR=~/letsencrypt] $0 [-t] [-m <email>] -c <cloudflare-cred.ini> [-n <~/.netrc>]"
+  echo "  -t: Issue staging certificate"
+  echo "  -l: Print CERTBOT + CERTBOT_FLAGS and exit"
+  exit 1
+}
+ARG_L=''
+while getopts 'tm:c:ln:' o; do
+  case "${o}" in
+    t)
+      TESTCERTFLAG=("--test-cert")
+      ;;
+    m)
+      USER_EMAIL="$OPTARG"
+      ;;
+    c)
+      CLOUDFLARE_CRED_INI="$OPTARG"
+      ;;
+    l)
+      ARG_L=true
+      ;;
+    n)
+      DOTNETRC_FILE="$OPTARG"
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+if [ -z "$USER_EMAIL" ]; then
+  USER_EMAIL="$(git config --global --get user.email | tr -d "\n")" || exit 1
+fi
+
+CERTBOT_FLAGS=($CERTBOT_FLAGS "--config-dir" "$CERTBOT_DIR" "--work-dir" "$CERTBOT_DIR" "--logs-dir" "$CERTBOT_DIR" "${TESTCERTFLAG[@]}" "--agree-tos" "-n" "-m" "$USER_EMAIL" "--manual-public-ip-logging-ok")
+
+if [ ! -z "$ARG_L" ]; then
+  echo $CERTBOT "${CERTBOT_FLAGS[@]}"
+  exit 0
+fi
+
+if [ -z "$CLOUDFLARE_CRED_INI" ]; then
+  usage
+fi
+
+if [ ! -d "$CERTBOT_DIR" ]; then
+  echo Registering account and creating $CERTBOT_DIR
+  mkdir -p "$CERTBOT_DIR" && \
+  $CERTBOT "${CERTBOT_FLAGS[@]}" register --no-eff-email || exit 2
+fi
+
+function ssh_maowtmorg () {
+  cmd=$1
+  if [ -z "$cmd" ]; then return 1; fi
+  echo Running "$cmd" on maowtm.org
+  ssh mao@127.23.0.234 -p 22233 "$cmd"
+  return $?
+}
+
+function sudocattofilecmdline () {
+  file="$1"
+  escaped="${file@Q}"
+  echo -En "sudo sh -c 'cat > '${escaped@Q}"
+}
+
+function scp_maowtmorg () {
+  local_file=$1
+  remote_file=$2
+  if [ -z "$local_file" -o -z "$remote_file" ]; then return 1; fi
+  ssh_maowtmorg "$(sudocattofilecmdline "$remote_file")" < "$local_file" || return 1
+  return $?
+}
+
+function do_maowtmorg () {
+  echo
+  echo -e '\e[32mIssuing certificate for maowtm.org\e[0m'
+
+  $CERTBOT "${CERTBOT_FLAGS[@]}" \
+    certonly \
+    --dns-cloudflare --dns-cloudflare-credentials "$CLOUDFLARE_CRED_INI" \
+    -d 'maowtm.org, *.maowtm.org, schsrch.xyz, *.schsrch.xyz, mww.moe, *.mww.moe, schsrch.org, *.schsrch.org, fuckcie.com, *.fuckcie.com, paper.sc, *.paper.sc' \
+    --cert-name maowtm.org || exit 2
+
+  CPATH="$CERTBOT_DIR/live/maowtm.org"
+  # At this point, certificate at $CPATH/{fullchain, cert, privkey}.pem
+  DOTFAKE=".fake"
+  if [ ${#TESTCERTFLAG[@]} -eq 0 ]; then DOTFAKE=""; fi
+  echo Deploying certificate to maowtm.org server
+  scp_maowtmorg "$CPATH/fullchain.pem" "/opt/chain.crt$DOTFAKE" && \
+  scp_maowtmorg "$CPATH/cert.pem" "/opt/ssl.crt$DOTFAKE" && \
+  scp_maowtmorg "$CPATH/privkey.pem" "/opt/ssl.key$DOTFAKE" || exit 2
+  if [ ${#TESTCERTFLAG[@]} -eq 0 ]; then
+    echo Restarting services
+    ssh_maowtmorg "cd maowtm.org-docker/ && sudo /opt/docker-compose restart www && sudo systemctl restart postfix@- dovecot" || exit 2
+  fi
+}
+
+function do_death_mw () {
+  echo -e '\e[32mIssuing certificate for death.maowtm.org\e[0m'
+
+  $CERTBOT "${CERTBOT_FLAGS[@]}" \
+    certonly \
+    --dns-cloudflare --dns-cloudflare-credentials "$CLOUDFLARE_CRED_INI" \
+    -d 'death.maowtm.org' \
+    --cert-name death.maowtm.org || exit 2
+  CPATH="$CERTBOT_DIR/live/death.maowtm.org"
+
+  if [ ${#TESTCERTFLAG[@]} -eq 0 ]; then
+    echo Deploying to GitLab
+    GITLAB_API_KEY="$(cat $DOTNETRC_FILE | grep 'machine gitlab.com' -m 1 -A 1000 | grep 'password' -m 1 | cut -f2 -d' ' | cat)" || exit 2
+    url="https://gitlab.com/api/v4/projects/wtm%2Fdeath.maowtm.org/pages/domains/death.maowtm.org"
+    echo PUT $url
+    curl --fail --request PUT --header "PRIVATE-TOKEN: $GITLAB_API_KEY" --form "certificate=@$CPATH/fullchain.pem" --form "key=@$CPATH/privkey.pem" $url > /dev/null || exit 2
+  else
+    echo Skipping GitLab deployment
+    # Because they don't accept invalid certificates
+  fi
+}
+
+function do_oaszlf () {
+  echo
+  echo -e '\e[32mIssuing certificate for oa.szlf.com\e[0m'
+
+  CLOUDFLARE_API_KEY="$(cat $CLOUDFLARE_CRED_INI | grep -m 1 dns_cloudflare_api_key | awk -F ' = ' '{print $2}')" || exit 1
+  CLOUDFLARE_API_EMAIL="$(cat $CLOUDFLARE_CRED_INI | grep -m 1 dns_cloudflare_email | awk -F ' = ' '{print $2}')" || exit 1
+  CURL_FLAGS=("-H" "X-Auth-Email: $CLOUDFLARE_API_EMAIL" "-H" "X-Auth-Key: $CLOUDFLARE_API_KEY")
+
+  function check_success () {
+    json="$1"
+    if [ "$(echo "$json" | jq -rj '.success' || (echo Failed to jq .success; exit 2))" != "true" ]; then
+      echo Error: "$(echo "$json" | jq -j '.errors')"
+      echo Exiting
+      exit 2
+    fi
+    return 0
+  }
+
+  zoneInfo="$(curl -X GET "https://api.cloudflare.com/client/v4/zones?match=any&name=maowtm.org" "${CURL_FLAGS[@]}")" || exit 2
+  check_success "$zoneInfo"
+  numResults="$(echo "$zoneInfo" | jq -rj '.result|length')" || exit 2
+  if [ $numResults != "1" ]; then
+    echo Returned $numResults instead of 1 results.
+    exit 2
+  fi
+  zoneId="$(echo "$zoneInfo" | jq -rj '.result[0].id|@uri')" || exit 2
+  zoneRecords="$(curl -X GET "https://api.cloudflare.com/client/v4/zones/$zoneId/dns_records?match=all&name=oaszlf.rb.maowtm.org&type=CNAME" "${CURL_FLAGS[@]}")" || exit 1
+  check_success "$zoneRecords"
+  if [ "$(echo "$zoneRecords" | jq -rj '.result_info.count')" != "1" ]; then
+    echo Fix the DNS records on oaszlf.rb.maowtm.org please!
+    exit 2
+  fi
+  targetRecordId="$(echo "$zoneRecords" | jq -rj '.result[0].id|@uri')" || exit 2
+  targetRecordContent="$(echo "$zoneRecords" | jq -rj '.result[0].content')" || exit 2
+
+  if [ "$targetRecordContent" != "oaszlf.ddns.net" ]; then
+    echo oaszlf.rb.maowtm.org currently points to "$targetRecordContent", not oaszlf.ddns.net. Fix that, then run this again.
+    exit 2
+  fi
+
+  function update_cname () {
+    newValue="$1"
+    echo Updating CNAME to point to $newValue
+    res=$(jq --arg newValue "$newValue" -nj '{"type": "CNAME", "name": "oaszlf.rb.maowtm.org", "content": $newValue, "ttl": 120, "proxied": false}' \
+            | curl -X PUT "https://api.cloudflare.com/client/v4/zones/$zoneId/dns_records/$targetRecordId" "${CURL_FLAGS[@]}" -H "Content-Type: application/json" --data @-)
+    return $?
+  }
+
+  update_cname s1.maowtm.org || exit 1
+  echo Waiting 15s for DNS
+  sleep 15
+
+  function auth_hook () {
+    echo "/.well-known/acme-challenge/$CERTBOT_TOKEN" "$CERTBOT_VALIDATION"
+    ssh_maowtmorg "sudo mkdir -p /opt/.well-known/acme-challenge" || exit 1
+    echo "$CERTBOT_VALIDATION" | ssh_maowtmorg "$(sudocattofilecmdline "/opt/.well-known/acme-challenge/$CERTBOT_TOKEN")"
+    ssh_maowtmorg "sudo chmod a+rX -R /opt/.well-known/acme-challenge" || exit 1
+    exit 0
+  }
+
+  function cleanup_hook () {
+    ssh_maowtmorg "sudo rm -rf /opt/.well-known/acme-challenge"
+    exit 0
+  }
+
+  export -f auth_hook cleanup_hook ssh_maowtmorg sudocattofilecmdline
+
+  $CERTBOT "${CERTBOT_FLAGS[@]}" \
+    certonly \
+    -d 'oa.szlf.com' \
+    --cert-name oa.szlf.com \
+    --preferred-challenges=http --manual \
+    --manual-auth-hook "bash -c 'auth_hook'" \
+    --manual-cleanup-hook "bash -c 'cleanup_hook'"
+  cert_success=$?
+
+  if [ $cert_success -ne 0 ]; then
+    echo -e '\e[31mFailed to get certificate\e[0m'
+  fi
+
+  update_cname "$targetRecordContent" && \
+    echo CNAME changed back to "$targetRecordContent" || \
+    (echo -e '\e[31;1mFailed to change CNAME back\e[0m'; exit 2)
+
+  if [ $cert_success -ne 0 ]; then
+    exit 2
+  fi
+
+  echo Waiting 15s for DNS
+  sleep 15
+
+  CPATH="$CERTBOT_DIR/live/oa.szlf.com"
+  function escape () {
+    echo -nE "${1@Q}"
+  }
+  function ssh_oaszlf () {
+    echo Running "$1" on oa.szlf.com
+    ssh root@oa.szlf.com "$1"
+    return $?
+  }
+
+  ssh_oaszlf "cat > /root/ssl/cert.pem" < "$CPATH/cert.pem" && \
+  ssh_oaszlf "cat > /root/ssl/key.pem" < "$CPATH/privkey.pem" && \
+  ssh_oaszlf "cat > /root/ssl/fullchain.pem" < "$CPATH/fullchain.pem" || exit 2
+
+  if [ ${#TESTCERTFLAG[@]} -eq 0 ]; then
+    echo Restarting services
+    ssh_oaszlf "systemctl restart httpd" || exit 2
+  fi
+}
+
+do_maowtmorg && \
+do_death_mw && \
+do_oaszlf || exit 2
+
+echo -e '\e[32;1mEverything done!\e[0m'
