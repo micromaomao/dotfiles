@@ -20,6 +20,8 @@ Plugin 'terryma/vim-multiple-cursors'
 " Fast moving cursor
 Plugin 'easymotion/vim-easymotion'
 
+Plugin 'tpope/vim-surround'
+
 map <Leader> <Plug>(easymotion-prefix)
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
