@@ -7,12 +7,26 @@ services:
 
 script:
   - >
+    sudo apt-get install -y curl jq || exit 1;
+    function doImage () {
+      tag="$1";
+      dockerfile="$2";
+      lastupdatedtime="$(curl "https://registry.hub.docker.com/v2/repositories/$tag/tags/latest/" | jq -rj '.last_updated')" || return 1;
+      if [ "$lastupdatedtime" != "null" ] && date -d "$lastupdatedtime"; then
+        sincelastbuild=$[$(date +%s) - $(date -d "$lastupdatedtime" +%s)];
+        if [ "$sincelastbuild" -le $[12*60*60] ]; then
+          return 0;
+        fi;
+      fi;
+      docker build -f "$dockerfile" . -t "$tag";
+      return $?;
+    };
     cd docker-images &&
-    docker build -f archlinux-base-additions.Dockerfile . -t maowtm/archlinux-base-additions &&
-    docker build -f debian-stretch.Dockerfile . -t maowtm/debian-stretch &&
-    docker build -f archlinux-texlive.Dockerfile . -t maowtm/archlinux-texlive &&
-    docker build -f v2ray.Dockerfile . -t maowtm/v2ray &&
-    cd obfsproxy && docker build -f Dockerfile . -t maowtm/obfsproxy && cd ..
+    doImage maowtm/archlinux-base-additions archlinux-base-additions.Dockerfile &&
+    doImage maowtm/debian-stretch debian-stretch.Dockerfile &&
+    doImage maowtm/archlinux-texlive archlinux-texlive.Dockerfile &&
+    doImage maowtm/v2ray v2ray.Dockerfile &&
+    cd obfsproxy && doImage maowtm/obfsproxy Dockerfile && cd ..; #
 
 deploy:
   provider: script
