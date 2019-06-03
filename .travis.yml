@@ -7,6 +7,7 @@ services:
 
 script:
   - >
+    echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin &&
     sudo apt-get install -y curl jq || exit 1;
     function doImage () {
       tag="$1";
@@ -15,11 +16,29 @@ script:
       if [ "$lastupdatedtime" != "null" ] && date -d "$lastupdatedtime"; then
         sincelastbuild=$[$(date +%s) - $(date -d "$lastupdatedtime" +%s)];
         if [ "$sincelastbuild" -le $[12*60*60] ]; then
+          echo -e '\e[32m'Skipping image "$tag" because last build is only $[$sincelastbuild / 60 / 60] hours ago.'\e[0m'
           return 0;
         fi;
       fi;
+      echo -e '\e[34m'Building image "$tag"...'\e[0m'
       docker build -f "$dockerfile" . -t "$tag";
-      return $?;
+      ret=$?;
+      if [ $ret -ne 0 ]; then
+        echo -e '\e[31m'Build failure on "$tag": docker build exited with code $ret.'\e[0m';
+        return $ret;
+      fi;
+      if [ "$TRAVIS_BRANCH" = "master" ]; then
+        echo -e '\e[34m'Pushing "$tag"'\e[0m';
+        docker push "$tag";
+        ret=$?;
+        if [ $ret -ne 0 ]; then
+          echo -e '\e[31m'Push failure on "$tag": docker push exited with code $ret.'\e[0m';
+          return $ret;
+        fi;
+      else
+        echo Skipping docker push on branch "$TRAVIS_BRANCH";
+      fi;
+      return 0;
     };
     cd docker-images &&
     doImage maowtm/archlinux-base-additions archlinux-base-additions.Dockerfile &&
@@ -27,15 +46,3 @@ script:
     doImage maowtm/archlinux-texlive archlinux-texlive.Dockerfile &&
     doImage maowtm/v2ray v2ray.Dockerfile &&
     cd obfsproxy && doImage maowtm/obfsproxy Dockerfile && cd ..; #
-
-deploy:
-  provider: script
-  script: >
-    echo "$DOCKERHUB_PASSWORD" | docker login -u "maowtm" --password-stdin &&
-    docker push maowtm/archlinux-base-additions &&
-    docker push maowtm/debian-stretch &&
-    docker push maowtm/archlinux-texlive &&
-    docker push maowtm/v2ray &&
-    docker push maowtm/obfsproxy; #
-  on:
-    branch: master
