@@ -1,4 +1,4 @@
-FROM maowtm/archlinux-base-additions
-RUN pacman -Syu --force --noconfirm && \
-    pacman -S --force --noconfirm fontconfig libxtst gtk3 python cairo alsa-lib nss gcc-libs libnotify libxss glibc lsof # deps
+FROM archlinux/base
+RUN pacman -Syu --noconfirm --force && \
+    pacman -S --noconfirm --force alsa-lib awk bison cairo curl file fontconfig gcc gcc-libs git glibc go grep gtk3 libnotify libxss libxtst lsof make nss p7zip pkgconf python rust unzip which
 COPY --chown=root:root ./makepkg.conf /etc/makepkg.conf
