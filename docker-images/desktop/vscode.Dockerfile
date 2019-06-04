@@ -8,9 +8,10 @@ RUN curl -sL 'https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code
     makepkg
 USER root:root
 RUN pacman --force --noconfirm -U visual-studio-code-bin/visual-studio-code-bin-*.tar && \
-    rm -rf visual-studio-code-bin visual-studio-code-bin.tar.gz
+    pacman --force --noconfirm -S fish pkgfile
 USER nobody:nobody
 
 ENV HOME=/tmp/
+ENV SHELL=/usr/bin/fish
 VOLUME [ "/tmp/.vscode", "/tmp/workspace", "/tmp/.X11-unix" ]
 ENTRYPOINT [ "code", "--new-window", "--verbose", "/tmp/workspace" ]
