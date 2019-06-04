@@ -11,6 +11,7 @@ if [ -z $SSH_CONNECTION ]
 end
 set -x GOPATH /home/mao/go
 set -x PATH $PATH:/usr/bin/core_perl/:~/npm-g/bin/:~/.cargo/bin
+set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
 abbr recitediff "git diff --color-words --minimal -U100"
 alias ctags "ctags --exclude=ctags --exclude=tags -L <(git ls-files -co --exclude-standard) ctags"
@@ -19,6 +20,7 @@ alias newcontainer "docker run -it --entrypoint bash -v (pwd):/tmp/workspace:ro 
 alias newcontainerrw "docker run -it --entrypoint bash -v (pwd):/tmp/workspace -v (pwd)/.git:/tmp/workspace/.git:ro -v (pwd)/.vscode:/tmp/workspace/.vscode:ro -w /tmp/workspace -u (id -u):(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
 alias diff "diff -u --color=always"
 alias httpserverhere ": (sleep 1; xdg-open http://localhost:8000) & newcontainer -p 127.0.0.1:8000:8000 python -c \"python -m http.server\""
+alias containedvscodehere 'newcontainerrw -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v $HOME/.vscode:/tmp/.vscode:ro -v $HOME/projects/dotfiles/.config/Code:/tmp/.config-copyfrom:ro -e DISPLAY=:0 --entrypoint bash maowtm/vscode -c \'mkdir /tmp/.config && cp /tmp/.config-copyfrom /tmp/.config/Code -r && code --new-window --verbose /tmp/workspace\''
 # Don't let others see our files.
 umask 0027
 

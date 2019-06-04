@@ -34,7 +34,6 @@
     "git.enableCommitSigning": true,
     "search.useIgnoreFiles": false,
     "editor.wordWrapColumn": 120,
-    "rust-client.disableRustup": true,
     "files.trimTrailingWhitespace": true,
     "rust.all_features": true,
     "editor.mouseWheelZoom": true,
@@ -61,6 +60,10 @@
         {
             "name": "Gatsby Purple",
             "value": "#639"
+        },
+        {
+            "name": "Java Blue-Gray",
+            "value": "#557c9b"
         },
         {
             "name": "JavaScript Yellow",
@@ -103,5 +106,8 @@
     "search.exclude": {
         "**/node_modules": false
     },
-    "gitlens.codeLens.enabled": false
+    "gitlens.codeLens.enabled": false,
+    "files.associations": {
+        "*.json": "jsonc"
+    }
 }

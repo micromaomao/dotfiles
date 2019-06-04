@@ -10,3 +10,7 @@ USER root:root
 RUN pacman --force --noconfirm -U visual-studio-code-bin/visual-studio-code-bin-*.tar && \
     rm -rf visual-studio-code-bin visual-studio-code-bin.tar.gz
 USER nobody:nobody
+
+ENV HOME=/tmp/
+VOLUME [ "/tmp/.vscode", "/tmp/workspace", "/tmp/.X11-unix" ]
+ENTRYPOINT [ "code", "--new-window", "--verbose", "/tmp/workspace" ]
