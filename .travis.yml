@@ -21,7 +21,10 @@ script:
         fi;
       fi;
       echo -e '\e[34m'Building image "$tag"...'\e[0m'
-      docker build -f "$dockerfile" . -t "$tag";
+      docker build -f "$dockerfile" . -t "$tag" --label=org.label-schema.build-date="$(date --rfc-3339=sec)" \
+                                                --label=org.label-schema.vcs-url='https://github.com/micromaomao/dotfiles' \
+                                                --label=org.label-schema.vcs-ref="$(git rev-parse --short HEAD)" \
+                                                --label=org.label-schema.schema-version=1.0;
       ret=$?;
       if [ $ret -ne 0 ]; then
         echo -e '\e[31m'Build failure on "$tag": docker build exited with code $ret.'\e[0m';
