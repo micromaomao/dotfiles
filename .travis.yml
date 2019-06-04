@@ -43,7 +43,11 @@ script:
     cd docker-images &&
     doImage maowtm/archlinux-base-additions archlinux-base-additions.Dockerfile &&
     doImage maowtm/debian-stretch debian-stretch.Dockerfile &&
-    doImage maowtm/archlinux-texlive archlinux-texlive.Dockerfile &&
     doImage maowtm/v2ray v2ray.Dockerfile &&
+    cd obfsproxy && doImage maowtm/obfsproxy Dockerfile && cd .. &&
     doImage maowtm/delegate delegate.Dockerfile &&
-    cd obfsproxy && doImage maowtm/obfsproxy Dockerfile && cd ..; #
+    cd desktop &&
+    doImage maowtm/gtk gtk.Dockerfile &&
+    doImage maowtm/vscode vscode.Dockerfile &&
+    cd .. &&
+    doImage maowtm/archlinux-texlive archlinux-texlive.Dockerfile; #
