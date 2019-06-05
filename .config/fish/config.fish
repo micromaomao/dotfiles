@@ -21,6 +21,7 @@ alias newcontainerrw "docker run -it --entrypoint bash -v (pwd):/tmp/workspace -
 alias diff "diff -u --color=always"
 alias httpserverhere ": (sleep 1; xdg-open http://localhost:8000) & newcontainer -p 127.0.0.1:8000:8000 python -c \"python -m http.server\""
 alias containedvscodehere 'newcontainerrw -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/1000/$WAYLAND_DISPLAY:ro -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY -e XDG_RUNTIME_DIR=/run/user/1000 -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY -v /usr/:/usr/:ro -v /opt/:/opt/:ro -v $HOME/.fonts:$HOME/.fonts:ro -v $HOME/go:$HOME/_go:ro -v $HOME/.rustup:$HOME/.rustup:ro -v $HOME/.vscode:$HOME/.vscode:ro -v /etc/ca-certificates/:/etc/ca-certificates/:ro -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro --entrypoint code maowtm/bare --new-window --verbose .'
+alias convert 'env MAGICK_TEMPORARY_PATH=$HOME/convert-tmp MAGICK_TMPDIR=$HOME/convert-tmp convert -limit memory 3G'
 # Don't let others see our files.
 umask 0027
 
