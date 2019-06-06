@@ -1,0 +1,12 @@
+[Unit]
+Description=Don't touch my /etc/resolv.conf!
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/
+ExecStart=/home/mao/projects/dotfiles/keep-resolv-file-that-way.sh
+
+[Install]
+WantedBy=multi-user.target
