@@ -5,6 +5,12 @@ set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove dupli
 
 set -g last_status 0
 
+# Compatibility
+type -q prompt_hostname; or \
+  function prompt_hostname
+    cat /etc/hostname | tr -d \n
+  end
+
 function show_time_of_exec -e fish_preexec
   echo -esn '\e[' (math $COLUMNS - 10) 'G\e[1A' (set_color yellow) (date +%T) '\e[0G\e[1B'
 end
@@ -13,7 +19,7 @@ function show_exit_status -e fish_postexec
   set last_status $status
 end
 
-function fish_prompt --description 'Write out the prompt'
+function fish_prompt
   set -l in_docker 0
   set -l color_hostname yellow
   if [ -e /.dockerenv ]
@@ -87,7 +93,7 @@ function containedvscode
     echo Usage: containedvscode '<dir>'
     return 1
   end
-  cd {$argv[1]} || return 1
+  cd {$argv[1]}; or return 1
   set -l arr (pwd | tr '/' '\0' | string split0)
   set -l trname (echo -n {$arr[(count $arr)]})
   docker run -it \
@@ -108,7 +114,7 @@ function containedvscode
     --entrypoint code maowtm/bare \
     --new-window --verbose .
   if [ -d .git ]
-    set -l hookspath (git config --local --get core.hooksPath || echo .git/hooks/)
+    set -l hookspath (git config --local --get core.hooksPath; or echo .git/hooks/)
     chmod a-x -R $hookspath/*
   end
 end
