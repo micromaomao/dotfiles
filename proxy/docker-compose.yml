@@ -1,0 +1,12 @@
+version: '3'
+networks:
+  ss:
+    driver: bridge
+services:
+  v2ray:
+    image: maowtm/v2ray
+    network_mode: host
+    user: nobody:nobody
+    volumes:
+      - ./v2ray-config.json:/etc/v2ray/config.json
+    stop_grace_period: 1s
