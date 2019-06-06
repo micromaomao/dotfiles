@@ -14,7 +14,7 @@ set -x PATH $PATH:/usr/bin/core_perl/:~/npm-g/bin/:~/.cargo/bin
 set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
 abbr recitediff "git diff --color-words --minimal -U100"
-alias ctags "ctags --exclude=ctags --exclude=tags -L <(git ls-files -co --exclude-standard) ctags"
+alias ctags "ctags --exclude=ctags --exclude=tags -L (git ls-files -co --exclude-standard | psub) ctags"
 alias ls exa
 alias newcontainer "docker run -it --entrypoint bash -v (pwd):/tmp/workspace:ro -w /tmp/workspace -u (id -u):(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
 alias newcontainerrw "docker run -it --entrypoint bash -v (pwd):/tmp/workspace -v (pwd)/.git:/tmp/workspace/.git:ro -v (pwd)/.vscode:/tmp/workspace/.vscode:ro -w /tmp/workspace -u (id -u):(id -g) --rm --network=ss_ss -e HTTP_PROXY=http://polipo:8080 -e HTTPS_PROXY=http://polipo:8080"
