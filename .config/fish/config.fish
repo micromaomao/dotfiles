@@ -41,12 +41,30 @@ function fish_prompt
   if [ -d .git ]
     set -l col blue
     set -l branch_name (cat .git/HEAD | string split --right -m 1 / | tail -n 1)
-    set -l num_untracked (git ls-files -o --exclude-standard | wc -l)
-    set -l num_modified (git diff --numstat --no-renames | wc -l)
     set git_branch "; "(set_color $col)"$branch_name"
-    set -l total_modified (math $num_untracked + $num_modified)
-    if [ $total_modified -gt 0 ]
+    set -g __git_timeouted 0
+    set -l total_modified 0
+    set -l num_modified 0
+    function with_timeout
+      timeout --foreground -s INT 0.05 $argv
+      if [ "$status" -ne 0 ]
+        set __git_timeouted 1
+        return 1
+      end
+    end
+    set -l num_untracked (with_timeout git ls-files -o --exclude-standard | wc -l)
+    if [ "$__git_timeouted" -eq 0 ]
+      set num_modified (with_timeout git diff --numstat --no-renames | wc -l)
+    end
+    if [ "$__git_timeouted" -eq 0 ]
+      set total_modified (math "$num_untracked" + "$num_modified")
+    else
+      set total_modified 0
+    end
+    if [ "$total_modified" -gt 0 ]
       set git_branch $git_branch"; "(set_color green)$total_modified
+    else if [ "$__git_timeouted" -ne 0 ]
+      set git_branch $git_branch"; "(set_color blue)"?"
     end
   end
 
