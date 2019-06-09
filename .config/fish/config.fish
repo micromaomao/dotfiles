@@ -121,6 +121,7 @@ function containedvscode
     --rm \
     -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/1000/$WAYLAND_DISPLAY:ro -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY -e XDG_RUNTIME_DIR=/run/user/1000 \
     -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
+    -e QT_X11_NO_MITSHM=1 -e _X11_NO_MITSHM=1 -e _MITSHM=0 \
     -v /usr/:/usr/:ro \
     -v /opt/:/opt/:ro \
     -v $HOME/.fonts:$HOME/.fonts:ro \
