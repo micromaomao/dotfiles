@@ -106,7 +106,7 @@ function httpserverhere
   newcontainer -p 127.0.0.1:8000:8000 python -c "python -m http.server"
 end
 
-function containedvscode
+function containedguishell
   if [ (count $argv) -eq 0 -o (count $argv) -gt 1 ]
     echo Usage: containedvscode '<dir>'
     return 1
@@ -130,8 +130,7 @@ function containedvscode
     -v $HOME/.vscode:$HOME/.vscode:ro \
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
     -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
-    --entrypoint code maowtm/bare \
-    --new-window --verbose .
+    --entrypoint fish maowtm/bare
   if [ -d .git ]
     set -l hookspath (git config --local --get core.hooksPath; or echo .git/hooks/)
     chmod a-x -R $hookspath/*
