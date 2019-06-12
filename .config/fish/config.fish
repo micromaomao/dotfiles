@@ -117,7 +117,7 @@ function containedguishell
   docker run -it \
     -v (pwd):"/tmp/$trname" \
     -w "/tmp/$trname" \
-    -u (id -u):(id -g) \
+    -u 1000:1000 \
     --rm \
     -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/1000/$WAYLAND_DISPLAY:ro -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY -e XDG_RUNTIME_DIR=/run/user/1000 \
     -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
@@ -125,16 +125,43 @@ function containedguishell
     -v /usr/:/usr/:ro \
     -v /opt/:/opt/:ro \
     -v $HOME/.fonts:$HOME/.fonts:ro \
+    -v /etc/fonts/:/etc/fonts/:ro \
     -v $HOME/go:$HOME/_go:ro \
     -v $HOME/.rustup:$HOME/.rustup:ro \
     -v $HOME/.vscode:$HOME/.vscode:ro \
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
-    -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
+    -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
+    -v /etc/java-8-openjdk/:/etc/java-8-openjdk/:ro \
+    --device=/dev/dri/renderD128:/dev/dri/renderD128 \
+    -v /tmp/.esd-1000/socket:/tmp/.esd-1000/socket:ro \
+    -v $XDG_RUNTIME_DIR/pulse/:/run/user/1000/pulse:ro \
     --entrypoint fish maowtm/bare
   if [ -d .git ]
     set -l hookspath (git config --local --get core.hooksPath; or echo .git/hooks/)
     chmod a-x -R $hookspath/*
   end
+end
+
+function minecraft
+  docker run -it \
+    -v /home/mao/.minecraft:/home/mao/.minecraft \
+    -w "/home/mao/.minecraft" \
+    -u 1000:1000 \
+    --rm \
+    -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/1000/$WAYLAND_DISPLAY:ro -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY -e XDG_RUNTIME_DIR=/run/user/1000 \
+    -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
+    -e QT_X11_NO_MITSHM=1 -e _X11_NO_MITSHM=1 -e _MITSHM=0 \
+    -v /usr/:/usr/:ro \
+    -v /opt/:/opt/:ro \
+    -v $HOME/.fonts:$HOME/.fonts:ro \
+    -v /etc/fonts/:/etc/fonts/:ro \
+    -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
+    -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
+    -v /etc/java-8-openjdk/:/etc/java-8-openjdk/:ro \
+    --device=/dev/dri/renderD128:/dev/dri/renderD128 \
+    -v /tmp/.esd-1000/socket:/tmp/.esd-1000/socket:ro \
+    -v $XDG_RUNTIME_DIR/pulse/:/run/user/1000/pulse:ro \
+    --entrypoint fish maowtm/bare
 end
 
 alias convert 'convert -limit memory 3G'
