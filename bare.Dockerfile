@@ -22,6 +22,7 @@ COPY --chown=1000:1000 .config /home/mao/.config
 COPY --chown=1000:1000 .npmrc /home/mao/
 COPY --chown=1000:1000 .vimrc /home/mao/
 VOLUME [ "/home/mao/.fonts" ]
+COPY --chown=1000:1000 bare-pulse.conf /etc/pulse/client.conf
 
 ENV HOME=/home/mao/ SHELL=/usr/bin/fish XDG_RUNTIME_DIR=/run/user/1000
 
