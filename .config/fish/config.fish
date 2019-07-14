@@ -1,6 +1,6 @@
 set -x EDITOR 'vim'
 set -x GOPATH /home/mao/go
-set -x PATH $PATH:/usr/bin/core_perl/:~/npm-g/bin/:~/.cargo/bin
+set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin
 set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
 set -g last_status 0
@@ -12,7 +12,7 @@ type -q prompt_hostname; or \
   end
 
 function show_time_of_exec -e fish_preexec
-  echo -esn '\e[' (math $COLUMNS - 10) 'G\e[1A' (set_color yellow) (date +%T) '\e[0G\e[1B'
+  echo -esn '\e[' (math $COLUMNS - 10) 'G\e[1A' (set_color yellow) (date +%T) '\e[0G\e[1B\e[0m'
 end
 
 function show_exit_status -e fish_postexec
@@ -75,9 +75,9 @@ function recitediff
   git diff --color-words --minimal -U100 $argv
 end
 
-if type -q exa
-  alias ls exa
-end
+# if type -q exa
+#   alias ls exa
+# end
 
 function newcontainer
   docker run \
@@ -148,7 +148,7 @@ function fish_greeting
 end
 
 abbr ga "git add"
-abbr gc "git commit"
+abbr gc "git commit -v"
 abbr gp "git push"
 abbr g "git"
 
