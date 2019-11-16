@@ -1,7 +1,7 @@
 FROM archlinux/base
 WORKDIR /
-RUN pacman -Syu --force --noconfirm && \
-    pacman -S --force --noconfirm v2ray && \
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm v2ray && \
     rm -f /etc/v2ray/config.json
 
 VOLUME [ "/etc/v2ray/config.json" ]
