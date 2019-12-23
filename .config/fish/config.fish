@@ -12,6 +12,9 @@ type -q prompt_hostname; or \
   end
 
 function show_time_of_exec -e fish_preexec
+  if [ "$USE_SIMPLE_PROMPT" = "true" ]
+    return
+  end
   echo -esn '\e[' (math $COLUMNS - 10) 'G\e[1A' (set_color yellow) (date +%T) '\e[0G\e[1B\e[0m'
 end
 
@@ -31,6 +34,14 @@ function fish_prompt
   if [ "$USER" = "root" ]
     set suffix "#"
     set color_username "red"
+  end
+
+  if [ "$USE_SIMPLE_PROMPT" = "true" ]
+    if [ $USER != "root" ]
+      set suffix "\$"
+    end
+    echo -sn (set_color green) "$suffix " (set_color normal)
+    return
   end
 
   if [ "$last_status" -ne 0 ]
@@ -79,7 +90,7 @@ end
 #   alias ls exa
 # end
 
-function newcontainer
+function newcontainerro
   docker run \
     -it --entrypoint bash \
     -v (pwd):/tmp/workspace:ro \
@@ -92,8 +103,6 @@ function newcontainerrw
   docker run \
     -it --entrypoint bash \
     -v (pwd):/tmp/workspace \
-    -v (pwd)/.git:/tmp/workspace/.git:ro \
-    -v (pwd)/.vscode:/tmp/workspace/.vscode:ro \
     -w /tmp/workspace \
     -u (id -u):(id -g) \
     --rm $argv
@@ -103,7 +112,7 @@ alias diff "diff -u --color=always"
 
 function httpserverhere
   : (sleep 1; xdg-open http://localhost:8000) & \
-  newcontainer -p 127.0.0.1:8000:8000 python -c "python -m http.server"
+  newcontainerro -p 127.0.0.1:8000:8000 python -c "python -m http.server"
 end
 
 function containedguishell
@@ -129,9 +138,13 @@ function containedguishell
     -v $HOME/go:$HOME/_go:ro \
     -v $HOME/.rustup:$HOME/.rustup:ro \
     -v $HOME/.vscode:$HOME/.vscode:ro \
+    -v $HOME/.vim:$HOME/.vim:ro \
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
     -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
     -v /etc/java-8-openjdk/:/etc/java-8-openjdk/:ro \
+    -v /var/lib/texmf/web2c/:/var/lib/texmf/web2c/:ro \
+    -v /etc/texmf/web2c/:/etc/texmf/web2c/:ro \
+    -v /home/mao/.texlive/:/home/mao/.texlive/:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
     --entrypoint fish maowtm/bare
   if [ -d .git ]
@@ -149,7 +162,7 @@ end
 
 abbr ga "git add"
 abbr gc "git commit -v"
-abbr gp "git push"
+abbr gp "git push -v"
 abbr g "git"
 
 set -x BAT_THEME ansi-light
