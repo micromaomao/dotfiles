@@ -22,16 +22,16 @@ RUN yum update -y && \
     make install && \
     # vim \
     cd /usr/src/ && \
-    curl -sL 'https://github.com/vim/vim/archive/v8.1.2119.tar.gz' -o vim.tar.gz && \
+    curl -sL 'https://github.com/vim/vim/archive/v8.2.0046.tar.gz' -o vim.tar.gz && \
     tar zxf vim.tar.gz && \
-    cd vim-8.1.2119 && \
+    cd vim-8.2.0046 && \
     ./configure --prefix=/cs/student/ug/2019/tingmwan/stuff/ --with-x=no --disable-gui --with-features=huge && \
     make -j3 && \
     make install && \
     # git \
     cd /usr/src/ && \
-    curl -sL 'https://github.com/git/git/archive/v2.23.0.tar.gz' -o git.tar.gz && \
+    curl -sL 'https://github.com/git/git/archive/v2.24.1.tar.gz' -o git.tar.gz && \
     tar zxf git.tar.gz && \
-    cd git-2.23.0/ && \
+    cd git-2.24.1/ && \
     make -j3 && \
     PREFIX=/cs/student/ug/2019/tingmwan/stuff/ make install
