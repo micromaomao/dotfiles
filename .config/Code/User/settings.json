@@ -9,8 +9,8 @@
     "editor.tabSize": 2,
     "window.newWindowDimensions": "maximized",
     "latex-workshop.view.pdf.viewer": "tab",
-    "git.promptToSaveFilesBeforeCommit": true,
-    "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "git.promptToSaveFilesBeforeCommit": "always",
+    "editor.fontFamily": " 'Hack', 'Source Han Sans', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "workbench.statusBar.feedback.visible": false,
     "editor.suggest.localityBonus": true,
     "go.formatTool": "gofmt",
@@ -25,7 +25,6 @@
     "files.autoSave": "off",
     "editor.formatOnPaste": true,
     "go.gopath": "/home/mao/go",
-    "vim.textwidth": 120,
     "javascript.format.enable": false,
     "editor.smoothScrolling": true,
     "terminal.integrated.enableBell": true,
@@ -40,74 +39,21 @@
     "window.titleBarStyle": "custom",
     "peacock.affectActivityBar": true,
     "peacock.affectStatusBar": true,
-    "peacock.favoriteColors": [
-        {
-            "name": "Angular Red",
-            "value": "#b52e31"
-        },
-        {
-            "name": "Auth0 Orange",
-            "value": "#eb5424"
-        },
-        {
-            "name": "Azure Blue",
-            "value": "#007fff"
-        },
-        {
-            "name": "C# Purple",
-            "value": "#68217A"
-        },
-        {
-            "name": "Gatsby Purple",
-            "value": "#639"
-        },
-        {
-            "name": "Java Blue-Gray",
-            "value": "#557c9b"
-        },
-        {
-            "name": "JavaScript Yellow",
-            "value": "#f9e64f"
-        },
-        {
-            "name": "Mandalorian Blue",
-            "value": "#1857a4"
-        },
-        {
-            "name": "Node Green",
-            "value": "#215732"
-        },
-        {
-            "name": "React Blue",
-            "value": "#00b3e6"
-        },
-        {
-            "name": "Something Different",
-            "value": "#832561"
-        },
-        {
-            "name": "Vue Green",
-            "value": "#42b883"
-        },
-        {
-            "name": "go",
-            "value": "#69d7e6"
-        },
-        {
-            "name": "rust",
-            "value": "#ff9146"
-        },
-        {
-            "name": "schsrch",
-            "value": "#ff5722"
-        }
-    ],
     "editor.acceptSuggestionOnCommitCharacter": false,
     "search.exclude": {
-        "**/node_modules": false
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/coverage": true,
+        "**/package-lock.json": true
     },
     "gitlens.codeLens.enabled": false,
     "files.associations": {
         "*.json": "jsonc"
-    }
+    },
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "window.zoomLevel": 0,
+    "latex-workshop.latex.autoBuild.run": "never",
+    "editor.insertSpaces": false,
+    "workbench.iconTheme": "vscode-icons",
+    "extensions.ignoreRecommendations": false
 }
