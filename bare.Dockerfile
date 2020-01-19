@@ -21,6 +21,7 @@ VOLUME [ "/usr", "/opt", "/tmp/.X11-unix" ]
 COPY --chown=1000:1000 .config /home/mao/.config
 COPY --chown=1000:1000 .npmrc /home/mao/
 COPY --chown=1000:1000 .vimrc /home/mao/
+COPY --chown=0:0 .config /root/.config
 VOLUME [ "/home/mao/.fonts" ]
 COPY --chown=1000:1000 bare-pulse.conf /etc/pulse/client.conf
 

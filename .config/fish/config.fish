@@ -82,6 +82,10 @@ function fish_prompt
   echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ") " (set_color green) (prompt_pwd) "$suffix " (set_color normal)
 end
 
+function fish_title
+  echo (status current-command) - (__fish_pwd)'@'(prompt_hostname)
+end
+
 function recitediff
   git diff --color-words --minimal -U100 $argv
 end
