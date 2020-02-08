@@ -146,9 +146,8 @@ function containedguishell
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
     -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
     -v /etc/java-8-openjdk/:/etc/java-8-openjdk/:ro \
-    -v /var/lib/texmf/web2c/:/var/lib/texmf/web2c/:ro \
-    -v /etc/texmf/web2c/:/etc/texmf/web2c/:ro \
-    -v /home/mao/.texlive/:/home/mao/.texlive/:ro \
+    -v /var/lib/texmf/:/var/lib/texmf/:ro \
+    -v /etc/texmf/:/etc/texmf/:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
     --entrypoint fish maowtm/bare
   if [ -d .git ]
