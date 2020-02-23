@@ -24,6 +24,7 @@ COPY --chown=1000:1000 .vimrc /home/mao/
 COPY --chown=0:0 .config /root/.config
 VOLUME [ "/home/mao/.fonts" ]
 COPY --chown=1000:1000 bare-pulse.conf /etc/pulse/client.conf
+COPY --chown=1000:1000 bare-entrypoint.sh /entrypoint.sh
 
 ENV HOME=/home/mao/ SHELL=/usr/bin/fish XDG_RUNTIME_DIR=/run/user/1000
 

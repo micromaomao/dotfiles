@@ -1,6 +1,6 @@
 set -x EDITOR 'vim'
 set -x GOPATH /home/mao/go
-set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin
+set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin /usr/bin/vendor_perl/
 set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
 set -g last_status 0
@@ -141,7 +141,7 @@ function containedguishell
     -v /etc/fonts/:/etc/fonts/:ro \
     -v $HOME/go:$HOME/_go:ro \
     -v $HOME/.rustup:$HOME/.rustup:ro \
-    -v $HOME/.vscode:$HOME/.vscode:ro \
+    -v $HOME/.vscode:$HOME/_vscode:ro \
     -v $HOME/.vim:$HOME/.vim:ro \
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
     -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
@@ -149,11 +149,7 @@ function containedguishell
     -v /var/lib/texmf/:/var/lib/texmf/:ro \
     -v /etc/texmf/:/etc/texmf/:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
-    --entrypoint fish maowtm/bare
-  if [ -d .git ]
-    set -l hookspath (git config --local --get core.hooksPath; or echo .git/hooks/)
-    chmod a-x -R $hookspath/*
-  end
+    --entrypoint fish maowtm/bare -C ". /entrypoint.sh"
 end
 
 alias convert 'convert -limit memory 3G'
