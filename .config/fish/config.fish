@@ -148,6 +148,8 @@ function containedguishell
     -v /etc/java-8-openjdk/:/etc/java-8-openjdk/:ro \
     -v /var/lib/texmf/:/var/lib/texmf/:ro \
     -v /etc/texmf/:/etc/texmf/:ro \
+    -v /etc/java10-openjdk/:/etc/java10-openjdk/:ro \
+    -v /opt/maven/:/opt/maven/:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
     --entrypoint fish maowtm/bare -C ". /entrypoint.sh"
 end
