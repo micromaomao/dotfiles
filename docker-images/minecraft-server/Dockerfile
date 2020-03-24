@@ -6,7 +6,7 @@ RUN useradd -d /minecraft -m mc && \
 USER mc:mc
 WORKDIR /minecraft/spigot/
 RUN wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar && \
-		java -jar BuildTools.jar --rev 1.15
+		java -jar BuildTools.jar --rev 1.15.2
 COPY --chown=mc:mc spigot/ /minecraft/spigot
 CMD [ "java", "-Xms256m", "-Xmx2048m", "-jar", "spigot-1.15.jar" ]
 VOLUME [ "/minecraft/spigot/" ]
