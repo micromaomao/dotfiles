@@ -50,4 +50,7 @@ script:
     doImage maowtm/delegate delegate.Dockerfile &&
     doImage maowtm/archlinux-texlive archlinux-texlive.Dockerfile &&
     cd .. &&
-    doImage maowtm/bare bare.Dockerfile; #
+    doImage maowtm/bare bare.Dockerfile &&
+    cd docker-images/minecraft-server &&
+    doImage maowtm/minecraft-server Dockerfile &&
+    cd ../..; #

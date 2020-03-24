@@ -1,0 +1,40 @@
+# DO NOT EDIT -- file is written to periodically!
+# Seriously, do not edit. Today it is YAML, tomorrow it may not be.
+# If you edit this file and you have problems, you are on your own!
+players: []
+groups:
+- name: players
+  permissions:
+    bukkit.command.help: true
+    bukkit.command.tps: true
+    coreprotect.help: true
+    coreprotect.inspect: true
+    coreprotect.lookup: true
+    essentials.afk: true
+    essentials.back: true
+    essentials.back.ondeath: true
+    essentials.delhome: true
+    essentials.help: true
+    essentials.helpop: true
+    essentials.home: true
+    essentials.home.bed: true
+    essentials.home.compass: true
+    essentials.list: true
+    essentials.ping: true
+    essentials.ptime: true
+    essentials.pweather: true
+    essentials.sethome: true
+    essentials.time: true
+    essentials.tpa: true
+    essentials.tpaall: true
+    essentials.tpaccept: true
+    essentials.tpahere: true
+    essentials.warp: true
+    essentials.warp.list: true
+    minecraft.command.help: true
+    zpermissions.check: true
+    zpermissions.mygroups: true
+  metadata: {}
+  priority: 10
+  members: []
+  tempmembers: []
