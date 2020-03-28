@@ -146,6 +146,7 @@ function containedguishell
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
     -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
     -v /etc/java-8-openjdk/:/etc/java-8-openjdk/:ro \
+    -v /etc/java-openjdk/:/etc/java-openjdk/:ro \
     -v /var/lib/texmf/:/var/lib/texmf/:ro \
     -v /etc/texmf/:/etc/texmf/:ro \
     -v /etc/java10-openjdk/:/etc/java10-openjdk/:ro \
