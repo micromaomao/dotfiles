@@ -1,6 +1,7 @@
 set -x EDITOR 'vim'
 set -x GOPATH /home/mao/go
 set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin /usr/bin/vendor_perl/
+set -x PATH $PATH $HOME/.bin
 set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
 set -g last_status 0
@@ -142,6 +143,7 @@ function containedguishell
     -v $HOME/go:$HOME/_go:ro \
     -v $HOME/.rustup:$HOME/.rustup:ro \
     -v $HOME/.vscode:$HOME/_vscode:ro \
+    -v $HOME/.config/Code/:$HOME/_.config/Code:ro \
     -v $HOME/.vim:$HOME/.vim:ro \
     -v /etc/ca-certificates/:/etc/ca-certificates/:ro \
     -v /etc/ssl/certs/:/etc/ssl/certs/:ro \
@@ -150,6 +152,7 @@ function containedguishell
     -v /var/lib/texmf/:/var/lib/texmf/:ro \
     -v /etc/texmf/:/etc/texmf/:ro \
     -v /etc/java10-openjdk/:/etc/java10-openjdk/:ro \
+    -v /etc/os-release:/etc/os-release:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
     --entrypoint fish maowtm/bare -C ". /entrypoint.sh"
 end
@@ -165,5 +168,7 @@ abbr ga "git add"
 abbr gc "git commit -v"
 abbr gp "git push -v"
 abbr g "git"
+
+abbr ls exa
 
 set -x BAT_THEME ansi-light
