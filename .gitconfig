@@ -1,12 +1,13 @@
 [user]
 	email = m@maowtm.org
-	name = Mao Wtm
+	name = Mao
   signingkey = F8F90429D7F6C877C7CC427C83C39700868796DB
 [push]
 	default = simple
 [core]
 	editor = vim
 	excludesfile = /home/mao/.gitignore
+  hooksPath = /dev/null
 [pager]
 	diff = diff-so-fancy | less --tabs=1,5 -RFX
 	show = diff-so-fancy | less --tabs=1,5 -RFX
@@ -18,3 +19,5 @@
 	gpgsign = true
 [alias]
   wt = worktree
+[pull]
+	ff = only
