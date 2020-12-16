@@ -5,7 +5,7 @@
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
     },
-    "workbench.colorTheme": "Quiet Light",
+    "workbench.colorTheme": "GitHub Light",
     "editor.tabSize": 2,
     "window.newWindowDimensions": "maximized",
     "latex-workshop.view.pdf.viewer": "tab",
@@ -48,7 +48,6 @@
     },
     "terminal.integrated.shell.linux": "/usr/bin/fish",
     "window.zoomLevel": 0,
-    "latex-workshop.latex.autoBuild.run": "never",
     "editor.insertSpaces": false,
     "workbench.iconTheme": "vscode-icons",
     "extensions.ignoreRecommendations": false,
@@ -112,5 +111,23 @@
     "java.configuration.checkProjectSettingsExclusions": false,
     "editor.minimap.maxColumn": 100,
     "editor.minimap.renderCharacters": false,
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "rust-analyzer.files.exclude": [
+        ".history"
+    ],
+    "rust-analyzer.notifications.cargoTomlNotFound": false,
+    "rust-analyzer.updates.channel": "nightly",
+    "rust.unstable_features": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "workbench.activityBar.visible": true,
+    "typescript.tsserver.log": "verbose",
+    "remote.SSH.useLocalServer": false,
+    "remote.SSH.remotePlatform": {
+        "mc.maowtm.org": "linux",
+        "csrw.cs.ucl.ac.uk": "linux"
+    },
+    "python.pythonPath": "/bin/python2",
+    "rust-client.engine": "rust-analyzer",
+    "python.languageServer": "Microsoft",
+    "window.restoreWindows": "none"
 }
