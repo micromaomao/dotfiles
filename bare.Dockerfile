@@ -14,16 +14,10 @@ RUN cp /bin/busybox /busybox && \
     /busybox chown 1000:1000 -R /run/user/1000
 
 USER mao:mao
-# This image should be run with /usr mounted to some read-only host /usr.
-# Like: docker run -it -u 1000:1000 -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=:0 -v /usr/:/usr/:ro -v /opt/:/opt/:ro --entrypoint /busybox maowtm/bare sh
-VOLUME [ "/usr", "/opt", "/tmp/.X11-unix" ]
-
 COPY --chown=1000:1000 .config /home/mao/.config
 COPY --chown=1000:1000 .npmrc /home/mao/
 COPY --chown=1000:1000 .vimrc /home/mao/
 COPY --chown=0:0 .config /root/.config
-VOLUME [ "/home/mao/.fonts" ]
-COPY --chown=1000:1000 bare-pulse.conf /etc/pulse/client.conf
 COPY --chown=1000:1000 bare-entrypoint.sh /entrypoint.sh
 
 ENV HOME=/home/mao/ SHELL=/usr/bin/fish XDG_RUNTIME_DIR=/run/user/1000

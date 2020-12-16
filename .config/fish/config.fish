@@ -121,13 +121,10 @@ function httpserverhere
 end
 
 function containedguishell
-  if [ (count $argv) -eq 0 -o (count $argv) -gt 1 ]
-    echo Usage: containedvscode '<dir>'
-    return 1
-  end
   cd {$argv[1]}; or return 1
   set -l arr (pwd | tr '/' '\0' | string split0)
   set -l trname (echo -n {$arr[(count $arr)]})
+  # We do not pass wayland because it won't work properly.
   docker run -it \
     -v (pwd):"/tmp/$trname" \
     -w "/tmp/$trname" \
@@ -136,6 +133,8 @@ function containedguishell
     -e XDG_RUNTIME_DIR=/run/user/1000 \
     -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
     -e QT_X11_NO_MITSHM=1 -e _X11_NO_MITSHM=1 -e _MITSHM=0 \
+    -v /run/user/1000/pulse/native:/run/user/1000/pulse/native \
+    -e PULSE_SERVER=unix:/run/user/1000/pulse/native \
     -v /usr/:/usr/:ro \
     -v /opt/:/opt/:ro \
     -v $HOME/.fonts:$HOME/.fonts:ro \
@@ -153,8 +152,9 @@ function containedguishell
     -v /etc/texmf/:/etc/texmf/:ro \
     -v /etc/java10-openjdk/:/etc/java10-openjdk/:ro \
     -v /etc/os-release:/etc/os-release:ro \
+    -v /etc/nsswitch.conf:/etc/nsswitch.conf:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
-    --entrypoint fish maowtm/bare -C ". /entrypoint.sh"
+    --entrypoint fish {$argv[2]} -C ". /entrypoint.sh"
 end
 
 alias convert 'convert -limit memory 3G'
