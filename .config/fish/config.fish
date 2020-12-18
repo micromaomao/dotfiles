@@ -131,7 +131,8 @@ function containedguishell
     -u 1000:1000 \
     --rm \
     -e XDG_RUNTIME_DIR=/run/user/1000 \
-    -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix/:/tmp/.X11-unix:ro \
+    -e DISPLAY=$DISPLAY \
     -e QT_X11_NO_MITSHM=1 -e _X11_NO_MITSHM=1 -e _MITSHM=0 \
     -v /run/user/1000/pulse/native:/run/user/1000/pulse/native \
     -e PULSE_SERVER=unix:/run/user/1000/pulse/native \
@@ -153,7 +154,13 @@ function containedguishell
     -v /etc/java10-openjdk/:/etc/java10-openjdk/:ro \
     -v /etc/os-release:/etc/os-release:ro \
     -v /etc/nsswitch.conf:/etc/nsswitch.conf:ro \
+    -v /etc/machine-id:/etc/machine-id:ro \
+    -v /etc/protocols:/etc/protocols:ro \
+    -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
     --device=/dev/dri/renderD128:/dev/dri/renderD128 \
+    --device=/dev/dri/renderD129:/dev/dri/renderD129 \
+    --device=/dev/dri/card0:/dev/dri/card0 \
+    --device=/dev/dri/card1:/dev/dri/card1 \
     --entrypoint fish {$argv[2]} -C ". /entrypoint.sh"
 end
 
