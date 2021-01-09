@@ -156,11 +156,16 @@ function containedguishell
     -v /etc/nsswitch.conf:/etc/nsswitch.conf:ro \
     -v /etc/machine-id:/etc/machine-id:ro \
     -v /etc/protocols:/etc/protocols:ro \
+    -v /etc/alsa:/etc/alsa:ro \
     -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
-    --device=/dev/dri/renderD128:/dev/dri/renderD128 \
-    --device=/dev/dri/renderD129:/dev/dri/renderD129 \
-    --device=/dev/dri/card0:/dev/dri/card0 \
-    --device=/dev/dri/card1:/dev/dri/card1 \
+    --device=/dev/nvidiactl:/dev/nvidiactl \
+    --device=/dev/nvidia0:/dev/nvidia0 \
+    -v /dev/nvidia-caps:/dev/nvidia-caps \
+    -v /dev/nvidia-modeset:/dev/nvidia-modeset \
+    -v /dev/dri:/dev/dri \
+    # --device=/dev/video0:/dev/video0 \
+    # --device=/dev/video1:/dev/video1 \
+    # --device=/dev/media0:/dev/media0 \
     --entrypoint fish {$argv[2]} -C ". /entrypoint.sh"
 end
 
