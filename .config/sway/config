@@ -173,7 +173,7 @@ bar {
 
 hide_edge_borders both
 
-output "*" background /home/mao/active-projects/dotfiles/wallpaper.png fill
+output "*" background /home/mao/dotfiles/wallpaper.png fill
 bindsym $mod+l exec /home/mao/.config/sway/lock-screen.sh
 bindsym $mod+Alt+l exec /home/mao/.config/sway/suspend.sh
 bindsym Shift+Print exec /home/mao/.config/sway/take-screenshot-region.sh

@@ -124,7 +124,6 @@ function containedguishell
   cd {$argv[1]}; or return 1
   set -l arr (pwd | tr '/' '\0' | string split0)
   set -l trname (echo -n {$arr[(count $arr)]})
-  # We do not pass wayland because it won't work properly.
   docker run -it \
     -v (pwd):"/tmp/$trname" \
     -w "/tmp/$trname" \
@@ -133,6 +132,7 @@ function containedguishell
     -e XDG_RUNTIME_DIR=/run/user/1000 \
     -v /tmp/.X11-unix/:/tmp/.X11-unix:ro \
     -e DISPLAY=$DISPLAY \
+    (if set -q WAYLAND_DISPLAY; echo -e\nWAYLAND_DISPLAY=$WAYLAND_DISPLAY\n-v\n/run/user/1000/wayland-0:/run/user/1000/wayland-0\n-v\n/run/user/1000/wayland-0.lock:/run/user/1000/wayland-0.lock; end) \
     -e QT_X11_NO_MITSHM=1 -e _X11_NO_MITSHM=1 -e _MITSHM=0 \
     -v /run/user/1000/pulse/native:/run/user/1000/pulse/native \
     -e PULSE_SERVER=unix:/run/user/1000/pulse/native \
@@ -158,10 +158,10 @@ function containedguishell
     -v /etc/protocols:/etc/protocols:ro \
     -v /etc/alsa:/etc/alsa:ro \
     -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
-    --device=/dev/nvidiactl:/dev/nvidiactl \
-    --device=/dev/nvidia0:/dev/nvidia0 \
-    -v /dev/nvidia-caps:/dev/nvidia-caps \
-    -v /dev/nvidia-modeset:/dev/nvidia-modeset \
+    # --device=/dev/nvidiactl:/dev/nvidiactl \
+    # --device=/dev/nvidia0:/dev/nvidia0 \
+    # -v /dev/nvidia-caps:/dev/nvidia-caps \
+    # -v /dev/nvidia-modeset:/dev/nvidia-modeset \
     -v /dev/dri:/dev/dri \
     # --device=/dev/video0:/dev/video0 \
     # --device=/dev/video1:/dev/video1 \
