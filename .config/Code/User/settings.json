@@ -42,13 +42,10 @@
         "**/coverage": true,
         "**/package-lock.json": true
     },
-    "gitlens.codeLens.enabled": false,
     "files.associations": {
         "*.json": "jsonc"
     },
     "terminal.integrated.shell.linux": "/usr/bin/fish",
-    "window.zoomLevel": 0,
-    "editor.insertSpaces": false,
     "workbench.iconTheme": "vscode-icons",
     "extensions.ignoreRecommendations": false,
     "peacock.favoriteColors": [
@@ -118,7 +115,6 @@
     "rust-analyzer.notifications.cargoTomlNotFound": false,
     "rust-analyzer.updates.channel": "nightly",
     "rust.unstable_features": true,
-    "diffEditor.ignoreTrimWhitespace": true,
     "workbench.activityBar.visible": true,
     "typescript.tsserver.log": "verbose",
     "remote.SSH.useLocalServer": false,
@@ -128,6 +124,42 @@
     },
     "python.pythonPath": "/bin/python2",
     "rust-client.engine": "rust-analyzer",
-    "python.languageServer": "Microsoft",
-    "window.restoreWindows": "none"
+    "python.languageServer": "Pylance",
+    "window.restoreWindows": "none",
+    "C_Cpp.clang_format_style": "LLVM",
+    "rust-client.autoStartRls": false,
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.default.cppStandard": "c++20",
+    "go.useLanguageServer": true,
+    "editor.formatOnSaveMode": "modifications",
+    "[go]": {
+        "editor.formatOnSave": true
+    },
+    "cmake.configureOnOpen": true,
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "julia.enableTelemetry": true,
+    "julia.format.indent": 2,
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "diffEditor.renderSideBySide": false,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["leader", "s"],
+            "after": ["leader", "leader", "s"]
+        },
+        {
+            "before": ["leader", "j"],
+            "after": ["leader", "leader", "j"]
+        },
+        {
+            "before": ["leader", "k"],
+            "after": ["leader", "leader", "k"]
+        }
+    ]
 }
