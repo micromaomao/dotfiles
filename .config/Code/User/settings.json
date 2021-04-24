@@ -161,5 +161,19 @@
             "before": ["leader", "k"],
             "after": ["leader", "leader", "k"]
         }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": ["leader", "s"],
+            "after": ["leader", "leader", "s"]
+        },
+        {
+            "before": ["leader", "j"],
+            "after": ["leader", "leader", "j"]
+        },
+        {
+            "before": ["leader", "k"],
+            "after": ["leader", "leader", "k"]
+        }
     ]
 }
