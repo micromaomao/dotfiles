@@ -80,7 +80,28 @@ function fish_prompt
     end
   end
 
-  echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ") " (set_color green) (prompt_pwd) "$suffix " (set_color normal)
+  set -l kube_status " "
+  set -l kube_ctx (kubectl config current-context 2>/dev/null)
+  set -l kube_ns ""
+  if [ $status -eq 0 ]
+    set kube_ns (kubectl config view --minify --flatten -o jsonpath='{.contexts[?(@.name == "'$kube_ctx'")].context.namespace}' 2>/dev/null)
+    if [ $status -ne 0 ]
+      set kube_ns (set_color red)"?"
+    else if [ "$kube_ns" = "" ]
+      set kube_ns "default"
+    end
+    set kube_status "$kube_status"(set_color yellow)"("(set_color cyan)$kube_ctx/$kube_ns(set_color yellow)") "
+  end
+  echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd)
+  echo
+  echo -sn "$suffix " (set_color normal)
+end
+
+function fish_right_prompt
+  # if [ "$USE_SIMPLE_PROMPT" != "true" -a "$last_exec_time" != "" ]
+  #   echo -sn (set_color yellow) $last_exec_time " " (set_color normal)
+  #   set last_exec_time ""
+  # end
 end
 
 function fish_title
