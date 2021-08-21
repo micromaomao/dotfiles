@@ -183,4 +183,6 @@ abbr g "git"
 
 abbr ls exa
 
+abbr k kubectl
+
 set -x BAT_THEME ansi-light
