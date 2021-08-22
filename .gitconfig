@@ -21,3 +21,7 @@
   wt = worktree
 [pull]
 	ff = only
+[init]
+	defaultBranch = main
+[remote "origin"]
+	prune = true
