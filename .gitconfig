@@ -25,3 +25,5 @@
 	defaultBranch = main
 [remote "origin"]
 	prune = true
+[rebase]
+	autostash = true
