@@ -1,4 +1,4 @@
-FROM archlinux/base
+FROM archlinux/archlinux
 
 WORKDIR /tmp/mount
 RUN pacman -Syu --noconfirm && \
