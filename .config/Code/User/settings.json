@@ -120,9 +120,11 @@
     "editor.inlineSuggest.enabled": true,
     "github.copilot.enable": {
         "*": true,
-        "yaml": false,
+        "yaml": true,
         "plaintext": true,
         "markdown": false
     },
-    "diffEditor.renderSideBySide": false
+    "go.toolsManagement.autoUpdate": true,
+    "python.defaultInterpreterPath": "/bin/python2",
+    "diffEditor.ignoreTrimWhitespace": false
 }
