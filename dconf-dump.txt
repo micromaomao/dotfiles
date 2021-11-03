@@ -1,0 +1,241 @@
+[desktop/ibus/general]
+engines-order=['anthy', 'xkb:us::eng', 'rime']
+preload-engines=['xkb:us::eng', 'rime', 'anthy']
+use-system-keyboard-layout=true
+version='1.5.21'
+
+[desktop/ibus/general/hotkey]
+triggers=['<Control>space']
+
+[org/gnome/calculator]
+accuracy=9
+angle-units='degrees'
+base=10
+button-mode='programming'
+number-format='automatic'
+show-thousands=false
+show-zeroes=false
+source-currency='DZD'
+source-units='USD'
+target-currency='DZD'
+target-units='CNY'
+window-position=(1022, 613)
+word-size=16
+
+
+[org/gnome/clocks]
+alarms=@aa{sv} []
+timer=uint32 60
+timers=@aa{sv} []
+world-clocks=[{'location': <(uint32 2, <('London', 'EGLL', false, [(0.89855367075064974, -0.0078539816339744835)], [(0.89855367075064974, -0.0078539816339744835)])>)>}, {'location': <(uint32 2, <('Coordinated Universal Time (UTC)', '@UTC', false, @a(dd) [], @a(dd) [])>)>}, {'location': <(uint32 2, <('Shenzhen', 'ZGSZ', false, [(0.39357174632472131, 1.9914206765255298)], @a(dd) [])>)>}]
+
+[org/gnome/control-center]
+last-panel='wifi'
+
+[org/gnome/desktop/calendar]
+show-weekdate=true
+
+[org/gnome/desktop/datetime]
+automatic-timezone=false
+
+[org/gnome/desktop/input-sources]
+mru-sources=[('xkb', 'us'), ('ibus', 'rime'), ('ibus', 'anthy')]
+per-window=false
+show-all-sources=true
+sources=[('xkb', 'us'), ('ibus', 'rime'), ('ibus', 'anthy')]
+xkb-options=['lv3:ralt_switch']
+
+[org/gnome/desktop/interface]
+clock-format='24h'
+clock-show-seconds=true
+clock-show-weekday=true
+cursor-theme='Paper'
+enable-hot-corners=true
+font-antialiasing='grayscale'
+font-hinting='slight'
+gtk-im-module='ibus'
+gtk-key-theme='Default'
+gtk-theme='Numix'
+icon-theme='Paper'
+show-battery-percentage=true
+toolkit-accessibility=false
+
+[org/gnome/desktop/media-handling]
+autorun-never=true
+autorun-x-content-ignore=@as []
+autorun-x-content-open-folder=@as []
+autorun-x-content-start-app=@as []
+
+[org/gnome/desktop/notifications]
+show-banners=true
+show-in-lock-screen=true
+
+[org/gnome/desktop/peripherals/mouse]
+left-handed=false
+natural-scroll=false
+speed=-0.15302491103202842
+
+[org/gnome/desktop/peripherals/touchpad]
+click-method='fingers'
+edge-scrolling-enabled=false
+natural-scroll=true
+send-events='enabled'
+speed=0.01067615658362997
+tap-to-click=true
+two-finger-scrolling-enabled=true
+
+[org/gnome/desktop/privacy]
+disable-microphone=false
+old-files-age=uint32 14
+remove-old-temp-files=true
+remove-old-trash-files=true
+
+[org/gnome/desktop/screensaver]
+lock-delay=uint32 0
+
+[org/gnome/desktop/session]
+idle-delay=uint32 600
+
+[org/gnome/desktop/sound]
+event-sounds=true
+theme-name='freedesktop'
+
+[org/gnome/desktop/wm/keybindings]
+close=['<Shift><Super>q']
+cycle-windows=['<Alt>Tab']
+cycle-windows-backward=['<Shift><Alt>Tab']
+move-to-workspace-1=['<Shift><Super>exclam']
+move-to-workspace-2=['<Shift><Super>at']
+move-to-workspace-3=['<Shift><Super>numbersign']
+move-to-workspace-4=['<Shift><Super>dollar']
+switch-applications=@as []
+switch-applications-backward=@as []
+switch-to-workspace-1=['<Super>1']
+switch-to-workspace-2=['<Super>2']
+switch-to-workspace-3=['<Super>3']
+switch-to-workspace-4=['<Super>4']
+switch-windows=@as []
+switch-windows-backward=@as []
+
+[org/gnome/desktop/wm/preferences]
+action-double-click-titlebar='none'
+auto-raise=false
+button-layout='close:appmenu'
+focus-mode='click'
+resize-with-right-button=true
+
+[org/gnome/gnome-screenshot]
+border-effect='shadow'
+delay=2
+include-border=true
+include-pointer=false
+
+[org/gnome/mutter]
+attach-modal-dialogs=false
+dynamic-workspaces=true
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Super>Return'
+command='gnome-terminal'
+name='Launch Terminal'
+
+[org/gnome/settings-daemon/plugins/power]
+power-button-action='suspend'
+
+[org/gnome/shell/extensions/system-monitor]
+battery-batt0-color='#c4a000ff'
+battery-display=false
+battery-graph-width=100
+battery-hidesystem=false
+battery-refresh-time=60000
+battery-show-menu=false
+battery-show-text=false
+battery-style='both'
+battery-time=false
+center-display=false
+compact-display=true
+cpu-display=false
+cpu-refresh-time=1000
+cpu-show-menu=true
+cpu-show-text=true
+cpu-style='digit'
+disk-show-menu=false
+disk-usage-style='none'
+freq-display=false
+freq-freq-color='#ef2929ff'
+freq-show-menu=true
+freq-show-text=true
+gpu-show-menu=true
+icon-display=false
+memory-refresh-time=1000
+memory-style='both'
+move-clock=false
+net-display=false
+show-tooltip=false
+thermal-display=false
+thermal-graph-width=30
+thermal-refresh-time=1000
+thermal-sensor-file='/sys/class/hwmon/hwmon0/temp1_input'
+thermal-show-text=false
+thermal-style='both'
+
+[org/gnome/shell/extensions/user-theme]
+name='Arc-Dark'
+
+[org/gnome/shell/overrides]
+button-layout='close,minimize,maximize:'
+
+[org/gnome/shell/world-clocks]
+locations=[<(uint32 2, <('London', 'EGLL', false, [(0.89855367075064974, -0.0078539816339744835)], [(0.89855367075064974, -0.0078539816339744835)])>)>, <(uint32 2, <('Coordinated Universal Time (UTC)', '@UTC', false, @a(dd) [], @a(dd) [])>)>, <(uint32 2, <('Shenzhen', 'ZGSZ', false, [(0.39357174632472131, 1.9914206765255298)], @a(dd) [])>)>]
+
+[org/gnome/terminal/legacy]
+default-show-menubar=false
+headerbar=@mb false
+menu-accelerator-enabled=false
+new-terminal-mode='window'
+schema-version=uint32 3
+shortcuts-enabled=true
+theme-variant='light'
+
+[org/gnome/terminal/legacy/profiles:]
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']
+
+[org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+audible-bell=false
+background-color='rgb(238,238,236)'
+bold-color-same-as-fg=true
+bold-is-bright=false
+custom-command='/home/mao/.terminalrc.sh'
+default-size-columns=150
+default-size-rows=35
+font='Inconsolata for Powerline Medium 11'
+foreground-color='rgb(46,52,54)'
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+scroll-on-keystroke=true
+scrollback-lines=1000
+scrollback-unlimited=true
+scrollbar-policy='always'
+use-custom-command=false
+use-system-font=false
+use-theme-colors=false
+visible-name='Default'
+
+[org/gnome/tweaks]
+show-extensions-notice=false
+
+[org/virt-manager/virt-manager/confirm]
+delete-storage=true
+forcepoweroff=false
+removedev=false
+unapplied-dev=false
+
+[org/virt-manager/virt-manager/connections]
+autoconnect=['qemu:///system', 'qemu:///session', 'lxc:///']
+uris=['qemu:///session', 'lxc:///', 'qemu:///system']
+
+[system/locale]
+region='en_GB.UTF-8'
+
+[system/proxy]
+mode='none'
