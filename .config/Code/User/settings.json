@@ -17,7 +17,6 @@
     "editor.acceptSuggestionOnEnter": "off",
     "files.insertFinalNewline": true,
     "files.autoSave": "off",
-    "go.gopath": "/home/mao/go",
     "editor.smoothScrolling": true,
     "terminal.integrated.enableBell": true,
     "go.lintOnSave": "off",

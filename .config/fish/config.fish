@@ -1,5 +1,4 @@
 set -x EDITOR 'vim'
-set -x GOPATH /home/mao/go
 set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin /usr/bin/vendor_perl/
 set -x PATH $PATH $HOME/.bin
 set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
