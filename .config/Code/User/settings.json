@@ -58,7 +58,7 @@
         ".history"
     ],
     "rust-analyzer.notifications.cargoTomlNotFound": false,
-    "rust-analyzer.updates.channel": "nightly",
+    "rust-analyzer.updates.channel": "stable",
     "rust.unstable_features": true,
     "workbench.activityBar.visible": true,
     "typescript.tsserver.log": "off",
@@ -124,6 +124,5 @@
         "markdown": false
     },
     "go.toolsManagement.autoUpdate": true,
-    "python.defaultInterpreterPath": "/bin/python2",
-    "diffEditor.ignoreTrimWhitespace": false
+    "python.defaultInterpreterPath": "/bin/python2"
 }
