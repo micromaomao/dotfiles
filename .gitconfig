@@ -27,3 +27,5 @@
 	prune = true
 [rebase]
 	autostash = true
+[credential]
+	helper = store --file /home/mao/.gitcredentials

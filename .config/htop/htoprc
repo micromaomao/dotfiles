@@ -2,9 +2,9 @@
 # The parser is also very primitive, and not human-friendly.
 htop_version=3.1.2
 config_reader_min_version=2
-fields=0 48 18 38 39 47 2 52 1
-sort_key=39
-sort_direction=-1
+fields=0 48 18 38 39 47 2 46 52 111 1
+sort_key=0
+sort_direction=1
 tree_sort_key=39
 tree_sort_direction=-1
 hide_kernel_threads=1

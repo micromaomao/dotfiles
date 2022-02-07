@@ -7,6 +7,13 @@ version='1.5.21'
 [desktop/ibus/general/hotkey]
 triggers=['<Control>space']
 
+[org/gnome/Connections]
+first-run=false
+
+[org/gnome/boxes]
+first-run=false
+view='list-view'
+
 [org/gnome/calculator]
 accuracy=9
 angle-units='degrees'
@@ -19,18 +26,22 @@ source-currency='DZD'
 source-units='USD'
 target-currency='DZD'
 target-units='CNY'
-window-position=(1022, 613)
 word-size=16
-
 
 [org/gnome/clocks]
 alarms=@aa{sv} []
 timer=uint32 60
-timers=@aa{sv} []
 world-clocks=[{'location': <(uint32 2, <('London', 'EGLL', false, [(0.89855367075064974, -0.0078539816339744835)], [(0.89855367075064974, -0.0078539816339744835)])>)>}, {'location': <(uint32 2, <('Coordinated Universal Time (UTC)', '@UTC', false, @a(dd) [], @a(dd) [])>)>}, {'location': <(uint32 2, <('Shenzhen', 'ZGSZ', false, [(0.39357174632472131, 1.9914206765255298)], @a(dd) [])>)>}]
 
 [org/gnome/control-center]
 last-panel='wifi'
+
+[org/gnome/desktop/background]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='/home/mao/dotfiles/wallpaper.jpg'
+primary-color='#000000'
+secondary-color='#000000'
 
 [org/gnome/desktop/calendar]
 show-weekdate=true
@@ -86,7 +97,8 @@ two-finger-scrolling-enabled=true
 
 [org/gnome/desktop/privacy]
 disable-microphone=false
-old-files-age=uint32 14
+old-files-age=uint32 30
+recent-files-max-age=30
 remove-old-temp-files=true
 remove-old-trash-files=true
 
@@ -124,15 +136,40 @@ button-layout='close:appmenu'
 focus-mode='click'
 resize-with-right-button=true
 
+[org/gnome/evince/default]
+continuous=true
+dual-page=false
+dual-page-odd-left=false
+enable-spellchecking=true
+fullscreen=false
+inverted-colors=false
+show-sidebar=false
+sidebar-size=132
+sizing-mode='free'
+
 [org/gnome/gnome-screenshot]
 border-effect='shadow'
 delay=2
 include-border=true
 include-pointer=false
+last-save-directory='file:///home/mao/Pictures'
 
 [org/gnome/mutter]
 attach-modal-dialogs=false
 dynamic-workspaces=true
+
+[org/gnome/nautilus/icon-view]
+default-zoom-level='small'
+
+[org/gnome/nautilus/list-view]
+default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency', 'starred', 'detailed_type']
+default-visible-columns=['name', 'size', 'date_modified', 'starred']
+default-zoom-level='small'
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='list-view'
+search-filter-time-type='last_modified'
+search-view='list-view'
 
 [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
 binding='<Super>Return'
@@ -141,6 +178,20 @@ name='Launch Terminal'
 
 [org/gnome/settings-daemon/plugins/power]
 power-button-action='suspend'
+sleep-inactive-ac-timeout=3600
+sleep-inactive-ac-type='nothing'
+sleep-inactive-battery-timeout=1200
+sleep-inactive-battery-type='suspend'
+
+[org/gnome/shell]
+disable-user-extensions=false
+disabled-extensions=['workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com']
+enabled-extensions=['temperature@xtranophilist', 'arch-update@RaphaelRochet', 'refresh-wifi@kgshank.net', 'pixel-saver@deadalnix.me', 'system-monitor@paradoxxx.zero.gmail.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'ControlBlurEffectOnLockScreen@pratap.fastmail.fm']
+favorite-apps=['firefox.desktop', 'visual-studio-code.desktop', 'org.gnome.Terminal.desktop']
+
+[org/gnome/shell/extensions/blur]
+brightness=0.80000000000000004
+sigma=2
 
 [org/gnome/shell/extensions/system-monitor]
 battery-batt0-color='#c4a000ff'
@@ -161,6 +212,7 @@ cpu-show-text=true
 cpu-style='digit'
 disk-show-menu=false
 disk-usage-style='none'
+fan-sensor-file='/sys/class/hwmon/hwmon5/fan1_input'
 freq-display=false
 freq-freq-color='#ef2929ff'
 freq-show-menu=true
@@ -236,6 +288,3 @@ uris=['qemu:///session', 'lxc:///', 'qemu:///system']
 
 [system/locale]
 region='en_GB.UTF-8'
-
-[system/proxy]
-mode='none'
