@@ -1,1 +1,1 @@
-Debian server: simply `curl -sL "https://dotfiles.mww.moe" | sh`
+`curl -sL "https://dotfiles.mww.moe" | sh`

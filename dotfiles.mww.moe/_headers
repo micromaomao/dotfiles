@@ -1,0 +1,9 @@
+/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD
+
+/ssh-key
+  Content-Type: text/plain
+
+/install.sh
+  Content-Type: text/plain
