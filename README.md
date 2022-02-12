@@ -1,1 +1,1 @@
-`curl -sL "https://dotfiles.mww.moe" | sh`
+`sh <(curl 'https://dotfiles.mww.moe' -sL)`
