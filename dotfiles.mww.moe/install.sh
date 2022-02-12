@@ -3,7 +3,7 @@
 stty > /dev/null 2>/dev/null
 if [ $? -ne 0 ]; then
   echo This script requires interactive input.
-  echo Please run with `sh <(curl 'https://dotfiles.mww.moe' -sL)`.
+  echo 'Please run with `sh <(curl '\''https://dotfiles.mww.moe'\'' -sL)`.'
   exit 1
 fi
 
