@@ -26,5 +26,5 @@ EOF
 while :; do
 fix
 echo fixed
-sleep 10
+sleep 5
 done
