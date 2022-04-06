@@ -121,8 +121,9 @@
         "*": true,
         "yaml": true,
         "plaintext": true,
-        "markdown": false
+        "markdown": true
     },
     "go.toolsManagement.autoUpdate": true,
-    "python.defaultInterpreterPath": "/bin/python2"
+    "python.defaultInterpreterPath": "/bin/python3",
+    "julia.symbolCacheDownload": true
 }
