@@ -5,16 +5,8 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
+cd "$(dirname "$0")"
 url=$1
 set -e
-
-script=$(cat <<EOF
-apt update && apt install -y curl && \
-cd /tmp && \
-curl -sfL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cfbin && \
-chmod +x cfbin && \
-./cfbin --url $url
-EOF
-);
-
-docker run -it --rm --network host debian sh -c "$script"
+docker build . -f tunnel.Dockerfile -t tunnel
+docker run -it --rm --network host tunnel "$url"
