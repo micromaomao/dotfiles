@@ -1,7 +1,7 @@
 set -x EDITOR 'vim'
-set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin /usr/bin/vendor_perl/
+set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin
 set -x PATH $PATH $HOME/.bin
-set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
+# set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
 set -g last_status 0
 
