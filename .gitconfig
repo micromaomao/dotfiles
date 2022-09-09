@@ -8,9 +8,6 @@
 	editor = vim
 	excludesfile = /home/mao/.gitignore
   hooksPath = /dev/null
-[pager]
-	diff = diff-so-fancy | less --tabs=1,5 -RFX
-	show = diff-so-fancy | less --tabs=1,5 -RFX
 [http]
   postBuffer = 1024288000
 [grep]
