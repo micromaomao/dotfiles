@@ -54,5 +54,43 @@
   {
     "key": "alt+i",
     "command": "toggle.diff.renderSideBySide"
+  },
+  {
+    "key": "f4",
+    "command": "-references-view.next",
+    "when": "reference-list.hasResult && references-view.canNavigate"
+  },
+  {
+    "key": "f4",
+    "command": "-search.action.focusNextSearchResult",
+    "when": "hasSearchResult || inSearchEditor"
+  },
+  {
+    "key": "f4",
+    "command": "-goToNextReference",
+    "when": "inReferenceSearchEditor || referenceSearchVisible"
+  },
+  {
+    "key": "f4",
+    "command": "workbench.action.tasks.reRunTask"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.terminal.killEditor",
+    "when": "terminalEditorFocus && terminalFocus && terminalHasBeenCreated && resourceScheme == 'vscode-terminal' || terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "-cursorUndo",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "-list.focusPageUp",
+    "when": "listFocus && !inputFocus"
   }
 ]

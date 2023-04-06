@@ -2,7 +2,6 @@
     "vim.easymotion": true,
     "vim.useCtrlKeys": true,
     "gitlens.keymap": "chorded",
-    "workbench.colorTheme": "GitHub Light",
     "editor.tabSize": 2,
     "window.newWindowDimensions": "maximized",
     "latex-workshop.view.pdf.viewer": "tab",
@@ -60,7 +59,6 @@
     "rust-analyzer.notifications.cargoTomlNotFound": false,
     "rust-analyzer.updates.channel": "stable",
     "rust.unstable_features": true,
-    "workbench.activityBar.visible": true,
     "typescript.tsserver.log": "off",
     "remote.SSH.useLocalServer": false,
     "python.pythonPath": "/bin/python2",
@@ -97,6 +95,14 @@
         {
             "before": ["leader", "k"],
             "after": ["leader", "leader", "k"]
+        },
+        {
+            "before": ["leader", "b"],
+            "after": ["leader", "leader", "b"]
+        },
+        {
+            "before": ["leader", "w"],
+            "after": ["leader", "leader", "w"]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
@@ -111,6 +117,14 @@
         {
             "before": ["leader", "k"],
             "after": ["leader", "leader", "k"]
+        },
+        {
+            "before": ["leader", "b"],
+            "after": ["leader", "leader", "b"]
+        },
+        {
+            "before": ["leader", "w"],
+            "after": ["leader", "leader", "w"]
         }
     ],
     "editor.cursorStyle": "line",
@@ -121,9 +135,24 @@
         "*": true,
         "yaml": true,
         "plaintext": true,
-        "markdown": true
+        "markdown": true,
+        "scminput": false
     },
     "go.toolsManagement.autoUpdate": true,
     "python.defaultInterpreterPath": "/bin/python3",
-    "julia.symbolCacheDownload": true
+    "julia.symbolCacheDownload": true,
+    "html.autoCreateQuotes": false,
+    "html.autoClosingTags": false,
+    "jupyter.askForKernelRestart": false,
+    "editor.renderWhitespace": "none",
+    "workbench.colorTheme": "GitHub Light",
+    "remote.SSH.configFile": "/home/mao/vscode-ssh/config",
+    "remote.SSH.remotePlatform": {
+        "dpdk.p.maowtm.org": "linux",
+        "dpdk-devbox.az.maowtm.org": "linux",
+        "dpdk-devbox-2.az.maowtm.org": "linux"
+    },
+    "[python]": {
+        "editor.formatOnType": true
+    }
 }
