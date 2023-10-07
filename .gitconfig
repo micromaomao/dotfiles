@@ -25,4 +25,4 @@
 [rebase]
 	autostash = true
 [credential]
-	helper = store --file /home/mao/.gitcredentials
+	helper = store --file /home/mao/.credentials/git
