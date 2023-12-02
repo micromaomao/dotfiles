@@ -1,5 +1,4 @@
 #!/bin/bash
-BACKLIGHT="$(xbacklight phy0-led -get)"
 FILE="/tmp/Screenshot-$(date +%Y%m%d_%H%M%S).png"
 grim -t png "$FILE" && \
 LOCKIMAGE="$(mktemp /tmp/lock-XXXXXXXXXXX.png)"

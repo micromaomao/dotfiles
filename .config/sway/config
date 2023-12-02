@@ -35,10 +35,10 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+c kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+q exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -167,12 +167,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        status_command i3status
-}
-
 hide_edge_borders both
 
 output "*" background /home/mao/dotfiles/wallpaper.jpg fill
@@ -182,3 +176,8 @@ bindsym Shift+Print exec /home/mao/.config/sway/take-screenshot-region.sh
 bindsym Print exec /home/mao/.config/sway/take-screenshot.sh
 
 exec dunst
+exec waybar
+exec /home/mao/.config/sway/idle.sh
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+bindsym $mod+v exec /home/mao/.config/sway/super-v.sh
