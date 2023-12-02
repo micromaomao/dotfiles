@@ -1,4 +1,4 @@
 #!/bin/bash
 FILE="/tmp/Screenshot-$(date +%Y%m%d_%H%M%S).png"
-grim -t png -o eDP-1 -g "$(slurp)" "$FILE" && \
+grim -t png -g "$(slurp)" "$FILE" && \
 cat $FILE | wl-copy --type image/png
