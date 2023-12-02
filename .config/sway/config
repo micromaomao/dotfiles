@@ -3,6 +3,8 @@
 #
 # Should you change your keyboard layout some time, delete
 # this file and re-run i3-config-wizard(1).
+
+include /etc/sway/config.d/*
 #
 
 # i3 config file (v4)
@@ -173,8 +175,10 @@ bar {
 
 hide_edge_borders both
 
-output "*" background /home/mao/dotfiles/wallpaper.png fill
+output "*" background /home/mao/dotfiles/wallpaper.jpg fill
 bindsym $mod+l exec /home/mao/.config/sway/lock-screen.sh
 bindsym $mod+Alt+l exec /home/mao/.config/sway/suspend.sh
 bindsym Shift+Print exec /home/mao/.config/sway/take-screenshot-region.sh
 bindsym Print exec /home/mao/.config/sway/take-screenshot.sh
+
+exec dunst
