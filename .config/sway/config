@@ -181,3 +181,15 @@ exec /home/mao/.config/sway/idle.sh
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 bindsym $mod+v exec /home/mao/.config/sway/super-v.sh
+
+bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+
+bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl -c backlight s 7%+
+bindsym XF86MonBrightnessDown exec brightnessctl -c backlight s 7%-
+bindsym XF86KbdBrightnessUp exec brightnessctl -d '*kbd_backlight' s 1+
+bindsym XF86KbdBrightnessDown exec brightnessctl -d '*kbd_backlight' s 1-
+bindsym XF86AudioMute exec amixer set Master toggle
+
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
