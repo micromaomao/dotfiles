@@ -13,7 +13,7 @@ if [ -f /etc/os-release ]; then
 
   set -xe
   sudo apt update
-  sudo apt install -y git curl tmux fish exa htop
+  sudo apt install -y git curl tmux fish exa htop kitty-terminfo
   set +xe
 
   type docker > /dev/null
