@@ -1,6 +1,13 @@
 #!/usr/bin/bash
 
-pactl load-module module-null-sink media.class=Audio/Source/Virtual node.passive=true node.latency=4096/48000 sink_name=combined-mic channel_map=front-left,front-right
+v="$(pactl list modules | grep -B 2 'sink_name=combined-mic' | head -n1)"
+if [ ! -z "$v" ]; then
+  echo Removing combined-mic
+  pactl unload-module ${v#Module \#}
+  exit 0
+fi
+
+pactl load-module module-null-sink media.class=Audio/Source/Virtual node.passive=true node.latency=8192/48000 sink_name=combined-mic channel_map=front-left,front-right
 sleep 0.5
 
 for SIDE in FL FR; do
