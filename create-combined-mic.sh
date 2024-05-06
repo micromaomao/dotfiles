@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
-pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=combined-mic channel_map=front-left,front-right
+pactl load-module module-null-sink media.class=Audio/Source/Virtual node.passive=true node.latency=4096/48000 sink_name=combined-mic channel_map=front-left,front-right
+sleep 0.5
 
 for SIDE in FL FR; do
   # Dock output
