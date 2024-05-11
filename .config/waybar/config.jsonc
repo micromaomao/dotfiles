@@ -20,6 +20,7 @@
     "memory",
     "network",
     "pulseaudio",
+    "custom/power_state",
     "battery",
     "backlight",
     "tray",
@@ -33,9 +34,8 @@
     }
   },
   "clock": {
-    "format": "{:%H:%M:%S}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": "{:%Y-%m-%d}",
+    "format": "{:%H:%M:%S %a %d %b}",
+    "tooltip-format": "<big>{:%F}</big>\n<tt><small>{calendar}</small></tt>",
     "interval": 1
   },
   "cpu": {
@@ -54,7 +54,8 @@
       "",
       "",
       ""
-    ]
+    ],
+    "tooltip": false
   },
   "backlight": {
     // "device": "acpi_video1",
@@ -131,7 +132,18 @@
       "class<firefox>": "F",
       // "class<kitty>": "T",
       "class<virt-manager>": "V",
-      "class<Code>": "C"
+      "class<Code>": "C",
+      "class<org.gnome.SoundRecorder>": "R",
+      "class<Audacity>": "A"
     }
+  },
+  "custom/power_state": {
+    "format": "{}",
+    "exec": "$HOME/.config/waybar/power_state.sh",
+    "on-click": "$HOME/.config/waybar/power_state.sh toggle",
+    "return-type": "json",
+    "interval": 10,
+    "exec-on-event": false, // Too unreliable
+    "signal": 1
   }
 }

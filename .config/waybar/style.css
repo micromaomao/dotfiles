@@ -325,3 +325,22 @@ label:focus {
 #privacy-item.audio-out {
     background-color: #0069d4;
 }
+
+.power_state {
+    padding: 0 10px;
+    background-color: white;
+    min-width: 15px;
+}
+
+.ps_performance {
+    background-color: #f53c3c;
+}
+
+.ps_power-saver {
+    background-color: #2ecc71;
+}
+
+.ps_balanced {
+    background-color: #ddd;
+    color: #222;
+}
