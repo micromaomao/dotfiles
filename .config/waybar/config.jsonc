@@ -128,6 +128,8 @@
     "format": "{icon}<sup>{windows}</sup>",
     "window-rewrite-default": "",
     "format-window-separator": "",
+    "all-outputs": true,
+    "move-to-monitor": true,
     "window-rewrite": {
       "class<firefox>": "F",
       // "class<kitty>": "T",
