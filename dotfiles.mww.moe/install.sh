@@ -11,7 +11,7 @@ if [ -f /etc/os-release ]; then
   . /etc/os-release
   echo Detected $ID $VERSION_ID
 
-  if [[ $ID == "debian" || $ID == "ubuntu" ]]; then
+  if [ $ID = "debian" ] || [ $ID = "ubuntu" ]; then
     set -xe
     sudo apt update
     sudo apt install -y git curl tmux fish exa htop kitty-terminfo
@@ -23,7 +23,7 @@ if [ -f /etc/os-release ]; then
 
   type docker > /dev/null
   if [ $? -ne 0 ]; then
-    if [[ $ID == "debian" ]] && [ $VERSION_ID -eq 11 -o $VERSION_ID -eq 10 ]; then
+    if [ $ID = "debian" ] && [ $VERSION_ID -eq 11 -o $VERSION_ID -eq 10 ]; then
       read -p "Install docker? (y/n) " -r P
       if [ $P = "y" ]; then
         set -xe
