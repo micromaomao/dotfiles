@@ -134,4 +134,4 @@ abbr k kubectl
 
 set -x BAT_THEME ansi-light
 
-abbr firejail "env GTK_IM_MODULE=xim firejail"
+# abbr firejail "env GTK_IM_MODULE=xim firejail"

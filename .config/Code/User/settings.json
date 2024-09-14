@@ -6,7 +6,7 @@
     "window.newWindowDimensions": "maximized",
     "latex-workshop.view.pdf.viewer": "tab",
     "git.promptToSaveFilesBeforeCommit": "always",
-    "editor.fontFamily": " 'Hack', 'Source Han Sans', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": " 'Hack', 'Source Han Sans CN', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.suggest.localityBonus": true,
     "go.formatTool": "gofmt",
     "files.enableTrash": false,
@@ -17,7 +17,6 @@
     "files.insertFinalNewline": true,
     "files.autoSave": "off",
     "editor.smoothScrolling": true,
-    "terminal.integrated.enableBell": true,
     "go.lintOnSave": "off",
     "search.useIgnoreFiles": false,
     "editor.wordWrapColumn": 120,
@@ -85,46 +84,116 @@
     },
     "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "before": ["leader", "s"],
-            "after": ["leader", "leader", "s"]
+            "before": [
+                "leader",
+                "s"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "s"
+            ]
         },
         {
-            "before": ["leader", "j"],
-            "after": ["leader", "leader", "j"]
+            "before": [
+                "leader",
+                "j"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "j"
+            ]
         },
         {
-            "before": ["leader", "k"],
-            "after": ["leader", "leader", "k"]
+            "before": [
+                "leader",
+                "k"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "k"
+            ]
         },
         {
-            "before": ["leader", "b"],
-            "after": ["leader", "leader", "b"]
+            "before": [
+                "leader",
+                "b"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "b"
+            ]
         },
         {
-            "before": ["leader", "w"],
-            "after": ["leader", "leader", "w"]
+            "before": [
+                "leader",
+                "w"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "w"
+            ]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
-            "before": ["leader", "s"],
-            "after": ["leader", "leader", "s"]
+            "before": [
+                "leader",
+                "s"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "s"
+            ]
         },
         {
-            "before": ["leader", "j"],
-            "after": ["leader", "leader", "j"]
+            "before": [
+                "leader",
+                "j"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "j"
+            ]
         },
         {
-            "before": ["leader", "k"],
-            "after": ["leader", "leader", "k"]
+            "before": [
+                "leader",
+                "k"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "k"
+            ]
         },
         {
-            "before": ["leader", "b"],
-            "after": ["leader", "leader", "b"]
+            "before": [
+                "leader",
+                "b"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "b"
+            ]
         },
         {
-            "before": ["leader", "w"],
-            "after": ["leader", "leader", "w"]
+            "before": [
+                "leader",
+                "w"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "w"
+            ]
         }
     ],
     "editor.cursorStyle": "line",
@@ -133,10 +202,10 @@
     "editor.inlineSuggest.enabled": true,
     "github.copilot.enable": {
         "*": true,
-        "yaml": true,
         "plaintext": true,
         "markdown": true,
-        "scminput": false
+        "scminput": false,
+        "yaml": true
     },
     "go.toolsManagement.autoUpdate": true,
     "python.defaultInterpreterPath": "/bin/python3",
@@ -145,7 +214,6 @@
     "html.autoClosingTags": false,
     "jupyter.askForKernelRestart": false,
     "editor.renderWhitespace": "none",
-    "workbench.colorTheme": "GitHub Light",
     "remote.SSH.configFile": "/home/mao/vscode-ssh/config",
     "remote.SSH.remotePlatform": {
         "dpdk.p.maowtm.org": "linux",
@@ -154,5 +222,26 @@
     },
     "[python]": {
         "editor.formatOnType": true
-    }
+    },
+    "css.format.spaceAroundSelectorSeparator": true,
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "svelte.enable-ts-plugin": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.renderControlCharacters": false,
+    "workbench.colorTheme": "GitHub Light",
+    "excalidraw.theme": "auto",
+    "accessibility.signals.terminalBell": {
+        "sound": "on"
+    },
+    "terminal.integrated.enableVisualBell": true,
+    "diffEditor.renderSideBySide": false,
+    "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+    ],
+    "redhat.telemetry.enabled": true,
+    "cmake.debugConfig": {}
 }
