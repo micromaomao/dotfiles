@@ -11,11 +11,37 @@ type -q prompt_hostname; or \
     cat /etc/hostname | tr -d \n
   end
 
+set -g last_exec_timestamp ""
+set -g last_exec_time ""
+
+function record_exec_time -e fish_preexec
+  set -g last_exec_timestamp (date +%s%3N)
+end
+
 function show_exit_status -e fish_postexec
   set last_status $status
 end
 
+function show_time_taken -e fish_postexec
+  set -l now (date +%s%3N)
+  set -l diff (math "$now" - "$last_exec_timestamp")
+  if [ "$diff" -ge 60000 ]
+    set -l mins (math -s 0 "$diff / 60000")
+    set -l secs (math -s 0 "$diff" % 60000 / 1000)
+    set -g last_exec_time (set_color magenta)"("$mins"m"$secs"s) "
+  else
+    set -g last_exec_time (set_color magenta)"(" (math "$diff" / 1000)"s) "
+  end
+end
+
+set -g VIRTUAL_ENV_DISABLE_PROMPT 1
+
 function fish_prompt
+  if [ -n "$VIRTUAL_ENV" ]
+    set -l venv_name (basename "$VIRTUAL_ENV")
+    echo -sn (set_color brblue)"($venv_name)"(set_color normal)" "
+  end
+
   set -l in_docker 0
   set -l color_hostname yellow
   if [ -e /.dockerenv ]
@@ -38,8 +64,12 @@ function fish_prompt
   end
 
   if [ "$last_status" -ne 0 ]
-    echo -n -s (set_color red) " ($last_status) "
+    echo -sn (set_color red) " ($last_status) "
   end
+
+  echo -sn $last_exec_time
+  set last_exec_timestamp ""
+  set last_exec_time ""
 
   set -l git_branch ''
   if [ -d .git ]
