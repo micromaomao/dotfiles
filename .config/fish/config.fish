@@ -11,13 +11,6 @@ type -q prompt_hostname; or \
     cat /etc/hostname | tr -d \n
   end
 
-function show_time_of_exec -e fish_preexec
-  if [ "$USE_SIMPLE_PROMPT" = "true" ]
-    return
-  end
-  echo -esn '\e[' (math $COLUMNS - 10) 'G\e[1A' (set_color yellow) (date +%T) '\e[0G\e[1B\e[0m'
-end
-
 function show_exit_status -e fish_postexec
   set last_status $status
 end
