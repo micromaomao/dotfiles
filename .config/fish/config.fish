@@ -68,8 +68,6 @@ function fish_prompt
   end
 
   echo -sn $last_exec_time
-  set last_exec_timestamp ""
-  set last_exec_time ""
 
   set -l git_branch ''
   if [ -d .git ]
