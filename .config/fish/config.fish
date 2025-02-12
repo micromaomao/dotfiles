@@ -70,9 +70,9 @@ function fish_prompt
   echo -sn $last_exec_time
 
   set -l git_branch ''
-  if [ -d .git ]
+  set -l branch_name (git branch --show-current 2>/dev/null)
+  if [ $status -eq 0 ]
     set -l col blue
-    set -l branch_name (cat .git/HEAD | string split --right -m 1 / | tail -n 1)
     set git_branch "; "(set_color $col)"$branch_name"
     set -g __git_timeouted 0
     set -l total_modified 0
