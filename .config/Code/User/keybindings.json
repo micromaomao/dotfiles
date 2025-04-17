@@ -112,5 +112,10 @@
     "key": "ctrl+shift+-",
     "command": "-workbench.action.navigateForward",
     "when": "canNavigateForward"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.terminal.killEditor",
+    "when": "terminalEditorFocus && terminalFocus && terminalHasBeenCreated || terminalEditorFocus && terminalFocus && terminalProcessSupported"
   }
 ]

@@ -15,7 +15,7 @@
     "files.trimFinalNewlines": true,
     "editor.acceptSuggestionOnEnter": "off",
     "files.insertFinalNewline": true,
-    "files.autoSave": "off",
+    "files.autoSave": "onFocusChange",
     "editor.smoothScrolling": true,
     "go.lintOnSave": "off",
     "search.useIgnoreFiles": false,
@@ -214,11 +214,12 @@
     "html.autoClosingTags": false,
     "jupyter.askForKernelRestart": false,
     "editor.renderWhitespace": "none",
-    "remote.SSH.configFile": "/home/mao/vscode-ssh/config",
+    "remote.SSH.configFile": "/home/mao/.ssh/config",
     "remote.SSH.remotePlatform": {
         "dpdk.p.maowtm.org": "linux",
         "dpdk-devbox.az.maowtm.org": "linux",
-        "dpdk-devbox-2.az.maowtm.org": "linux"
+        "dpdk-devbox-2.az.maowtm.org": "linux",
+        "linux-devbox-vm": "linux"
     },
     "[python]": {
         "editor.formatOnType": true
@@ -228,10 +229,9 @@
         "editor.defaultFormatter": "svelte.svelte-vscode"
     },
     "svelte.enable-ts-plugin": true,
-    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.ignoreTrimWhitespace": true,
     "editor.unicodeHighlight.invisibleCharacters": false,
     "editor.renderControlCharacters": false,
-    "workbench.colorTheme": "GitHub Light",
     "excalidraw.theme": "auto",
     "accessibility.signals.terminalBell": {
         "sound": "on"
@@ -243,5 +243,11 @@
         "workbench.action.tasks.runTask"
     ],
     "redhat.telemetry.enabled": true,
-    "cmake.debugConfig": {}
+    "cmake.debugConfig": {},
+    "workbench.colorTheme": "GitHub Light",
+    "editor.mouseWheelScrollSensitivity": 2,
+    "terminal.integrated.localEchoEnabled": "off",
+    "vim.textwidth": 74,
+    "gitlens.rebaseEditor.ordering": "asc",
+    "workbench.secondarySideBar.showLabels": false
 }

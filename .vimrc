@@ -12,11 +12,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Relative line numbers
-Plugin 'myusuf3/numbers.vim'
-
-Plugin 'terryma/vim-multiple-cursors'
-
 " Fast moving cursor
 Plugin 'easymotion/vim-easymotion'
 
