@@ -40,6 +40,20 @@ class PwObject:
             return None
         return info.get("props", {}).get(name)
 
+    def __str__(self):
+        if self.type == "PipeWire:Interface:Node":
+            return (
+                f"Node {self.id} {self.props('media.class')} {self.props('node.name')} {self.props('media.name')}"
+            )
+        elif self.type == "PipeWire:Interface:Port":
+            return f"Port {self.id} {self.props('port.name')}"
+        elif self.type == "PipeWire:Interface:Link":
+            return f"Link {self.id} {self.props('link.output.node')} : {self.props('link.output.port')} -> {self.props('link.input.node')} : {self.props('link.input.port')}"
+        elif self.type == "PipeWire:Interface:Client":
+            return f"Client {self.id} {self.props('application.name')}"
+        else:
+            return f"Unknown object {self.id} of type {self.type}"
+
 
 def parse_pw_dump(pw_dump_str: str) -> List[PwObject]:
     nodes = []
@@ -78,7 +92,7 @@ class VirtualSink:
                 "module-null-sink",
                 "media.class=Audio/Source/Virtual",
                 "node.passive=true",
-                "node.latency=8192/48000",
+                # "node.latency=8192/48000",
                 f"sink_name={self.sink_name}",
                 "channel_map=front-left,front-right",
             ]
@@ -133,16 +147,16 @@ def pw_monitor():
                         continue
                     if deleted_obj_id in all_objs:
                         obj = all_objs[deleted_obj_id]
-                        log.debug(f"Event: delete on {obj.id} (type={obj.type})")
+                        log.debug(f"Event: delete on {obj}")
                         del all_objs[deleted_obj_id]
                 else:
                     obj = PwObject(change)
                     exists = obj.id in all_objs
                     all_objs[obj.id] = obj
                     if exists:
-                        log.debug(f"Event: change on {obj.id} (type={obj.type})")
+                        log.debug(f"Event: change on {obj}")
                     else:
-                        log.debug(f"Event: add on {obj.id} (type={obj.type})")
+                        log.debug(f"Event: add on {obj}")
             yield all_objs.values()
     except KeyboardInterrupt:
         print("", flush=True)
@@ -181,11 +195,11 @@ def link_node(dump: List[PwObject], source: PwObject, sink: PwObject):
         if direction != "out":
             continue
         if channel is None:
-            log.warning(f"Port {port.id} has no channel")
+            log.warning(f"{port} has no channel")
             continue
         if channel in source_channels_port:
             log.warning(
-                f"Source {source.id} has duplicate channel {channel} among output ports"
+                f"Source {source} has duplicate channel {channel} among output ports"
             )
             continue
         source_channels_port[channel] = port
@@ -199,17 +213,17 @@ def link_node(dump: List[PwObject], source: PwObject, sink: PwObject):
             continue
         if channel in sink_channels_port:
             log.warning(
-                f"Sink {sink.id} has duplicate channel {channel} among input ports"
+                f"Sink {sink} has duplicate channel {channel} among input ports"
             )
             continue
         sink_channels_port[channel] = port
     if set(source_channels_port.keys()) != set(sink_channels_port.keys()):
         log.error(
-            f"Source {source.id} and sink {sink.id} have different channel sets - refusing to link"
+            f"Source {source} and sink {sink} have different channel sets - refusing to link"
         )
         return
     if not source_channels_port:
-        log.warning(f"Source {source.id} has no output ports")
+        log.warning(f"Source {source} has no output ports")
         return
     for channel in source_channels_port.keys():
         source_port = source_channels_port[channel]
@@ -220,7 +234,7 @@ def link_node(dump: List[PwObject], source: PwObject, sink: PwObject):
             )
             continue
         log.debug(
-            f"Linking {source.id} {source_port.props('port.name')} to {sink.id} {sink_port.props('port.name')}"
+            f"Linking {source} {source_port.props('port.name')} to {sink.id} {sink_port.props('port.name')}"
         )
         subprocess.check_call(
             ["pw-link", str(source_port.id), str(sink_port.id)],
@@ -235,41 +249,52 @@ def update(dump: List[PwObject]):
 
     log.debug("Updating links")
 
-    for link in dump:
-        if v_sink.match_pw_node(link):
-            v_sink_node = link
+    for obj in dump:
+        log.debug(f"Object: {obj}")
+
+    for obj in dump:
+        if v_sink.match_pw_node(obj):
+            v_sink_node = obj
             continue
         if (
-            link.type == "PipeWire:Interface:Node"
-            and link.props("media.class") == "Stream/Output/Audio"
+            obj.type == "PipeWire:Interface:Node"
+            and obj.props("media.class") == "Stream/Output/Audio"
         ):
-            if "discord" in link.props("media.name").lower():
+            if "discord" in obj.props("media.name").lower():
                 log.debug(
-                    f"Ignoring Discord source {link.id} {link.props('node.name')} ({link.props('media.name')})"
+                    f"Ignoring Discord source {obj}"
                 )
                 continue
-            need_connect_sources.append(link)
+            need_connect_sources.append(obj)
             continue
 
     if v_sink_node is None:
         raise RuntimeError(f"Virtual sink {v_sink.sink_name} has disappeared")
 
-    for link in dump:
+    for obj in dump:
         if (
-            link.type == "PipeWire:Interface:Link"
-            and link.props("link.input.node") == v_sink_node.id
+            obj.type == "PipeWire:Interface:Node"
+            and obj.props("media.class") == "Audio/Source"
+            and obj.id != v_sink_node.id
         ):
-            already_connected_node_ids.add(link.props("link.output.node"))
+            need_connect_sources.append(obj)
 
-    for link in set(need_connect_sources):
-        if link.id in already_connected_node_ids:
+    for obj in dump:
+        if (
+            obj.type == "PipeWire:Interface:Link"
+            and obj.props("link.input.node") == v_sink_node.id
+        ):
+            already_connected_node_ids.add(obj.props("link.output.node"))
+
+    for obj in set(need_connect_sources):
+        log.debug(f"Eligible source to connect: {obj}")
+        if obj.id in already_connected_node_ids:
+            log.debug("  ... but already connected")
             continue
-        node_name = link.props("node.name")
-        media_name = link.props("media.name")
         log.info(
-            f"Connecting source {link.id} {node_name} ({media_name}) to virtual sink {v_sink.sink_name}"
+            f"Connecting source {obj} to virtual sink {v_sink.sink_name}"
         )
-        link_node(dump, link, v_sink_node)
+        link_node(dump, obj, v_sink_node)
 
 
 def update_thread():
@@ -288,7 +313,8 @@ t.start()
 try:
     v_sink = VirtualSink("combined-mic")
     for d in pw_monitor():
-        latest_dump = d
+        # don't hold reference to the original directory in pw_monitor
+        latest_dump = list(d)
         evt.set()
         if not t.is_alive():
             t = threading.Thread(target=update_thread)
