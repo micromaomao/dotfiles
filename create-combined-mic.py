@@ -12,12 +12,14 @@ import time
 import logging
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="[%(asctime)s] [%(levelname)-5s] %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
     ],
 )
+
+log_events = False
 
 log = logging.getLogger(__name__)
 
@@ -42,8 +44,13 @@ class PwObject:
 
     def __str__(self):
         if self.type == "PipeWire:Interface:Node":
+            opt_media_name = self.props('media.name')
+            if opt_media_name is None:
+                opt_media_name = ""
+            else:
+                opt_media_name = f" {opt_media_name}"
             return (
-                f"Node {self.id} {self.props('media.class')} {self.props('node.name')} {self.props('media.name')}"
+                f"Node {self.id} {self.props('media.class')} {self.props('node.name')}{opt_media_name}"
             )
         elif self.type == "PipeWire:Interface:Port":
             return f"Port {self.id} {self.props('port.name')}"
@@ -136,6 +143,8 @@ def pw_monitor():
 
     try:
         for line in iter(proc.stdout.readline, None):
+            if not line:
+                continue
             parsed_json = json.loads(line)
             assert isinstance(parsed_json, list)
             for change in parsed_json:
@@ -147,16 +156,18 @@ def pw_monitor():
                         continue
                     if deleted_obj_id in all_objs:
                         obj = all_objs[deleted_obj_id]
-                        log.debug(f"Event: delete on {obj}")
+                        if log_events:
+                            log.debug(f"Event: delete on {obj}")
                         del all_objs[deleted_obj_id]
                 else:
                     obj = PwObject(change)
                     exists = obj.id in all_objs
                     all_objs[obj.id] = obj
-                    if exists:
-                        log.debug(f"Event: change on {obj}")
-                    else:
-                        log.debug(f"Event: add on {obj}")
+                    if log_events:
+                        if exists:
+                            log.debug(f"Event: change on {obj}")
+                        else:
+                            log.debug(f"Event: add on {obj}")
             yield all_objs.values()
     except KeyboardInterrupt:
         print("", flush=True)
@@ -166,9 +177,11 @@ def pw_monitor():
 evt = threading.Event()
 v_sink = None
 latest_dump = None
+stopped = False
 
 
 def link_node(dump: List[PwObject], source: PwObject, sink: PwObject):
+    global stopped
     source_ports = []
     sink_ports = []
     existing_links: Set[(int, int)] = set()
@@ -233,24 +246,72 @@ def link_node(dump: List[PwObject], source: PwObject, sink: PwObject):
                 f"Link {source_port.id} -> {sink_port.id} already exists - skipping"
             )
             continue
-        log.debug(
-            f"Linking {source} {source_port.props('port.name')} to {sink.id} {sink_port.props('port.name')}"
-        )
-        subprocess.check_call(
-            ["pw-link", str(source_port.id), str(sink_port.id)],
-        )
+        if stopped:
+            return
+        attempts = 0
+        while True:
+            if attempts > 0:
+                check_dump = pw_dump()
+                found = False
+                for obj in check_dump:
+                    if obj.type == "PipeWire:Interface:Link":
+                        if (
+                            obj.props("link.output.port") == source_port.id
+                            and obj.props("link.input.port") == sink_port.id
+                        ):
+                            log.info(
+                                f"  ... but it did work. Continuing."
+                            )
+                            found = True
+                            break
+                if found:
+                    break
+            log.debug(
+                f"Linking {source} {source_port.props('port.name')} to {sink.id} {sink_port.props('port.name')}"
+            )
+            try:
+                subprocess.check_call(
+                    ["pw-link", str(source_port.id), str(sink_port.id)],
+                    timeout=2
+                )
+                break
+            except subprocess.TimeoutExpired:
+                log.error(
+                    f"pw-link {source_port.id} {sink_port.id} did not finish within 2 seconds"
+                )
+                attempts += 1
+                if attempts >= 2:
+                    raise
+            except subprocess.CalledProcessError as e:
+                log.error(
+                    f"pw-link {source_port.id} {sink_port.id} failed with error code {e.returncode}"
+                )
+                attempts += 1
+                if attempts >= 2:
+                    raise
+        if stopped:
+            return
 
 
 def update(dump: List[PwObject]):
-    global v_sink
+    global v_sink, stopped
     v_sink_node = None
     need_connect_sources = []
     already_connected_node_ids = set()
+
+    if stopped:
+        return
 
     log.debug("Updating links")
 
     for obj in dump:
         log.debug(f"Object: {obj}")
+
+    all_input_stream_names = set()
+    for obj in dump:
+        if obj.type == "PipeWire:Interface:Node" and obj.props("media.class") == "Stream/Input/Audio":
+            all_input_stream_names.add((obj.props("node.name"), obj.props("media.name")))
+    log.debug(f"All input stream names: {all_input_stream_names}")
 
     for obj in dump:
         if v_sink.match_pw_node(obj):
@@ -260,6 +321,11 @@ def update(dump: List[PwObject]):
             obj.type == "PipeWire:Interface:Node"
             and obj.props("media.class") == "Stream/Output/Audio"
         ):
+            if (obj.props("node.name"), obj.props("media.name")) in all_input_stream_names:
+                log.debug(
+                    f"Ignoring {obj} because it is also listening for input"
+                )
+                continue
             if "discord" in obj.props("media.name").lower():
                 log.debug(
                     f"Ignoring Discord source {obj}"
@@ -295,12 +361,16 @@ def update(dump: List[PwObject]):
             f"Connecting source {obj} to virtual sink {v_sink.sink_name}"
         )
         link_node(dump, obj, v_sink_node)
+        if stopped:
+            return
 
 
 def update_thread():
-    global evt, latest_dump
-    while True:
+    global evt, latest_dump, stopped
+    while not stopped:
         evt.wait()
+        if stopped:
+            break
         evt.clear()
         update(latest_dump)
         time.sleep(0.5)
@@ -321,6 +391,7 @@ try:
             t.daemon = True
             t.start()
 finally:
+    stopped = True
     evt.clear()
     if v_sink:
         v_sink.delete()
