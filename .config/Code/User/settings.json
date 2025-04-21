@@ -15,7 +15,6 @@
     "files.trimFinalNewlines": true,
     "editor.acceptSuggestionOnEnter": "off",
     "files.insertFinalNewline": true,
-    "files.autoSave": "onFocusChange",
     "editor.smoothScrolling": true,
     "go.lintOnSave": "off",
     "search.useIgnoreFiles": false,
