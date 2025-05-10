@@ -2,11 +2,10 @@
     "vim.easymotion": true,
     "vim.useCtrlKeys": true,
     "gitlens.keymap": "chorded",
-    "editor.tabSize": 2,
     "window.newWindowDimensions": "maximized",
     "latex-workshop.view.pdf.viewer": "tab",
     "git.promptToSaveFilesBeforeCommit": "always",
-    "editor.fontFamily": " 'Hack', 'Source Han Sans CN', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'Hack', 'Source Han Sans CN', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.suggest.localityBonus": true,
     "go.formatTool": "gofmt",
     "files.enableTrash": false,
@@ -22,7 +21,6 @@
     "files.trimTrailingWhitespace": true,
     "rust.all_features": true,
     "editor.mouseWheelZoom": true,
-    "window.titleBarStyle": "custom",
     "editor.acceptSuggestionOnCommitCharacter": false,
     "search.exclude": {
         "**/node_modules": true,
@@ -63,7 +61,6 @@
     "rust-client.engine": "rust-analyzer",
     "python.languageServer": "Pylance",
     "window.restoreWindows": "none",
-    "C_Cpp.clang_format_style": "LLVM",
     "rust-client.autoStartRls": false,
     "C_Cpp.default.cStandard": "c17",
     "C_Cpp.default.cppStandard": "c++20",
@@ -228,7 +225,7 @@
         "editor.defaultFormatter": "svelte.svelte-vscode"
     },
     "svelte.enable-ts-plugin": true,
-    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.ignoreTrimWhitespace": false,
     "editor.unicodeHighlight.invisibleCharacters": false,
     "editor.renderControlCharacters": false,
     "excalidraw.theme": "auto",
@@ -248,5 +245,7 @@
     "terminal.integrated.localEchoEnabled": "off",
     "vim.textwidth": 74,
     "gitlens.rebaseEditor.ordering": "asc",
-    "workbench.secondarySideBar.showLabels": false
+    "workbench.secondarySideBar.showLabels": false,
+    "files.autoSave": "onFocusChange",
+    "editor.inlayHints.enabled": "on"
 }
