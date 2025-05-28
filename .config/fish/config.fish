@@ -134,7 +134,7 @@ function recitediff
   git diff --color-words --minimal -U100 $argv
 end
 
-alias diff "diff -u --color=always"
+alias diff "diff -u"
 alias convert 'convert -limit memory 3G'
 
 umask 0027
