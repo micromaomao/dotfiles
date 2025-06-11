@@ -247,5 +247,18 @@
     "gitlens.rebaseEditor.ordering": "asc",
     "workbench.secondarySideBar.showLabels": false,
     "files.autoSave": "onFocusChange",
-    "editor.inlayHints.enabled": "on"
+    "editor.inlayHints.enabled": "off",
+    "clangd.arguments": [
+        "-header-insertion=never"
+    ],
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "diffEditor.hideUnchangedRegions.contextLineCount": 6,
+    "[diff]": {
+        "files.trimTrailingWhitespace": false,
+        "editor.renderWhitespace": "all"
+    },
+    "[eml]": {
+        "files.trimTrailingWhitespace": false,
+        "editor.renderWhitespace": "all"
+    }
 }
