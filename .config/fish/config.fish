@@ -148,6 +148,7 @@ abbr gp "git push -v"
 abbr g "git"
 
 abbr glf "git log --format='%>(30)%ad %C(Yellow)%h %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
+abbr rsync- "rsync -r -v --progress --update --compress --links --safe-links -E --checksum --compress-choice zstd -t"
 
 if type -q exa
   abbr ls exa
