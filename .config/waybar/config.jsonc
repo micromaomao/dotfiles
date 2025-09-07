@@ -137,7 +137,8 @@
       "class<virt-manager>": "V",
       "class<Code>": "C",
       "class<org.gnome.SoundRecorder>": "R",
-      "class<Audacity>": "A"
+      "class<Audacity>": "A",
+      "class<anki>": "A"
     }
   },
   "custom/power_state": {
