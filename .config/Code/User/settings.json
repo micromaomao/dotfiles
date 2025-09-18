@@ -38,7 +38,7 @@
         },
         "fish": {
             "path": "fish"
-        },
+        }
     },
     "terminal.integrated.defaultProfile.linux": "fish",
     "workbench.iconTheme": "vscode-icons",
@@ -65,7 +65,6 @@
     "C_Cpp.default.cStandard": "c17",
     "C_Cpp.default.cppStandard": "c++20",
     "go.useLanguageServer": true,
-    "editor.formatOnSaveMode": "modifications",
     "[go]": {
         "editor.formatOnSave": true
     },
@@ -209,7 +208,6 @@
     "html.autoCreateQuotes": false,
     "html.autoClosingTags": false,
     "jupyter.askForKernelRestart": false,
-    "editor.renderWhitespace": "none",
     "remote.SSH.configFile": "/home/mao/.ssh/config",
     "remote.SSH.remotePlatform": {
         "dpdk.p.maowtm.org": "linux",
@@ -240,12 +238,10 @@
     ],
     "redhat.telemetry.enabled": true,
     "cmake.debugConfig": {},
-    "workbench.colorTheme": "GitHub Light",
     "editor.mouseWheelScrollSensitivity": 2,
     "terminal.integrated.localEchoEnabled": "off",
     "vim.textwidth": 74,
     "gitlens.rebaseEditor.ordering": "asc",
-    "workbench.secondarySideBar.showLabels": false,
     "files.autoSave": "onFocusChange",
     "editor.inlayHints.enabled": "off",
     "clangd.arguments": [
@@ -260,5 +256,32 @@
     "[eml]": {
         "files.trimTrailingWhitespace": false,
         "editor.renderWhitespace": "all"
+    },
+    "[plaintext]": {
+        "files.trimTrailingWhitespace": false,
+        "editor.renderWhitespace": "all"
+    },
+    "workbench.secondarySideBar.showLabels": false,
+    "workbench.colorTheme": "GitHub Light",
+    "[c]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "gitlens.views.scm.grouped.views": {
+        "commits": true,
+        "branches": true,
+        "remotes": true,
+        "stashes": true,
+        "tags": true,
+        "worktrees": true,
+        "contributors": true,
+        "fileHistory": false,
+        "repositories": true,
+        "searchAndCompare": false,
+        "launchpad": false
+    },
+    "[restructuredtext]": {
+        "editor.wordWrapColumn": 74,
+        "editor.tabSize": 8
     }
 }
