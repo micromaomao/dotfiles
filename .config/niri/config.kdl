@@ -54,7 +54,7 @@ input {
     }
 
     // disable-power-key-handling
-    // warp-mouse-to-focus
+    warp-mouse-to-focus
     // focus-follows-mouse max-scroll-amount="0%"
     // workspace-auto-back-and-forth
 
@@ -132,10 +132,10 @@ binds {
 
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+Left  { focus-column-or-monitor-left; }
-    Mod+Down  { focus-window-or-monitor-down; }
-    Mod+Up    { focus-window-or-monitor-up; }
-    Mod+Right { focus-column-or-monitor-right; }
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
     // Mod+H     { focus-column-left; }
     // Mod+J     { focus-window-down; }
     // Mod+K     { focus-window-up; }
@@ -152,8 +152,8 @@ binds {
     // Mod+Ctrl+K     { move-window-up; }
     // Mod+Ctrl+L     { move-column-right; }
 
-    Mod+Shift+Left    { swap-window-left; }
-    Mod+Shift+Right   { swap-window-right; }
+    Mod+Shift+Left    { move-column-left; }
+    Mod+Shift+Right   { move-column-right; }
 
     // Alternative commands that move across workspaces when reaching
     // the first or last window in a column.
@@ -324,7 +324,9 @@ binds {
     // Mod+C { center-column; }
 
     // Center all fully visible columns on screen.
-    Mod+Ctrl+C { center-visible-columns; }
+    // Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Shift+C { center-column; }
 
     // Finer width adjustments.
     // This command can also:
@@ -474,4 +476,8 @@ binds {
 prefer-no-csd
 window-rule {
     draw-border-with-background false
+}
+
+layout {
+    gaps 8
 }
