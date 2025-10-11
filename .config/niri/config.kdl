@@ -14,9 +14,9 @@ input {
         // drag false
         // drag-lock
         natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
-        // scroll-factor 1.0
+        accel-speed 0.3
+        accel-profile "adaptive"
+        scroll-factor 0.5
         // scroll-factor vertical=1.0 horizontal=-2.0
         // scroll-method "two-finger"
         // scroll-button 273
@@ -30,7 +30,7 @@ input {
 
     mouse {
         // natural-scroll
-        // accel-speed 0.2
+        accel-speed 0.0
         // accel-profile "flat"
         // scroll-factor 1.0
         // scroll-factor vertical=1.0 horizontal=-2.0
@@ -44,7 +44,7 @@ input {
     trackpoint {
         // off
         // natural-scroll
-        // accel-speed 0.2
+        accel-speed -0.6
         // accel-profile "flat"
         // scroll-method "on-button-down"
         // scroll-button 273
@@ -54,7 +54,7 @@ input {
     }
 
     // disable-power-key-handling
-    warp-mouse-to-focus
+    // warp-mouse-to-focus
     // focus-follows-mouse max-scroll-amount="0%"
     // workspace-auto-back-and-forth
 
@@ -85,7 +85,7 @@ output "eDP-1" {
 }
 
 output "HDMI-A-1" {
-    mode "2560x1440@99.97"
+    mode "2560x1440@99.965"
     scale 1.0
     position x=1920 y=0
     // variable-refresh-rate // on-demand=true
@@ -139,8 +139,8 @@ binds {
     // Mod+H     { focus-column-left; }
     // Mod+J     { focus-window-down; }
     // Mod+K     { focus-window-up; }
-    Mod+J        { focus-monitor-right; }
-    Mod+K        { focus-monitor-left; }
+    Mod+J        { focus-monitor-left; }
+    Mod+K        { focus-monitor-right; }
     // Mod+L     { focus-column-right; }
 
     // Mod+Ctrl+Left  { move-column-left; }
@@ -197,8 +197,9 @@ binds {
     // Alternatively, there are commands to move just a single window:
     // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
     // ...
-    Mod+Shift+H    { move-window-to-monitor-left; }
-    Mod+Shift+L    { move-window-to-monitor-right; }
+
+    Mod+Shift+H    { move-column-to-monitor-left; }
+    Mod+Shift+L    { move-column-to-monitor-right; }
 
     // And you can also move a whole workspace to another monitor:
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
@@ -314,7 +315,7 @@ binds {
     // Mod+R { switch-preset-column-width-back; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
-    Mod+F { maximize-column; }
+    // Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
 
     // Expand the focused column to space not taken up by other fully visible columns.
@@ -404,35 +405,35 @@ binds {
         spawn-sh "$HOME/.config/sway/super-v.sh"
     }
 
-    XF86AudioRaiseVolume {
+    XF86AudioRaiseVolume allow-when-locked=true {
         spawn "amixer" "-D" "pipewire" "sset" "Master" "5%+"
     }
 
-    XF86AudioLowerVolume {
+    XF86AudioLowerVolume allow-when-locked=true {
         spawn "amixer" "-D" "pipewire" "sset" "Master" "5%-"
     }
 
-    XF86AudioMute {
+    XF86AudioMute allow-when-locked=true {
         spawn "amixer" "-D" "pipewire" "set" "Master" "toggle"
     }
 
-    XF86AudioMicMute {
+    XF86AudioMicMute allow-when-locked=true {
         spawn "amixer" "-D" "pipewire" "set" "Capture" "toggle"
     }
 
-    XF86MonBrightnessUp {
+    XF86MonBrightnessUp allow-when-locked=true {
         spawn "brightnessctl" "-c" "backlight" "s" "4%+"
     }
 
-    XF86MonBrightnessDown {
+    XF86MonBrightnessDown allow-when-locked=true {
         spawn "brightnessctl" "-c" "backlight" "s" "4%-"
     }
 
-    XF86KbdBrightnessUp {
+    XF86KbdBrightnessUp allow-when-locked=true {
         spawn "brightnessctl" "-d" "*kbd_backlight" "s" "1+"
     }
 
-    XF86KbdBrightnessDown {
+    XF86KbdBrightnessDown allow-when-locked=true {
         spawn "brightnessctl" "-d" "*kbd_backlight" "s" "1-"
     }
 
@@ -480,4 +481,18 @@ window-rule {
 
 layout {
     gaps 8
+}
+
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 32
+}
+
+environment {
+    GDK_BACKEND "wayland"
+    QT_QPA_PLATFORM "wayland"
+    HYPRCURSOR_THEME "Adwaita"
+    HYPRCURSOR_SIZE "32"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    MOZ_ENABLE_WAYLAND "1"
 }
