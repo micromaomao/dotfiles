@@ -32,7 +32,7 @@ input {
         // natural-scroll
         accel-speed 0.0
         // accel-profile "flat"
-        // scroll-factor 1.0
+        scroll-factor 1.0
         // scroll-factor vertical=1.0 horizontal=-2.0
         // scroll-method "no-scroll"
         // scroll-button 273
@@ -207,14 +207,20 @@ binds {
 
     Mod+Ctrl+Shift+Page_Down { move-workspace-to-monitor-left; }
     Mod+Ctrl+Shift+Page_Up   { move-workspace-to-monitor-right; }
+    Mod+Ctrl+Shift+KP_Next   { move-workspace-to-monitor-left; }
+    Mod+Ctrl+Shift+KP_Prior  { move-workspace-to-monitor-right; }
 
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
+    Mod+KP_Next        { focus-workspace-down; }
+    Mod+KP_Prior       { focus-workspace-up; }
     Mod+U              { focus-workspace-down; }
     Mod+I              { focus-workspace-up; }
 
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+KP_Next   { move-column-to-workspace-down; }
+    Mod+Ctrl+KP_Prior  { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
     Mod+Ctrl+I         { move-column-to-workspace-up; }
 
@@ -229,6 +235,8 @@ binds {
 
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
+    Mod+Shift+KP_Next   { move-workspace-down; }
+    Mod+Shift+KP_Prior  { move-workspace-up; }
     Mod+Shift+U         { move-workspace-down; }
     Mod+Shift+I         { move-workspace-up; }
 
@@ -240,10 +248,10 @@ binds {
     // To avoid scrolling through workspaces really fast, you can use
     // the cooldown-ms property. The bind will be rate-limited to this value.
     // You can set a cooldown on any bind, but it's most useful for the wheel.
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+WheelScrollDown      cooldown-ms=300 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=300 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=300 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=300 { move-column-to-workspace-up; }
 
     Mod+WheelScrollRight      { focus-column-right; }
     Mod+WheelScrollLeft       { focus-column-left; }
@@ -252,10 +260,10 @@ binds {
 
     // Usually scrolling up and down with Shift in applications results in
     // horizontal scrolling; these binds replicate that.
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    Mod+Shift+WheelScrollDown      cooldown-ms=300 { focus-column-right; }
+    Mod+Shift+WheelScrollUp        cooldown-ms=300 { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=300 { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=300 { move-column-left; }
 
     // Similarly, you can bind touchpad scroll "ticks".
     // Touchpad scrolling is continuous, so for these binds it is split into
@@ -341,10 +349,11 @@ binds {
     Mod+Equal { set-column-width "+10%"; }
 
     Mod+0 { set-column-width "100%"; }
+    Mod+Shift+0 { reset-window-height; }
 
     // Finer height adjustments when in column with other windows.
-    Mod+Shift+Minus { set-window-height "-10%"; }
-    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Shift+Minus { set-window-height "-5%"; }
+    Mod+Shift+Equal { set-window-height "+5%"; }
 
     // Move the focused window between the floating and the tiling layout.
     // Mod+V       { toggle-window-floating; }
@@ -450,7 +459,7 @@ binds {
     }
 
     XF86SelectiveScreenshot {
-        spawn-sh "$HOME/.config/sway/take-screenshot-region.sh"
+	screenshot
     }
 
     Super+Shift+XF86Assistant allow-when-locked=true {
@@ -481,6 +490,42 @@ window-rule {
 
 layout {
     gaps 8
+
+    shadow {
+        // Uncomment the next line to enable shadows.
+        on
+
+        // By default, the shadow draws only around its window, and not behind it.
+        // Uncomment this setting to make the shadow draw behind its window.
+        //
+        // Note that niri has no way of knowing about the CSD window corner
+        // radius. It has to assume that windows have square corners, leading to
+        // shadow artifacts inside the CSD rounded corners. This setting fixes
+        // those artifacts.
+        //
+        // However, instead you may want to set prefer-no-csd and/or
+        // geometry-corner-radius. Then, niri will know the corner radius and
+        // draw the shadow correctly, without having to draw it behind the
+        // window. These will also remove client-side shadows if the window
+        // draws any.
+        //
+        // draw-behind-window true
+
+        // You can change how shadows look. The values below are in logical
+        // pixels and match the CSS box-shadow properties.
+
+        // Softness controls the shadow blur radius.
+        softness 10
+
+        // Spread expands the shadow.
+        spread 0
+
+        // Offset moves the shadow relative to the window.
+        offset x=2 y=2
+
+        // You can also change the shadow color and opacity.
+        color "#000c"
+    }
 }
 
 cursor {
