@@ -84,6 +84,26 @@ output "eDP-1" {
     // }
 }
 
+output "DP-2" {
+    mode "2560x1440@99.965"
+    scale 1.0
+    position x=1920 y=0
+    // variable-refresh-rate // on-demand=true
+    // focus-at-startup
+    // backdrop-color "#001100"
+
+    // hot-corners {
+    //     /// off
+    //     /// top-left
+    //     top-right
+    //     // bottom-left
+    //     // bottom-right
+    // }
+
+    // layout {
+    // }
+}
+
 output "HDMI-A-1" {
     mode "2560x1440@99.965"
     scale 1.0
@@ -106,7 +126,7 @@ output "HDMI-A-1" {
 
 spawn-at-startup "mako"
 spawn-at-startup "waybar"
-spawn-sh-at-startup "swaybg -o '*' -i $HOME/dotfiles/wallpaper-1920x1200.png -o HDMI-A-1 -i $HOME/dotfiles/wallpaper.png"
+spawn-sh-at-startup "swaybg -o 'eDP-1' -i $HOME/dotfiles/wallpaper-1920x1200.png -o '*' -i $HOME/dotfiles/wallpaper.png"
 spawn-at-startup "nm-applet" "--indicator"
 spawn-at-startup "blueman-applet"
 spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-gnome"
@@ -260,10 +280,10 @@ binds {
 
     // Usually scrolling up and down with Shift in applications results in
     // horizontal scrolling; these binds replicate that.
-    Mod+Shift+WheelScrollDown      cooldown-ms=300 { focus-column-right; }
-    Mod+Shift+WheelScrollUp        cooldown-ms=300 { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=300 { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=300 { move-column-left; }
+    Mod+Shift+WheelScrollDown      cooldown-ms=100 { focus-column-right; }
+    Mod+Shift+WheelScrollUp        cooldown-ms=100 { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown cooldown-ms=100 { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   cooldown-ms=100 { move-column-left; }
 
     // Similarly, you can bind touchpad scroll "ticks".
     // Touchpad scrolling is continuous, so for these binds it is split into
@@ -525,6 +545,13 @@ layout {
 
         // You can also change the shadow color and opacity.
         color "#000c"
+    }
+
+    struts {
+        left 0
+        right 0
+        top -5
+        bottom -5
     }
 }
 
