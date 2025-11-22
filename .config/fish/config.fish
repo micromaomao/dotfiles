@@ -150,7 +150,14 @@ abbr g "git"
 alias glf "git log --format='%>(30)%ad %C(Yellow)%h %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
 alias rsync- "rsync -r -v --progress --update --compress --links --safe-links -E --checksum --compress-choice zstd -t"
 alias gb "git for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname)' refs/heads refs/tags refs/remotes | less"
-alias grf "git reflog --format='%cr %C(Yellow)%h %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
+alias grf "git reflog --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
+function grfc
+  set hh (git reflog --color=always --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s' | \
+    fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
+  if [ $status -eq 0 -a -n "$hh" ]
+    git checkout $hh
+  end
+end
 
 if type -q exa
   abbr ls exa
