@@ -213,7 +213,9 @@
         "dpdk.p.maowtm.org": "linux",
         "dpdk-devbox.az.maowtm.org": "linux",
         "dpdk-devbox-2.az.maowtm.org": "linux",
-        "linux-devbox-vm": "linux"
+        "linux-devbox-vm": "linux",
+        "linux-devbox-vm-2": "linux",
+        "linux-devbox-2": "linux"
     },
     "[python]": {
         "editor.formatOnType": true
@@ -262,7 +264,7 @@
         "editor.renderWhitespace": "all"
     },
     "workbench.secondarySideBar.showLabels": false,
-    "workbench.colorTheme": "GitHub Light",
+    "workbench.colorTheme": "GitHub Dark Default",
     "[c]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
@@ -283,5 +285,10 @@
     "[restructuredtext]": {
         "editor.wordWrapColumn": 74,
         "editor.tabSize": 8
+    },
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "gitlens.advanced.messages": {
+        "suppressRebaseSwitchToTextWarning": true
     }
 }
