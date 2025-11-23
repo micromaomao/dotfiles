@@ -147,12 +147,19 @@ abbr gc "git commit -v"
 abbr gp "git push -v"
 abbr g "git"
 
-alias glf "git log --format='%>(30)%ad %C(Yellow)%h %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
+alias glf "git log --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
+function glfc
+  set hh (git log --color=always --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | \
+    fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
+  if [ $status -eq 0 -a -n "$hh" ]
+    git checkout $hh
+  end
+end
 alias rsync- "rsync -r -v --progress --update --compress --links --safe-links -E --checksum --compress-choice zstd -t"
 alias gb "git for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname)' refs/heads refs/tags refs/remotes | less"
 alias grf "git reflog --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
 function grfc
-  set hh (git reflog --color=always --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s' | \
+  set hh (git reflog --color=always --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | \
     fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
   if [ $status -eq 0 -a -n "$hh" ]
     git checkout $hh
