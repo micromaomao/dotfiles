@@ -155,6 +155,15 @@ function glfc
     git checkout $hh
   end
 end
+
+function grbi
+  set hh (git log --color=always --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | \
+    fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
+  if [ $status -eq 0 -a -n "$hh" ]
+    git rebase -i --autosquash --autostash --rebase-merges $hh
+  end
+end
+
 alias rsync- "rsync -r -v --progress --update --compress --links --safe-links -E --checksum --compress-choice zstd -t"
 alias gb "git for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname)' refs/heads refs/tags refs/remotes | less"
 alias grf "git reflog --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
