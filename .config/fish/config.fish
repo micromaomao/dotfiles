@@ -149,7 +149,7 @@ abbr g "git"
 
 alias glf "git log --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
 function glfc
-  set hh (git log --color=always --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | \
+  set hh (git log --color=always --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | head -n 1000 | \
     fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
   if [ $status -eq 0 -a -n "$hh" ]
     git checkout $hh
@@ -157,7 +157,7 @@ function glfc
 end
 
 function grbi
-  set hh (git log --color=always --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | \
+  set hh (git log --color=always --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | head -n 1000 | \
     fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
   if [ $status -eq 0 -a -n "$hh" ]
     git rebase -i --autosquash --autostash --rebase-merges $hh
@@ -168,7 +168,7 @@ alias rsync- "rsync -r -v --progress --update --compress --links --safe-links -E
 alias gb "git for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname)' refs/heads refs/tags refs/remotes | less"
 alias grf "git reflog --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
 function grfc
-  set hh (git reflog --color=always --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | \
+  set hh (git reflog --color=always --format='%C(bold)%C(Yellow)%h %C(reset)%>(15)%cr %C(Cyan)%<|(34,trunc)%an %C(auto)%(decorate) %C(bold)%s' $argv | head -n 1000 | \
     fzf --ansi --no-sort --height=~20 --layout=reverse --no-multi --accept-nth=1)
   if [ $status -eq 0 -a -n "$hh" ]
     git checkout $hh
