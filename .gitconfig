@@ -5,7 +5,7 @@
 [push]
 	default = simple
 [core]
-	editor = "code --wait"
+	editor = code --wait
 	excludesfile = /home/mao/.gitignore
   hooksPath = /dev/null
 [http]
@@ -27,10 +27,6 @@
 [credential]
 	helper = store --file /home/mao/.credentials/git
 [diff]
-  tool = difftastic
-[difftool]
-  prompt = false
-[difftool "difftastic"]
-  cmd = difft "$LOCAL" "$REMOTE"
+  external = difft --background=light
 [pager]
   difftool = true
