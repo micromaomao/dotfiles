@@ -98,8 +98,8 @@ output "DP-2" {
         struts {
             left 50
             right 50
-            top -10
-            bottom 50
+            top 0
+            bottom 20
         }
     }
 }
