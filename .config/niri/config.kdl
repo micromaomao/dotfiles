@@ -30,7 +30,7 @@ input {
 
     mouse {
         // natural-scroll
-        accel-speed 0.0
+        accel-speed -0.2
         // accel-profile "flat"
         scroll-factor 1.0
         // scroll-factor vertical=1.0 horizontal=-2.0
@@ -92,16 +92,16 @@ output "DP-2" {
     // focus-at-startup
     // backdrop-color "#001100"
 
-    // hot-corners {
-    //     /// off
-    //     /// top-left
-    //     top-right
-    //     // bottom-left
-    //     // bottom-right
-    // }
+    layout {
+        gaps 20
 
-    // layout {
-    // }
+        struts {
+            left 50
+            right 50
+            top 0
+            bottom 50
+        }
+    }
 }
 
 output "HDMI-A-1" {
@@ -340,7 +340,7 @@ binds {
 
     Mod+R { switch-preset-column-width; }
     // Cycling through the presets in reverse order is also possible.
-    // Mod+R { switch-preset-column-width-back; }
+    Mod+E { switch-preset-column-width-back; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
     // Mod+F { maximize-column; }
@@ -553,6 +553,15 @@ layout {
         top -5
         bottom -5
     }
+
+    preset-column-widths {
+        proportion 0.333333
+        proportion 0.5
+        proportion 0.666666
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.66666; }
 }
 
 cursor {
