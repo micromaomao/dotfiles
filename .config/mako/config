@@ -1,0 +1,8 @@
+max-history=100
+width=500
+height=200
+padding=10
+anchor=bottom-right
+font="Segoe UI" 18
+background-color=#e7e7e7dd
+text-color=#222222FF
