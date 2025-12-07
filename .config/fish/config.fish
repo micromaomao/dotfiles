@@ -36,6 +36,8 @@ end
 
 set -g VIRTUAL_ENV_DISABLE_PROMPT 1
 
+set -g prompt_show_in_exec 0
+
 function fish_prompt
   if [ -n "$VIRTUAL_ENV" ]
     set -l venv_name (basename "$VIRTUAL_ENV")
@@ -115,15 +117,26 @@ function fish_prompt
     end
   end
   echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd)
+  if [ $prompt_show_in_exec -eq 1 ]
+    echo -sn (set_color blue) " at " (set_color brblack) (date "+%H:%M:%S") (set_color normal)
+  end
   echo
   echo -sn "$suffix " (set_color normal)
 end
 
-function fish_right_prompt
-  # if [ "$USE_SIMPLE_PROMPT" != "true" -a "$last_exec_time" != "" ]
-  #   echo -sn (set_color yellow) $last_exec_time " " (set_color normal)
-  #   set last_exec_time ""
-  # end
+function _handle_enter
+  if ! commandline --is-valid
+    commandline -f execute
+    return
+  end
+  set -g prompt_show_in_exec 1
+  commandline -f force-repaint execute
+end
+
+bind enter _handle_enter
+
+function clear_in_exec -e fish_postexec
+  set -g prompt_show_in_exec 0
 end
 
 function fish_title
