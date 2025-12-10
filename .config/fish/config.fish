@@ -143,7 +143,7 @@ function _handle_enter
   commandline -f force-repaint execute
 end
 
-bind enter _handle_enter
+bind \r _handle_enter
 
 function clear_in_exec -e fish_postexec
   set -g prompt_show_in_exec 0
