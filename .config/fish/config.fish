@@ -3,6 +3,8 @@ set -x PATH $PATH $HOME/npm-g/bin/ $HOME/.cargo/bin
 set -x PATH $PATH $HOME/.bin
 # set PATH (echo "$PATH" | tr : \n | sort -u | head -c-1 | tr \n :) # Remove duplicates
 
+set -g kube_status " "
+set -g kube_status_fetched_time 0
 set -g last_status 0
 
 # Compatibility
@@ -37,6 +39,28 @@ end
 set -g VIRTUAL_ENV_DISABLE_PROMPT 1
 
 set -g prompt_show_in_exec 0
+
+function maybe_refresh_kube_status
+  set -l now (date +%s)
+  if [ (math "$now" - "$kube_status_fetched_time") -lt 5 ]
+    return
+  end
+  set -g kube_status_fetched_time $now
+  set -g kube_status " "
+  if type -q kubectl
+    set -l kube_ctx (kubectl config current-context 2>/dev/null)
+    set -l kube_ns ""
+    if [ $status -eq 0 ]
+      set kube_ns (kubectl config view --minify --flatten -o jsonpath='{.contexts[?(@.name == "'$kube_ctx'")].context.namespace}' 2>/dev/null)
+      if [ $status -ne 0 ]
+        set kube_ns (set_color red)"?"
+      else if [ "$kube_ns" = "" ]
+        set kube_ns "default"
+      end
+      set -g kube_status "$kube_status"(set_color yellow)"("(set_color cyan)$kube_ctx/$kube_ns(set_color yellow)") "
+    end
+  end
+end
 
 function fish_prompt
   if [ -n "$VIRTUAL_ENV" ]
@@ -102,20 +126,6 @@ function fish_prompt
     end
   end
 
-  set -l kube_status " "
-  if type -q kubectl
-    set -l kube_ctx (kubectl config current-context 2>/dev/null)
-    set -l kube_ns ""
-    if [ $status -eq 0 ]
-      set kube_ns (kubectl config view --minify --flatten -o jsonpath='{.contexts[?(@.name == "'$kube_ctx'")].context.namespace}' 2>/dev/null)
-      if [ $status -ne 0 ]
-        set kube_ns (set_color red)"?"
-      else if [ "$kube_ns" = "" ]
-        set kube_ns "default"
-      end
-      set kube_status "$kube_status"(set_color yellow)"("(set_color cyan)$kube_ctx/$kube_ns(set_color yellow)") "
-    end
-  end
   echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd)
   if [ $prompt_show_in_exec -eq 1 ]
     echo -sn (set_color blue) " at " (set_color brblack) (date "+%H:%M:%S") (set_color normal)
@@ -137,7 +147,9 @@ bind enter _handle_enter
 
 function clear_in_exec -e fish_postexec
   set -g prompt_show_in_exec 0
+  maybe_refresh_kube_status
 end
+maybe_refresh_kube_status
 
 function fish_title
   echo (status current-command) - (__fish_pwd)'@'(prompt_hostname)
