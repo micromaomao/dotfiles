@@ -27,6 +27,6 @@
 [credential]
 	helper = store --file /home/mao/.credentials/git
 [diff]
-  external = difft --background=light
+  external = difft --background=light --display=inline --parse-error-limit=1000
 [pager]
   difftool = true
