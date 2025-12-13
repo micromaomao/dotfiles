@@ -205,6 +205,7 @@ if type -q exa
 end
 
 abbr k kubectl
+abbr i island
 
 set -x BAT_THEME ansi-light
 
