@@ -126,7 +126,12 @@ function fish_prompt
     end
   end
 
-  echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd)
+  set -l island ""
+  if test -n "$_ISLAND_PROFILES"
+    set island " "(set_color magenta)"I["(set_color blue)(string join ", " $_ISLAND_PROFILES)(set_color magenta)"]"(set_color normal)
+  end
+
+  echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd) $island
   if [ $prompt_show_in_exec -eq 1 ]
     echo -sn (set_color blue) " at " (set_color brblack) (date "+%H:%M:%S") (set_color normal)
   end
@@ -205,7 +210,11 @@ if type -q exa
 end
 
 abbr k kubectl
-abbr i island
+
+if type -q island
+  source (island hook fish | psub)
+  abbr i island
+end
 
 set -x BAT_THEME ansi-light
 
