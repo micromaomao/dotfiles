@@ -214,6 +214,7 @@ abbr k kubectl
 if type -q island
   source (island hook fish | psub)
   abbr i island
+  abbr nosa nosandbox
 end
 
 set -x BAT_THEME ansi-light
