@@ -96,7 +96,7 @@ output "DP-2" {
         gaps 20
 
         struts {
-            left 50
+            left 10
             right 50
             top 0
             bottom 20
