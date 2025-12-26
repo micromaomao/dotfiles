@@ -6,3 +6,4 @@ anchor=bottom-right
 font="Segoe UI" 18
 background-color=#e7e7e7dd
 text-color=#222222FF
+on-button-middle=exec makoctl menu -n "$id" -- fuzzel -d -p 'Select action: '
