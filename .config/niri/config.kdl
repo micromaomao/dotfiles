@@ -130,6 +130,7 @@ spawn-sh-at-startup "swaybg -o 'eDP-1' -i $HOME/dotfiles/wallpaper-1920x1200.png
 spawn-at-startup "nm-applet" "--indicator"
 spawn-at-startup "blueman-applet"
 spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-gnome"
+spawn-at-startup "hypridle"
 
 spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
 spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
@@ -250,8 +251,8 @@ binds {
 
     Mod+Shift+Down  { move-window-to-workspace-down; }
     Mod+Shift+Up { move-window-to-workspace-up; }
-    Mod+Shift+J     { move-window-to-workspace-down; }
-    Mod+Shift+K     { move-window-to-workspace-up; }
+    // Mod+Shift+J     { move-window-to-workspace-down; }
+    // Mod+Shift+K     { move-window-to-workspace-up; }
 
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
@@ -408,7 +409,7 @@ binds {
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
+    // Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like
@@ -426,9 +427,6 @@ binds {
     }
     Super+F {
         fullscreen-window
-    }
-    Super+Shift+E {
-        quit
     }
     Super+V {
         spawn-sh "$HOME/.config/sway/super-v.sh"
@@ -479,7 +477,7 @@ binds {
     }
 
     XF86SelectiveScreenshot {
-	screenshot
+        screenshot
     }
 
     Super+Shift+XF86Assistant allow-when-locked=true {
@@ -500,6 +498,21 @@ binds {
 
     Super+Alt+L allow-when-locked=true {
         spawn-sh "$HOME/.config/sway/suspend.sh"
+    }
+
+    // English
+    Alt+Shift+E {
+        spawn "fcitx5-remote" "-s" "keyboard-us"
+    }
+
+     // Japanese
+    Alt+Shift+J {
+        spawn "fcitx5-remote" "-s" "mozc"
+    }
+
+    // Chinese
+    Alt+Shift+C {
+        spawn "fcitx5-remote" "-s" "pinyin"
     }
 }
 
@@ -548,8 +561,8 @@ layout {
     }
 
     struts {
-        left 0
-        right 0
+        left -5
+        right -5
         top -5
         bottom -5
     }

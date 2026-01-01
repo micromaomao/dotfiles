@@ -1,0 +1,4 @@
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.ScreenSaver
+dbus-user.talk org.freedesktop.portal.Desktop
+# ignore noroot

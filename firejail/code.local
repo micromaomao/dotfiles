@@ -1,0 +1,3 @@
+blacklist /home/mao/.gitcredentials
+blacklist /home/mao/cloudflare-cred.ini
+blacklist /home/mao/gcp-cred-dns-syncer.json
