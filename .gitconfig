@@ -30,3 +30,5 @@
   external = difft --background=light --display=inline --parse-error-limit=1000
 [pager]
   difftool = true
+[stash]
+	showIncludeUntracked = true
