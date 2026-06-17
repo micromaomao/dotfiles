@@ -29,3 +29,5 @@
 	helper = store --file /home/mao/.credentials/git
 [stash]
 	showIncludeUntracked = true
+[rerere]
+	enabled = true
