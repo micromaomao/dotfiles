@@ -100,6 +100,10 @@ function fish_prompt
   if [ $status -eq 0 ]
     set -l col blue
     set git_branch "; "(set_color $col)"$branch_name"
+    set -l commit_hash (git rev-parse --short HEAD 2>/dev/null)
+    if [ $status -eq 0 ]
+      set git_branch $git_branch(set_color yellow)" = "(set_color yellow)"$commit_hash"
+    end
     set -g __git_timeouted 0
     set -l total_modified 0
     set -l num_modified 0
