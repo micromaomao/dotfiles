@@ -124,9 +124,9 @@ function fish_prompt
       set total_modified 0
     end
     if [ "$total_modified" -gt 0 ]
-      set git_branch $git_branch"; "(set_color green)$total_modified
+      set git_branch $git_branch" "(set_color green)$total_modified
     else if [ "$__git_timeouted" -ne 0 ]
-      set git_branch $git_branch"; "(set_color blue)"?"
+      set git_branch $git_branch" "(set_color blue)"?"
     end
   end
 
