@@ -96,37 +96,45 @@ function fish_prompt
   echo -sn $last_exec_time
 
   set -l git_branch ''
-  set -l branch_name (git branch --show-current 2>/dev/null)
-  if [ $status -eq 0 ]
-    set -l col blue
-    set git_branch "; "(set_color $col)"$branch_name"
-    set -l commit_hash (git rev-parse --short HEAD 2>/dev/null)
+  if jj root >/dev/null 2>&1
+    set -l jj_change (jj log --no-graph -n 1 -T 'if(local_bookmarks, local_bookmarks.map(|bookmark| bookmark.name()).join(",") ++ " = ") ++ change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ if(description.first_line(), "\"" ++ truncate_end(50, description.first_line(), "...") ++ "\"", "(no description set)")' 2>/dev/null)
     if [ $status -eq 0 ]
-      set git_branch $git_branch(set_color yellow)" = "(set_color yellow)"$commit_hash"
+      set -l jj_parts (string split -m 2 \t -- "$jj_change")
+      set git_branch "; "(set_color blue)"$jj_parts[1]"(set_color yellow)"@$jj_parts[2] "(set_color brblack)"$jj_parts[3]"
     end
-    set -g __git_timeouted 0
-    set -l total_modified 0
-    set -l num_modified 0
-    function with_timeout
-      timeout --foreground -s INT 0.05 $argv
-      if [ "$status" -ne 0 ]
-        set __git_timeouted 1
-        return 1
+  else
+    set -l branch_name (git branch --show-current 2>/dev/null)
+    if [ $status -eq 0 ]
+      set -l col blue
+      set git_branch "; "(set_color $col)"$branch_name"
+      set -l commit_hash (git rev-parse --short HEAD 2>/dev/null)
+      if [ $status -eq 0 ]
+        set git_branch $git_branch(set_color yellow)" = "(set_color yellow)"$commit_hash"
       end
-    end
-    set -l num_untracked (with_timeout git ls-files -o --exclude-standard | wc -l)
-    if [ "$__git_timeouted" -eq 0 ]
-      set num_modified (with_timeout git diff --numstat --no-renames | wc -l)
-    end
-    if [ "$__git_timeouted" -eq 0 ]
-      set total_modified (math "$num_untracked" + "$num_modified")
-    else
-      set total_modified 0
-    end
-    if [ "$total_modified" -gt 0 ]
-      set git_branch $git_branch" "(set_color green)$total_modified
-    else if [ "$__git_timeouted" -ne 0 ]
-      set git_branch $git_branch" "(set_color blue)"?"
+      set -g __git_timeouted 0
+      set -l total_modified 0
+      set -l num_modified 0
+      function with_timeout
+        timeout --foreground -s INT 0.05 $argv
+        if [ "$status" -ne 0 ]
+          set __git_timeouted 1
+          return 1
+        end
+      end
+      set -l num_untracked (with_timeout git ls-files -o --exclude-standard | wc -l)
+      if [ "$__git_timeouted" -eq 0 ]
+        set num_modified (with_timeout git diff --numstat --no-renames | wc -l)
+      end
+      if [ "$__git_timeouted" -eq 0 ]
+        set total_modified (math "$num_untracked" + "$num_modified")
+      else
+        set total_modified 0
+      end
+      if [ "$total_modified" -gt 0 ]
+        set git_branch $git_branch" "(set_color green)$total_modified
+      else if [ "$__git_timeouted" -ne 0 ]
+        set git_branch $git_branch" "(set_color blue)"?"
+      end
     end
   end
 
@@ -180,6 +188,22 @@ abbr ga "git add"
 abbr gc "git commit -v"
 abbr gp "git push -v"
 abbr g "git"
+abbr jl "jj log"
+
+function update_jj_git_abbr --on-variable PWD
+  if type -q jj; and jj root >/dev/null 2>&1
+    abbr --add git "jj git"
+    abbr --add gc "jj commit"
+    abbr --add gp "jj git push"
+    abbr --add g "jj git"
+  else
+    abbr --erase git 2>/dev/null
+    abbr --add gc "git commit -v"
+    abbr --add gp "git push -v"
+    abbr --add g "git"
+  end
+end
+update_jj_git_abbr
 
 alias glf "git log --format='%C(Yellow)%h %>(30)%C(reset)%ad %C(Cyan)%<|(53,trunc)%an %C(auto)%(decorate) %C(bold)%s'"
 function glfc
