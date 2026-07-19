@@ -3,4 +3,4 @@ if ps -C hyprlock; then
   exit
 fi
 
-hyprlock --immediate & disown
+hyprlock & disown

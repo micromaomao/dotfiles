@@ -84,6 +84,27 @@ output "eDP-1" {
     // }
 }
 
+output "DP-1" {
+    // mode "2560x1440@99.965"
+    mode "3440x1440@120.000"
+    scale 1.0
+    position x=1920 y=0
+    // variable-refresh-rate // on-demand=true
+    // focus-at-startup
+    // backdrop-color "#001100"
+
+    layout {
+        gaps 20
+
+        struts {
+            left 10
+            right 30
+            top 0
+            bottom 20
+        }
+    }
+}
+
 output "DP-2" {
     mode "2560x1440@99.965"
     scale 1.0
@@ -97,7 +118,7 @@ output "DP-2" {
 
         struts {
             left 10
-            right 50
+            right 30
             top 0
             bottom 20
         }
@@ -112,16 +133,74 @@ output "HDMI-A-1" {
     // focus-at-startup
     // backdrop-color "#001100"
 
+    layout {
+        gaps 20
+
+        struts {
+            left 10
+            right 30
+            top 0
+            bottom 20
+        }
+    }
+}
+
+output "DP-8" {
+    // off
+    mode "1920x1080@74.973"
+    scale 1.0
+    position x=1920 y=0
+    // variable-refresh-rate // on-demand=true
+    focus-at-startup
+    // backdrop-color "#001100"
+
     // hot-corners {
-    //     /// off
-    //     /// top-left
-    //     top-right
+    //     // off
+    //     top-left
+    //     // top-right
     //     // bottom-left
     //     // bottom-right
     // }
 
-    // layout {
+    layout {
+        gaps 5
+
+        struts {
+            left 5
+            right 5
+            top 5
+            bottom 5
+        }
+    }
+}
+
+output "DP-7" {
+    // off
+    mode "1920x1080@74.973"
+    scale 1.0
+    position x=0 y=0
+    // variable-refresh-rate // on-demand=true
+    focus-at-startup
+    // backdrop-color "#001100"
+
+    // hot-corners {
+    //     // off
+    //     top-left
+    //     // top-right
+    //     // bottom-left
+    //     // bottom-right
     // }
+
+    layout {
+        gaps 5
+
+        struts {
+            left 5
+            right 5
+            top 5
+            bottom 5
+        }
+    }
 }
 
 spawn-at-startup "mako"
@@ -440,9 +519,9 @@ binds {
         spawn "amixer" "-D" "pipewire" "sset" "Master" "5%-"
     }
 
-    XF86AudioMute allow-when-locked=true {
-        spawn "amixer" "-D" "pipewire" "set" "Master" "toggle"
-    }
+    // XF86AudioMute allow-when-locked=true {
+    //     spawn "amixer" "-D" "pipewire" "set" "Master" "toggle"
+    // }
 
     XF86AudioMicMute allow-when-locked=true {
         spawn "amixer" "-D" "pipewire" "set" "Capture" "toggle"
@@ -519,6 +598,16 @@ binds {
 prefer-no-csd
 window-rule {
     draw-border-with-background false
+}
+window-rule {
+    match is-floating=true
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="^turnstile-example-prompter$"
+    open-floating true
 }
 
 layout {
