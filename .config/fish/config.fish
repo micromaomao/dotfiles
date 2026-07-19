@@ -97,7 +97,7 @@ function fish_prompt
 
   set -l git_branch ''
   if command -v jj >/dev/null 2>/dev/null && jj root >/dev/null 2>&1
-    set -l jj_change (jj log --no-graph -n 1 -T 'if(local_bookmarks, "1" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(","), "0") ++ "\t" ++ change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ if(description.first_line(), "\"" ++ truncate_end(50, description.first_line(), "...") ++ "\"", "(no description set)")' 2>/dev/null)
+    set -l jj_change (jj log -r @ --no-graph -n 1 -T 'if(local_bookmarks, "1" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(","), "0") ++ "\t" ++ change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ if(description.first_line(), "\"" ++ truncate_end(50, description.first_line(), "...") ++ "\"", "(no description set)")' 2>/dev/null)
     if [ $status -eq 0 ]
       set -l jj_parts (string split -m 3 \t -- "$jj_change")
       set -l jj_bookmark ""
@@ -204,15 +204,11 @@ abbr jl "jj log"
 
 function update_jj_git_abbr --on-variable PWD
   if type -q jj; and jj root >/dev/null 2>&1
-    abbr --add git "jj git"
     abbr --add gc "jj commit"
     abbr --add gp "jj git push"
-    abbr --add g "jj git"
   else
-    abbr --erase git 2>/dev/null
     abbr --add gc "git commit -v"
     abbr --add gp "git push -v"
-    abbr --add g "git"
   end
 end
 update_jj_git_abbr
