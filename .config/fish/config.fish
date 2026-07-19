@@ -96,7 +96,7 @@ function fish_prompt
   echo -sn $last_exec_time
 
   set -l git_branch ''
-  if jj root >/dev/null 2>&1
+  if command -v jj >/dev/null 2>/dev/null && jj root >/dev/null 2>&1
     set -l jj_change (jj log --no-graph -n 1 -T 'if(local_bookmarks, "1" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(","), "0") ++ "\t" ++ change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ if(description.first_line(), "\"" ++ truncate_end(50, description.first_line(), "...") ++ "\"", "(no description set)")' 2>/dev/null)
     if [ $status -eq 0 ]
       set -l jj_parts (string split -m 3 \t -- "$jj_change")
