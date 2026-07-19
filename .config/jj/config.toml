@@ -1,0 +1,10 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+[user]
+name = "Tingmao Wang"
+email = "m@maowtm.org"
+
+[git]
+private-commits = '''description('private:*')'''
+
+[ui]
+editor = "code --wait"
