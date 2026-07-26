@@ -97,13 +97,13 @@ function fish_prompt
 
   set -l git_branch ''
   if command -v jj >/dev/null 2>/dev/null && jj root >/dev/null 2>&1
-    set -l jj_change (jj log -r @ --no-graph -n 1 -T 'if(local_bookmarks, "1" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(","), "0") ++ "\t" ++ change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ if(description.first_line(), "\"" ++ truncate_end(50, description.first_line(), "...") ++ "\"", "(no description set)")' 2>/dev/null)
+    set -l jj_change (jj log -r @ --no-graph -n 1 -T 'change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ description.first_line() ++ "\t" ++ diff.files().len() ++ "\t" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(",")' 2>/dev/null)
     if [ $status -eq 0 ]
-      set -l jj_parts (string split -m 3 \t -- "$jj_change")
+      set -l jj_parts (string split -m 4 \t -- "$jj_change")
       set -l jj_bookmark ""
       set -l jj_bookmark_relation " = "
-      if string match -q '1*' -- "$jj_parts[1]"
-        set jj_bookmark (string sub -s 2 -- "$jj_parts[1]")
+      if [ -n "$jj_parts[5]" ]
+        set jj_bookmark "$jj_parts[5]"
       else
         set jj_bookmark (jj log -r '::@ & bookmarks()' --no-graph -n 1 -T 'local_bookmarks.map(|bookmark| bookmark.name()).join(",")' 2>/dev/null)
         set jj_bookmark_relation " .. "
@@ -112,7 +112,18 @@ function fish_prompt
       if [ -n "$jj_bookmark" ]
         set git_branch $git_branch"$jj_bookmark$jj_bookmark_relation"
       end
-      set git_branch $git_branch"$jj_parts[2]"(set_color yellow)" @ $jj_parts[3] "(set_color brblack)"$jj_parts[4]"
+      set git_branch $git_branch"$jj_parts[1]"(set_color yellow)" @ $jj_parts[2] "
+      if [ -n "$jj_parts[3]" ]
+        set git_branch $git_branch(set_color brblack)'"'(string shorten -m 50 -- "$jj_parts[3]")'"'
+      else if [ "$jj_parts[4]" = "0" ]
+        set git_branch $git_branch(set_color brblack)"(no description set, empty)"
+      else
+        set -l jj_file_word "files"
+        if [ "$jj_parts[4]" = "1" ]
+          set jj_file_word "file"
+        end
+        set git_branch $git_branch(set_color brblack)"(no description set, "(set_color yellow)"$jj_parts[4] $jj_file_word changed"(set_color brblack)")"
+      end
     end
   else
     set -l branch_name (git branch --show-current 2>/dev/null)
@@ -256,4 +267,3 @@ end
 set -x BAT_THEME ansi-light
 
 # abbr firejail "env GTK_IM_MODULE=xim firejail"
-
