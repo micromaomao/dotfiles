@@ -10,4 +10,4 @@ private-commits = '''description('private:*')'''
 editor = "code --wait"
 
 [revsets]
-log = "reachable(@,mutable())|ancestors(bookmarks(),2)|ancestors(tracked_remote_bookmarks(),2)"
+log = "reachable(present(@),mutable())|ancestors(present(@),4)|(ancestors(bookmarks(),30)&mutable())|ancestors(mutable(),2)|ancestors(tracked_remote_bookmarks(),2)"
