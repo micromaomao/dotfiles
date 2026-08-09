@@ -9,5 +9,15 @@ private-commits = '''description('private:*')'''
 [ui]
 editor = "code --wait"
 
+[templates]
+file_annotate = '''
+separate(" ",
+	commit.commit_id().shortest(8),
+	pad_start(14, commit.committer().timestamp().ago()),
+	pad_end(25, truncate_end(25, commit.description().first_line())),
+	pad_start(4, line_number),
+) ++ ": " ++ content
+'''
+
 [revsets]
 log = "reachable(present(@),mutable())|ancestors(present(@),4)|(ancestors(bookmarks(),30)&mutable())|ancestors(mutable(),2)|ancestors(tracked_remote_bookmarks(),2)"
