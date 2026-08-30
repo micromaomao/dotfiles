@@ -166,7 +166,12 @@ function fish_prompt
     set island " "(set_color magenta)"I["(set_color blue)(string join ", " $_ISLAND_PROFILES)(set_color magenta)"]"(set_color normal)
   end
 
-  echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd) $island
+  set -l turnstile ""
+  if test -n "$_CURRENT_TURNSTILE_CONFIG"
+      set turnstile " "(set_color magenta)"turnstile["(set_color blue)"$_CURRENT_TURNSTILE_CONFIG"(set_color magenta)"]"
+  end
+
+  echo -sn (set_color $color_hostname) (prompt_hostname) (set_color yellow) " (" (set_color $color_username) $USER $git_branch (set_color yellow) ")" $kube_status (set_color green) (prompt_pwd) $island $turnstile
   if [ $prompt_show_in_exec -eq 1 ]
     echo -sn (set_color blue) " at " (set_color brblack) (date "+%H:%M:%S") (set_color normal)
   end
@@ -265,5 +270,9 @@ if type -q island
 end
 
 set -x BAT_THEME ansi-light
+
+if type -q turnstile-sandbox
+  source (turnstile-sandbox --print-shell-hook | psub)
+end
 
 # abbr firejail "env GTK_IM_MODULE=xim firejail"
