@@ -60,6 +60,8 @@ function script:Update-KubeStatus {
 }
 
 function script:Get-GitSegment {
+    if (Test-Path Env:fish_prompt_skip_vcs) { return '' }
+
     $branch = (git branch --show-current 2>$null)
     if ($LASTEXITCODE -ne 0 -or -not $branch) { return '' }
 
@@ -76,6 +78,14 @@ function script:Get-GitSegment {
         $seg += ' ' + $script:colGreen + $total
     }
     return $seg
+}
+
+function toggle_vcs {
+    if (Test-Path Env:fish_prompt_skip_vcs) {
+        Remove-Item Env:fish_prompt_skip_vcs
+    } else {
+        $env:fish_prompt_skip_vcs = '1'
+    }
 }
 
 function script:Get-DurationSegment {

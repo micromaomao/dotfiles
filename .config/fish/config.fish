@@ -62,6 +62,14 @@ function maybe_refresh_kube_status
   end
 end
 
+function toggle_vcs
+  if set -q fish_prompt_skip_vcs
+    set -e fish_prompt_skip_vcs
+  else
+    set -gx fish_prompt_skip_vcs 1
+  end
+end
+
 function fish_prompt
   if [ -n "$VIRTUAL_ENV" ]
     set -l venv_name (basename "$VIRTUAL_ENV")
@@ -96,67 +104,69 @@ function fish_prompt
   echo -sn $last_exec_time
 
   set -l git_branch ''
-  if command -v jj >/dev/null 2>/dev/null && jj root >/dev/null 2>&1
-    set -l jj_change (jj log -r @ --no-graph -n 1 -T 'change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ description.first_line() ++ "\t" ++ diff.files().len() ++ "\t" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(",")' 2>/dev/null)
-    if [ $status -eq 0 ]
-      set -l jj_parts (string split -m 4 \t -- "$jj_change")
-      set -l jj_bookmark ""
-      set -l jj_bookmark_relation " = "
-      if [ -n "$jj_parts[5]" ]
-        set jj_bookmark "$jj_parts[5]"
-      else
-        set jj_bookmark (jj log -r '::@ & bookmarks()' --no-graph -n 1 -T 'local_bookmarks.map(|bookmark| bookmark.name()).join(",")' 2>/dev/null)
-        set jj_bookmark_relation " .. "
-      end
-      set git_branch "; "(set_color blue)
-      if [ -n "$jj_bookmark" ]
-        set git_branch $git_branch"$jj_bookmark$jj_bookmark_relation"
-      end
-      set git_branch $git_branch"$jj_parts[1]"(set_color yellow)" @ $jj_parts[2] "
-      if [ -n "$jj_parts[3]" ]
-        set git_branch $git_branch(set_color brblack)'"'(string shorten -m 50 -- "$jj_parts[3]")'"'
-      else if [ "$jj_parts[4]" = "0" ]
-        set git_branch $git_branch(set_color brblack)"(no description set, empty)"
-      else
-        set -l jj_file_word "files"
-        if [ "$jj_parts[4]" = "1" ]
-          set jj_file_word "file"
-        end
-        set git_branch $git_branch(set_color brblack)"(no description set, "(set_color yellow)"$jj_parts[4] $jj_file_word changed"(set_color brblack)")"
-      end
-    end
-  else
-    set -l branch_name (git branch --show-current 2>/dev/null)
-    if [ $status -eq 0 ]
-      set -l col blue
-      set git_branch "; "(set_color $col)"$branch_name"
-      set -l commit_hash (git rev-parse --short HEAD 2>/dev/null)
+  if not set -q fish_prompt_skip_vcs
+    if command -v jj >/dev/null 2>/dev/null && jj root >/dev/null 2>&1
+      set -l jj_change (jj log -r @ --no-graph -n 1 -T 'change_id.short() ++ "\t" ++ commit_id.short() ++ "\t" ++ description.first_line() ++ "\t" ++ diff.files().len() ++ "\t" ++ local_bookmarks.map(|bookmark| bookmark.name()).join(",")' 2>/dev/null)
       if [ $status -eq 0 ]
-        set git_branch $git_branch(set_color yellow)" = "(set_color yellow)"$commit_hash"
-      end
-      set -g __git_timeouted 0
-      set -l total_modified 0
-      set -l num_modified 0
-      function with_timeout
-        timeout --foreground -s INT 0.05 $argv
-        if [ "$status" -ne 0 ]
-          set __git_timeouted 1
-          return 1
+        set -l jj_parts (string split -m 4 \t -- "$jj_change")
+        set -l jj_bookmark ""
+        set -l jj_bookmark_relation " = "
+        if [ -n "$jj_parts[5]" ]
+          set jj_bookmark "$jj_parts[5]"
+        else
+          set jj_bookmark (jj log -r '::@ & bookmarks()' --no-graph -n 1 -T 'local_bookmarks.map(|bookmark| bookmark.name()).join(",")' 2>/dev/null)
+          set jj_bookmark_relation " .. "
+        end
+        set git_branch "; "(set_color blue)
+        if [ -n "$jj_bookmark" ]
+          set git_branch $git_branch"$jj_bookmark$jj_bookmark_relation"
+        end
+        set git_branch $git_branch"$jj_parts[1]"(set_color yellow)" @ $jj_parts[2] "
+        if [ -n "$jj_parts[3]" ]
+          set git_branch $git_branch(set_color brblack)'"'(string shorten -m 50 -- "$jj_parts[3]")'"'
+        else if [ "$jj_parts[4]" = "0" ]
+          set git_branch $git_branch(set_color brblack)"(no description set, empty)"
+        else
+          set -l jj_file_word "files"
+          if [ "$jj_parts[4]" = "1" ]
+            set jj_file_word "file"
+          end
+          set git_branch $git_branch(set_color brblack)"(no description set, "(set_color yellow)"$jj_parts[4] $jj_file_word changed"(set_color brblack)")"
         end
       end
-      set -l num_untracked (with_timeout git ls-files -o --exclude-standard | wc -l)
-      if [ "$__git_timeouted" -eq 0 ]
-        set num_modified (with_timeout git diff --numstat --no-renames | wc -l)
-      end
-      if [ "$__git_timeouted" -eq 0 ]
-        set total_modified (math "$num_untracked" + "$num_modified")
-      else
-        set total_modified 0
-      end
-      if [ "$total_modified" -gt 0 ]
-        set git_branch $git_branch" "(set_color green)$total_modified
-      else if [ "$__git_timeouted" -ne 0 ]
-        set git_branch $git_branch" "(set_color blue)"?"
+    else
+      set -l branch_name (git branch --show-current 2>/dev/null)
+      if [ $status -eq 0 ]
+        set -l col blue
+        set git_branch "; "(set_color $col)"$branch_name"
+        set -l commit_hash (git rev-parse --short HEAD 2>/dev/null)
+        if [ $status -eq 0 ]
+          set git_branch $git_branch(set_color yellow)" = "(set_color yellow)"$commit_hash"
+        end
+        set -g __git_timeouted 0
+        set -l total_modified 0
+        set -l num_modified 0
+        function with_timeout
+          timeout --foreground -s INT 0.05 $argv
+          if [ "$status" -ne 0 ]
+            set __git_timeouted 1
+            return 1
+          end
+        end
+        set -l num_untracked (with_timeout git ls-files -o --exclude-standard | wc -l)
+        if [ "$__git_timeouted" -eq 0 ]
+          set num_modified (with_timeout git diff --numstat --no-renames | wc -l)
+        end
+        if [ "$__git_timeouted" -eq 0 ]
+          set total_modified (math "$num_untracked" + "$num_modified")
+        else
+          set total_modified 0
+        end
+        if [ "$total_modified" -gt 0 ]
+          set git_branch $git_branch" "(set_color green)$total_modified
+        else if [ "$__git_timeouted" -ne 0 ]
+          set git_branch $git_branch" "(set_color blue)"?"
+        end
       end
     end
   end
